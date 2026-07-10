@@ -18,6 +18,12 @@ from backend.agent_workflow import run_agent_workflow, set_client_and_model, reg
 
 app = FastAPI(title="AI Multi-Agent Data Analysis App")
 
+def get_resource_path(relative_path: str) -> str:
+    """Gets the absolute path to resource, working both in dev and under PyInstaller."""
+    if hasattr(sys, "_MEIPASS"):
+        return str(Path(sys._MEIPASS) / relative_path)
+    return str(Path(relative_path).resolve())
+
 # Global status dictionary for the active run
 run_state = {
     "is_running": False,
@@ -32,11 +38,10 @@ run_state = {
 
 # Ensure folders exist
 Path("artifacts").mkdir(exist_ok=True)
-Path("frontend").mkdir(exist_ok=True)
 Path("uploads").mkdir(exist_ok=True)
 
 # Mount frontend static files and artifacts
-app.mount("/frontend", StaticFiles(directory="frontend"), name="frontend")
+app.mount("/frontend", StaticFiles(directory=get_resource_path("frontend")), name="frontend")
 app.mount("/artifacts", StaticFiles(directory="artifacts"), name="artifacts")
 
 class CredentialsPayload(BaseModel):
@@ -59,7 +64,7 @@ def on_startup():
 @app.get("/", response_class=HTMLResponse)
 def serve_index():
     """Serves the frontend SPA index.html."""
-    return FileResponse("frontend/index.html")
+    return FileResponse(get_resource_path("frontend/index.html"))
 
 @app.get("/api/credentials")
 def api_get_credentials():
