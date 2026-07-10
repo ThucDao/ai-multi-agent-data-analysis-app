@@ -87,6 +87,15 @@
             <p class="field-info">Upload strictly 1 CSV data file.</p>
           </div>
 
+          <div class="form-group">
+            <label for="export-location">Export Directory (Optional)</label>
+            <div class="file-picker-container">
+              <input type="text" id="export-location" placeholder="Select folder to save PDF & MD reports...">
+              <button type="button" class="btn btn-secondary" onclick="browseExportLocation()">Browse</button>
+            </div>
+            <p class="field-info">Generated PDF and Markdown reports will be stored in this directory.</p>
+          </div>
+
           <button id="start-analysis-btn" class="btn btn-primary" onclick="startAnalysis()" disabled>
             Start Multi-Agent Analysis
           </button>

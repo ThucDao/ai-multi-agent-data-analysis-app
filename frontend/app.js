@@ -17,6 +17,7 @@ const geminiStatus = document.getElementById('gemini-status');
 const langsmithStatus = document.getElementById('langsmith-status');
 const fileInputText = document.getElementById('csv-file-name');
 const startBtn = document.getElementById('start-analysis-btn');
+const exportLocationInput = document.getElementById('export-location');
 const progressCard = document.getElementById('progress-card');
 const resultsCard = document.getElementById('results-card');
 const consoleBody = document.getElementById('console-body');
@@ -159,6 +160,27 @@ async function handleFileChange(event) {
   }
 }
 
+// Browse Folder Picker for Export Location
+async function browseExportLocation() {
+  if (isAnalyzing) return;
+  try {
+    const res = await fetch('/api/select-export-directory', {
+      method: 'POST'
+    });
+    if (res.ok) {
+      const data = await res.json();
+      if (data.status === 'success') {
+        exportLocationInput.value = data.directory;
+      }
+    } else {
+      const errData = await res.json();
+      alert(`Folder picker failed: ${errData.detail || 'You can type the path manually.'}`);
+    }
+  } catch (err) {
+    alert(`Could not connect to directory picker: ${err.message}. You can type the path manually.`);
+  }
+}
+
 // Start Multi-Agent workflow
 async function startAnalysis() {
   if (isAnalyzing) return;
@@ -188,6 +210,11 @@ async function startAnalysis() {
 
   const formData = new FormData();
   formData.append('tier', selectedTier);
+  
+  const exportPath = exportLocationInput.value.trim();
+  if (exportPath) {
+    formData.append('export_path', exportPath);
+  }
 
   try {
     const res = await fetch('/api/run-analysis', {

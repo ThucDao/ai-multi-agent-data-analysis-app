@@ -92,6 +92,31 @@ def api_upload_csv(file: UploadFile = File(...)):
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to save uploaded file: {str(e)}")
 
+@app.post("/api/select-export-directory")
+def api_select_export_directory():
+    """Pops up a native directory selector dialog on the host computer."""
+    try:
+        import tkinter as tk
+        from tkinter import filedialog
+        
+        root = tk.Tk()
+        root.withdraw()
+        root.attributes("-topmost", True)
+        
+        selected_dir = filedialog.askdirectory(title="Select Export Directory")
+        root.destroy()
+        
+        if selected_dir:
+            return {"status": "success", "directory": selected_dir}
+        else:
+            return {"status": "cancelled", "directory": ""}
+    except Exception as e:
+        traceback.print_exc()
+        raise HTTPException(
+            status_code=500,
+            detail=f"Failed to open folder picker: {str(e)}. You can type the path manually in the text box."
+        )
+
 def agent_status_cb(agent: str, message: str, error: str | None = None):
     """Callback function used by agent graph nodes to update live status."""
     global run_state
@@ -100,7 +125,7 @@ def agent_status_cb(agent: str, message: str, error: str | None = None):
     if error:
         run_state["error"] = error
 
-def run_workflow_background(csv_path: str, tier: str, gemini_key: str, langsmith_key: str):
+def run_workflow_background(csv_path: str, tier: str, gemini_key: str, langsmith_key: str, export_path: str = None):
     """Worker function that runs in a separate thread to avoid blocking FastAPI requests."""
     global run_state
     try:
@@ -134,6 +159,29 @@ def run_workflow_background(csv_path: str, tier: str, gemini_key: str, langsmith
 
         if result["ok"]:
             run_state["message"] = "Analysis finished successfully!"
+            if export_path:
+                try:
+                    export_dir = Path(export_path)
+                    if export_dir.exists() and export_dir.is_dir():
+                        from datetime import datetime
+                        import shutil
+                        timestamp = datetime.now().strftime("%Y-%m-%d_%H.%M.%S")
+                        md_export = export_dir / f"report_{timestamp}.md"
+                        pdf_export = export_dir / f"report_{timestamp}.pdf"
+                        
+                        if result["report_md"]:
+                            with open(md_export, "w", encoding="utf-8") as f:
+                                f.write(result["report_md"])
+                        
+                        if result["report_pdf"] and Path(result["report_pdf"]).exists():
+                            shutil.copy2(result["report_pdf"], pdf_export)
+                        
+                        run_state["message"] += f" Exported reports to: {export_path}"
+                    else:
+                        run_state["message"] += " (Export folder not found/invalid)"
+                except Exception as ex:
+                    print("Failed to export files:", ex)
+                    run_state["message"] += " (Failed to write to export folder)"
         else:
             # Code crashed, but we generated a report outline
             run_state["message"] = "Analysis finished, but errors occurred during code execution."
@@ -166,7 +214,7 @@ def run_workflow_background(csv_path: str, tier: str, gemini_key: str, langsmith
         run_state["is_running"] = False
 
 @app.post("/api/run-analysis")
-def api_run_analysis(tier: str = Form(...)):
+def api_run_analysis(tier: str = Form(...), export_path: str = Form(None)):
     """Triggers the asynchronous multi-agent data-analysis flow."""
     global run_state
     if run_state["is_running"]:
@@ -186,7 +234,7 @@ def api_run_analysis(tier: str = Form(...)):
     # Spawn thread to avoid holding the HTTP thread
     t = threading.Thread(
         target=run_workflow_background,
-        args=(str(csv_path), tier, gemini_key, langsmith_key)
+        args=(str(csv_path), tier, gemini_key, langsmith_key, export_path)
     )
     t.daemon = True
     t.start()
