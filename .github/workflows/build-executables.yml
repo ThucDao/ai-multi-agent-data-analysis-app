@@ -42,7 +42,7 @@ jobs:
 
       - name: Build executable with PyInstaller
         run: |
-          pyinstaller --onefile --noconsole ${{ matrix.pyinstaller_args }} --name "DataAnalysisStudio" backend/main.py
+          pyinstaller --onefile --noconsole ${{ matrix.pyinstaller_args }} --name "DataAnalysisStudio" launcher.py
 
       - name: Rename executable on Unix (non-Windows)
         if: matrix.os != 'windows-latest'
