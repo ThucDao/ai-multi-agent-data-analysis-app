@@ -13,7 +13,6 @@ from langgraph.graph import StateGraph, END
 from langsmith import traceable
 import pandas as pd
 import markdown2
-import weasyprint
 
 from markdown_it import MarkdownIt
 from mdit_py_plugins.tasklists import tasklists_plugin
@@ -139,6 +138,7 @@ md = (
 
 def render_pdf(markdown_text: str):
     """Renders HTML from markdown and writes it to a styled PDF using WeasyPrint."""
+    import weasyprint
     html_body = md.render(markdown_text)
 
     html_template = f"""
