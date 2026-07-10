@@ -96,6 +96,21 @@
             <p class="field-info">Generated PDF and Markdown reports will be stored in this directory.</p>
           </div>
 
+          <div class="form-group">
+            <label>PDF Rendering Engine</label>
+            <div class="segment-control">
+              <button type="button" id="engine-xhtml2pdf" class="segment-btn active" onclick="selectEngine('xhtml2pdf')">
+                xhtml2pdf <span>(Default / Portable)</span>
+              </button>
+              <button type="button" id="engine-weasyprint" class="segment-btn" onclick="selectEngine('weasyprint')">
+                WeasyPrint <span>(High Fidelity)</span>
+              </button>
+            </div>
+            <p class="field-info" id="engine-desc">
+              <strong>xhtml2pdf</strong>: Runs completely in Python. Zero native OS setup required. Works instantly on any machine.
+            </p>
+          </div>
+
           <button id="start-analysis-btn" class="btn btn-primary" onclick="startAnalysis()" disabled>
             Start Multi-Agent Analysis
           </button>
@@ -202,13 +217,13 @@
           </div>
 
           <!-- PDF Highlight Line -->
-          <div class="pdf-highlight-line" onclick="openPDF()">
-            <span class="pdf-icon">📄</span>
+          <div id="pdf-action-block" class="pdf-highlight-line" onclick="generatePDF()">
+            <span class="pdf-icon" id="pdf-action-icon">📄</span>
             <div class="pdf-text">
-              <strong>Open Polished PDF Report</strong>
-              <span>Click to view the publication-ready PDF containing generated visualization figures and formatted insights.</span>
+              <strong id="pdf-action-title">Export to PDF</strong>
+              <span id="pdf-action-desc">Click to compile the publication-ready PDF using the selected engine and save/open it.</span>
             </div>
-            <span class="pdf-arrow">➔</span>
+            <span class="pdf-arrow" id="pdf-action-arrow">➔</span>
           </div>
 
           <!-- Markdown Report Toggle -->

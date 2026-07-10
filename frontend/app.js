@@ -1,6 +1,8 @@
 // Local State Variables
 let selectedTier = 'free';
+let selectedEngine = 'xhtml2pdf';
 let pdfReportPath = null;
+let generatedMarkdown = null;
 let pollInterval = null;
 let lastLogMessage = '';
 let isAnalyzing = false;
@@ -42,6 +44,26 @@ function selectTier(tier) {
   } else {
     tierPaidBtn.classList.add('active');
     tierFreeBtn.classList.remove('active');
+  }
+}
+
+// PDF Engine Toggle
+function selectEngine(engine) {
+  if (isAnalyzing) return;
+  selectedEngine = engine;
+  
+  const xhtmlBtn = document.getElementById('engine-xhtml2pdf');
+  const weasyBtn = document.getElementById('engine-weasyprint');
+  const descEl = document.getElementById('engine-desc');
+  
+  if (engine === 'xhtml2pdf') {
+    xhtmlBtn.classList.add('active');
+    weasyBtn.classList.remove('active');
+    descEl.innerHTML = '<strong>xhtml2pdf</strong>: Runs completely in Python. Zero native OS setup required. Works instantly on any machine.';
+  } else {
+    weasyBtn.classList.add('active');
+    xhtmlBtn.classList.remove('active');
+    descEl.innerHTML = '<strong>WeasyPrint</strong>: High-fidelity CSS3/HTML5 printer engine. Requires GTK+ and Pango installed on your operating system.';
   }
 }
 
@@ -253,11 +275,17 @@ async function pollStatus() {
       workflowSpinner.classList.remove('progress-spinner');
 
       if (status.completed) {
-        // Run completed successfully or with tolerable errors
-        pdfReportPath = status.report_pdf;
+        // Run completed successfully
+        pdfReportPath = null; // resets local path since PDF isn't compiled yet
+        generatedMarkdown = status.report_md;
+        
+        // Reset PDF action button state
+        document.getElementById('pdf-action-title').textContent = 'Export to PDF';
+        document.getElementById('pdf-action-desc').textContent = `Compile and render the report using ${selectedEngine}.`;
+        
         document.getElementById('markdown-body').innerHTML = status.report_html || '<p>No report body generated.</p>';
         resultsCard.style.display = 'block';
-        addLogLine('system-msg', 'Workflow execution completed.');
+        addLogLine('system-msg', 'Workflow execution completed. You can now toggle the report or click "Export to PDF".');
       }
       
       if (status.error && !status.completed) {
@@ -367,10 +395,69 @@ function toggleMarkdownReport() {
   }
 }
 
+// On-demand PDF Generation
+async function generatePDF() {
+  if (isAnalyzing) return;
+  if (!generatedMarkdown) {
+    alert('Please run the data analysis workflow first to generate a report.');
+    return;
+  }
+
+  const titleEl = document.getElementById('pdf-action-title');
+  const descEl = document.getElementById('pdf-action-desc');
+
+  // If already compiled, clicking the banner will open the PDF
+  if (pdfReportPath) {
+    openPDF();
+    return;
+  }
+
+  // Update button state to compiling
+  titleEl.textContent = 'Generating PDF...';
+  descEl.textContent = 'Running HTML to PDF layout compiler engine. Please wait...';
+
+  try {
+    const res = await fetch('/api/generate-pdf', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        report_md: generatedMarkdown,
+        engine: selectedEngine,
+        export_path: exportLocationInput.value.trim() || null
+      })
+    });
+
+    if (res.ok) {
+      const data = await res.json();
+      pdfReportPath = data.pdf_path;
+      
+      titleEl.textContent = 'Open PDF Report';
+      
+      let msg = `PDF generated successfully using ${selectedEngine}! Click to view.`;
+      if (data.exported_path) {
+        msg += ' Copied to export directory.';
+      }
+      descEl.textContent = msg;
+      
+      // Auto open PDF
+      openPDF();
+    } else {
+      const errData = await res.json();
+      titleEl.textContent = 'Failed to Generate PDF';
+      descEl.textContent = errData.detail || 'Rendering engine returned an error.';
+      alert(`PDF Compilation Error: ${errData.detail || 'Unknown error'}`);
+    }
+  } catch (err) {
+    titleEl.textContent = 'Failed to Generate PDF';
+    descEl.textContent = `Network error: ${err.message}`;
+    alert(`Failed to connect to backend: ${err.message}`);
+  }
+}
+
 // Desktop launcher action - open PDF report
 async function openPDF() {
   if (!pdfReportPath) {
-    alert('No report PDF path found.');
+    alert('Please generate the PDF first.');
     return;
   }
 

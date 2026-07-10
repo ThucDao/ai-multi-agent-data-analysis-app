@@ -274,3 +274,47 @@ def api_open_pdf(payload: dict):
         return {"status": "success", "message": f"Opened report in default reader: {abs_path}"}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to open PDF file: {str(e)}")
+
+class GeneratePDFPayload(BaseModel):
+    report_md: str
+    engine: str
+    export_path: str | None = None
+
+@app.post("/api/generate-pdf")
+def api_generate_pdf(payload: GeneratePDFPayload):
+    """Generates a PDF document on-demand using the specified engine."""
+    if not payload.report_md:
+        raise HTTPException(status_code=400, detail="report_md is required.")
+    
+    try:
+        from backend.agent_workflow import render_pdf
+        pdf_path = render_pdf(payload.report_md, payload.engine)
+        
+        exported_path = None
+        if payload.export_path:
+            export_dir = Path(payload.export_path)
+            if export_dir.exists() and export_dir.is_dir():
+                from datetime import datetime
+                import shutil
+                filename = Path(pdf_path).name
+                exported_dest = export_dir / filename
+                shutil.copy2(pdf_path, exported_dest)
+                exported_path = str(exported_dest.resolve())
+                
+        return {
+            "status": "success", 
+            "pdf_path": pdf_path, 
+            "exported_path": exported_path
+        }
+    except Exception as e:
+        traceback.print_exc()
+        err_msg = str(e).lower()
+        if "libgobject" in err_msg or "gobject" in err_msg or "pango" in err_msg:
+            friendly = (
+                "WeasyPrint Error: Missing system libraries (GTK/Pango). "
+                "To use WeasyPrint, you must install GTK+ on your system. "
+                "Otherwise, please select xhtml2pdf, which requires no extra installation."
+            )
+        else:
+            friendly = f"PDF compilation failed: {str(e)}"
+        raise HTTPException(status_code=500, detail=friendly)

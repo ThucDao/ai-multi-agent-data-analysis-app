@@ -136,8 +136,86 @@ md = (
     .use(footnote_plugin)
 )
 
-def render_pdf(markdown_text: str):
-    """Renders HTML from markdown and writes it to a styled PDF using WeasyPrint."""
+def render_pdf_xhtml2pdf(markdown_text: str, pdf_path: Path):
+    """Renders PDF using xhtml2pdf (pure Python, zero native OS dependencies)."""
+    from xhtml2pdf import pisa
+    import os
+    
+    html_body = md.render(markdown_text)
+    
+    html_template = f"""
+    <html>
+    <head>
+      <meta charset="utf-8">
+      <style>
+        @page {{
+          size: letter;
+          margin: 0.8in;
+        }}
+        body {{
+          font-family: Helvetica, Arial, sans-serif;
+          font-size: 10pt;
+          line-height: 1.4;
+          color: #111111;
+        }}
+        h1 {{ font-size: 18pt; margin-bottom: 8pt; color: #111111; }}
+        h2 {{ font-size: 14pt; margin-top: 14pt; margin-bottom: 6pt; color: #222222; }}
+        h3 {{ font-size: 11pt; margin-top: 10pt; margin-bottom: 4pt; color: #333333; }}
+        p {{ margin-bottom: 6pt; }}
+        ul, ol {{ margin-bottom: 8pt; margin-left: 15pt; }}
+        li {{ margin-bottom: 2pt; }}
+        table {{
+          width: 100%;
+          border-collapse: collapse;
+          margin: 10pt 0;
+          font-size: 9pt;
+        }}
+        th, td {{
+          border: 1px solid #cccccc;
+          padding: 5pt;
+          text-align: left;
+        }}
+        th {{ background-color: #f2f2f2; font-weight: bold; }}
+        img {{
+          display: block;
+          margin: 10pt auto;
+          max-width: 320px;
+        }}
+        .chart-block {{
+          page-break-inside: avoid;
+          margin-bottom: 12pt;
+        }}
+        code {{
+          background-color: #f6f6f6;
+          font-family: Courier, monospace;
+          font-size: 9pt;
+        }}
+      </style>
+    </head>
+    <body>
+      {html_body}
+    </body>
+    </html>
+    """
+    
+    # Callback to resolve relative image path references from html (e.g. "artifacts/chart...")
+    def link_callback(uri, rel):
+        if uri.startswith("artifacts/"):
+            return os.path.abspath(uri)
+        return uri
+
+    with open(pdf_path, "wb") as pdf_file:
+        pisa_status = pisa.CreatePDF(
+            src=html_template,
+            dest=pdf_file,
+            link_callback=link_callback
+        )
+        
+    if pisa_status.err:
+        raise RuntimeError("xhtml2pdf failed to render PDF document.")
+
+def render_pdf_weasyprint(markdown_text: str, pdf_path: Path):
+    """Renders PDF using WeasyPrint (high-fidelity printer rendering, requires GTK+)."""
     import weasyprint
     html_body = md.render(markdown_text)
 
@@ -202,13 +280,20 @@ def render_pdf(markdown_text: str):
     </html>
     """
 
-    timestamp = datetime.now().strftime("%Y-%m-%d_%H.%M.%S")
-    pdf_path = ARTIFACTS_DIR / f"report_{timestamp}.pdf"
-
     weasyprint.HTML(
         string=html_template,
         base_url=str(ARTIFACTS_DIR.parent.resolve())
     ).write_pdf(str(pdf_path))
+
+def render_pdf(markdown_text: str, engine: str = "xhtml2pdf"):
+    """Compiles Markdown report to PDF using the chosen rendering engine."""
+    timestamp = datetime.now().strftime("%Y-%m-%d_%H.%M.%S")
+    pdf_path = ARTIFACTS_DIR / f"report_{timestamp}.pdf"
+
+    if engine.lower() == "weasyprint":
+        render_pdf_weasyprint(markdown_text, pdf_path)
+    else:
+        render_pdf_xhtml2pdf(markdown_text, pdf_path)
 
     return str(pdf_path)
 
@@ -413,7 +498,7 @@ def report_agent(state: State):
 
     resp = gemini_call(prompt, thinking_level="low")
     state.report_md = resp["generations"][0]["text"]
-    state.report_pdf = render_pdf(state.report_md)
+    state.report_pdf = None
     return state
 
 # ----------------- Compile Graph -----------------

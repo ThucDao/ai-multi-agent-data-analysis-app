@@ -17,21 +17,22 @@ Here is a summary of the files created and modifications made.
 ### 2. Multi-Agent Backend
 * **Created** backend/agent_workflow.py: Adapts the LangGraph multi-agent architecture from the notebook.
   * Dynamically binds `genai.Client` and registers either `gemini-3.5-flash` (Free Tier) or `gemini-3.1-pro-preview` (Paid Tier).
-  * Implements `register_status_callback` to emit real-time execution progress updates from within agent nodes (`profiler`, `code_writer`, `executor`, `insights`, `report`).
+  * Implements `register_status_callback` to emit progress updates.
+  * **On-Demand PDF Rendering**: Refactored the workflow to output only Markdown. Added the PDF layout compiler functions for both `xhtml2pdf` (Default / Pure Python / Portable) and `weasyprint` (High Fidelity / System dependent).
 * **Created** backend/main.py: Sets up the FastAPI server.
-  * Serves REST API endpoints for secure credentials, CSV uploads, thread-isolated workflow execution, status polling, and desktop-level PDF opening.
-  * Implements user-friendly error translations for API quota, invalid keys, or OS-level library issues.
-  * Spawns a background thread to launch the default browser targeting `http://localhost:8000` 1.5 seconds after boot.
+  * Serves REST API endpoints for secure credentials, CSV uploads, workflow runs, on-demand PDF compilation, and desktop PDF opening.
+  * Spawns a background thread to launch the default browser targeting `http://localhost:8000` on startup.
 
 ### 3. Glassmorphic User Interface
 * **Created** frontend/index.html: Constructs a responsive single-page layout with clear segmentation:
   1. API configuration (tier toggles and masked API inputs).
-  2. Dataset importer (Browse button with drag/drop upload target).
-  3. Live workflow agent cards that glow and transition states dynamically.
-  4. Real-time console showing terminal logging lines.
-  5. Post-run actions (Open LangSmith, navigation guides, Markdown toggle viewer, click-to-open PDF link).
+  2. Dataset importer & Export Location picker.
+  3. PDF Rendering Engine segment buttons with description text toggles (`xhtml2pdf` vs `WeasyPrint`).
+  4. Live workflow agent cards that glow and transition states dynamically.
+  5. Real-time console showing terminal logging lines.
+  6. Post-run actions (Open LangSmith, navigation guides, Markdown toggle viewer, and "Export to PDF" button).
 * **Created** frontend/styles.css: Premium design theme featuring high-end dark backgrounds, neon glowing overlays, custom Outfit/Inter typography, responsive media queries, and click scaling micro-animations.
-* **Created** frontend/app.js: Controls state transitions, handles files/creds posts, runs polling hooks, and interacts with system utilities.
+* **Created** frontend/app.js: Controls state transitions, handles files/creds posts, runs polling hooks, selects PDF engines, triggers on-demand PDF rendering requests, and interacts with system utilities.
 
 ### 4. Cross-Platform Double-Click Launchers
 * **Created** run.bat: Shell script for Windows that automates virtual environment creation (`.venv`), activating, dependency installs, and launching the server.
