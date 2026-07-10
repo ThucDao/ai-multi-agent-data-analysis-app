@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Multi-Agent Data Analysis Studio</title>
+  <!-- Google Fonts for Modern Premium Look -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+  <!-- Link Stylesheet -->
+  <link rel="stylesheet" href="/frontend/styles.css">
+</head>
+<body>
+
+  <!-- Background Gradients -->
+  <div class="bg-glow bg-glow-1"></div>
+  <div class="bg-glow bg-glow-2"></div>
+
+  <div class="container">
+    <!-- Header -->
+    <header class="app-header">
+      <h1 class="gradient-text">AI Multi-Agent Data Analysis Studio</h1>
+      <p class="subtitle">Orchestrate Gemini-powered agents to profile, visualize, and generate insights from your data in seconds.</p>
+    </header>
+
+    <div class="app-layout">
+      <!-- Left Column: Controls & Configuration -->
+      <section class="control-panel">
+        
+        <!-- API Credentials Card -->
+        <div class="glass-card">
+          <div class="card-header">
+            <span class="icon">🔑</span>
+            <h2>API Configuration</h2>
+          </div>
+          
+          <div class="form-group">
+            <label>Select Execution Tier</label>
+            <div class="segment-control">
+              <button type="button" id="tier-free" class="segment-btn active" onclick="selectTier('free')">
+                Free Tier <span>(gemini-3.5-flash)</span>
+              </button>
+              <button type="button" id="tier-paid" class="segment-btn" onclick="selectTier('paid')">
+                Paid Tier <span>(gemini-3.1-pro-preview)</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="gemini-key">Gemini API Key</label>
+            <div class="input-container">
+              <input type="password" id="gemini-key" placeholder="Enter Gemini API key...">
+              <span class="status-badge" id="gemini-status">Not Saved</span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="langsmith-key">LangSmith API Key</label>
+            <div class="input-container">
+              <input type="password" id="langsmith-key" placeholder="Enter LangSmith API key...">
+              <span class="status-badge" id="langsmith-status">Not Saved</span>
+            </div>
+          </div>
+
+          <button id="save-creds-btn" class="btn btn-secondary" onclick="saveCreds()">
+            Save Credentials Securely
+          </button>
+          
+          <p class="creds-hint">Keys are saved locally in your user folder and will never be exposed in the UI after saving.</p>
+        </div>
+
+        <!-- File Upload Card -->
+        <div class="glass-card mt-4">
+          <div class="card-header">
+            <span class="icon">📊</span>
+            <h2>Import Dataset</h2>
+          </div>
+          
+          <div class="form-group">
+            <label>Select CSV Document</label>
+            <div class="file-picker-container">
+              <input type="text" id="csv-file-name" placeholder="No file selected..." readonly>
+              <button type="button" class="btn btn-secondary" onclick="triggerFilePicker()">Browse</button>
+              <input type="file" id="csv-file-input" accept=".csv" style="display: none;" onchange="handleFileChange(event)">
+            </div>
+            <p class="field-info">Upload strictly 1 CSV data file.</p>
+          </div>
+
+          <button id="start-analysis-btn" class="btn btn-primary" onclick="startAnalysis()" disabled>
+            Start Multi-Agent Analysis
+          </button>
+        </div>
+
+      </section>
+
+      <!-- Right Column: Progress & Results -->
+      <section class="results-panel">
+        
+        <!-- Live Workflow Progress Card -->
+        <div id="progress-card" class="glass-card" style="display: none;">
+          <div class="card-header">
+            <span class="icon progress-spinner" id="workflow-spinner">⏳</span>
+            <h2>Agent Execution Logs</h2>
+          </div>
+
+          <!-- Agent Checklist UI -->
+          <div class="agent-grid">
+            <div class="agent-node" id="node-profiler">
+              <div class="node-indicator"></div>
+              <div class="node-details">
+                <h3>Data Profiler</h3>
+                <p>Profiles columns & structures</p>
+              </div>
+            </div>
+            <div class="agent-node" id="node-code_writer">
+              <div class="node-indicator"></div>
+              <div class="node-details">
+                <h3>Code Writer</h3>
+                <p>Generates matplotlib code</p>
+              </div>
+            </div>
+            <div class="agent-node" id="node-executor">
+              <div class="node-indicator"></div>
+              <div class="node-details">
+                <h3>Executor</h3>
+                <p>Runs python code safely</p>
+              </div>
+            </div>
+            <div class="agent-node" id="node-insights">
+              <div class="node-indicator"></div>
+              <div class="node-details">
+                <h3>Insights Writer</h3>
+                <p>Synthesizes metrics & charts</p>
+              </div>
+            </div>
+            <div class="agent-node" id="node-report">
+              <div class="node-indicator"></div>
+              <div class="node-details">
+                <h3>PDF Builder</h3>
+                <p>Generates final reports</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Console log output -->
+          <div class="console-log">
+            <div class="console-header">
+              <span>Terminal stdout</span>
+              <span class="terminal-dots"><span></span><span></span><span></span></span>
+            </div>
+            <div id="console-body" class="console-body">
+              <div class="log-line system-msg">Workflow idle. Ready to analyze.</div>
+            </div>
+          </div>
+
+          <!-- Error Alert Banner -->
+          <div id="error-alert" class="error-alert-banner" style="display: none;">
+            <div class="error-icon">❌</div>
+            <div class="error-message">
+              <h3>Execution Halted</h3>
+              <p id="error-text">An unknown error occurred during execution.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Final Results & Reports Card -->
+        <div id="results-card" class="glass-card mt-4" style="display: none;">
+          <div class="card-header">
+            <span class="icon">🏆</span>
+            <h2>Analysis Summary</h2>
+          </div>
+
+          <!-- LangSmith Dashboard Prompt -->
+          <div class="action-highlight-box">
+            <div class="box-info">
+              <h3>Review Detailed Traces</h3>
+              <p>You can inspect the reasoning flow, LLM prompt templates, and execution speed inside the LangSmith trace graph dashboard.</p>
+            </div>
+            <button class="btn btn-secondary icon-btn" onclick="openLangSmith()">
+              🚀 Open LangSmith Dashboard
+            </button>
+          </div>
+
+          <div class="langsmith-guide">
+            <h4>How to navigate in LangSmith:</h4>
+            <ol>
+              <li>Log in to your LangSmith console with your active credentials.</li>
+              <li>Click on the <strong>Projects</strong> tab on the left sidebar.</li>
+              <li>Select the project named <strong>auto-data-analysis</strong>.</li>
+              <li>Click on the latest run thread to expand the full agent cascade (Waterfall View). You can click on individual nodes to review the input prompts and output responses for each agent.</li>
+            </ol>
+          </div>
+
+          <!-- PDF Highlight Line -->
+          <div class="pdf-highlight-line" onclick="openPDF()">
+            <span class="pdf-icon">📄</span>
+            <div class="pdf-text">
+              <strong>Open Polished PDF Report</strong>
+              <span>Click to view the publication-ready PDF containing generated visualization figures and formatted insights.</span>
+            </div>
+            <span class="pdf-arrow">➔</span>
+          </div>
+
+          <!-- Markdown Report Toggle -->
+          <div class="markdown-toggle-header">
+            <h2>Markdown Findings Report</h2>
+            <button id="toggle-md-btn" class="btn btn-secondary btn-sm" onclick="toggleMarkdownReport()">
+              Show Markdown Report
+            </button>
+          </div>
+
+          <!-- Markdown Report Container -->
+          <div id="markdown-viewer-container" class="markdown-container" style="display: none;">
+            <div id="markdown-body" class="markdown-body">
+              <!-- Rendered markdown inserts here -->
+            </div>
+          </div>
+
+        </div>
+
+      </section>
+    </div>
+  </div>
+
+  <!-- Include App Logic script -->
+  <script src="/frontend/app.js"></script>
+</body>
+</html>

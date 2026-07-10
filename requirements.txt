@@ -1,0 +1,14 @@
+google-genai
+langgraph
+langsmith
+pydantic
+pandas
+matplotlib
+markdown2
+weasyprint
+markdown-it-py
+mdit-py-plugins
+fastapi
+uvicorn
+python-multipart
+grandalf
