@@ -36,6 +36,7 @@ Here is a summary of the files created and modifications made.
 ### 4. Cross-Platform Double-Click Launchers
 * **Created** run.bat: Shell script for Windows that automates virtual environment creation (`.venv`), activating, dependency installs, and launching the server.
 * **Created** run.sh: Shell launcher equivalent for macOS and Linux.
+* **Created** launcher.py: Root-level entry script that programmatically initializes the uvicorn server. Serves as the entry point for PyInstaller so that relative package imports (like backend.config) resolve correctly in the compiled bundle.
 * **Optimization**: Includes age-comparison caching. It checks if requirements.txt is newer than a sentinel installation token (.venv\sentinel). If no modifications were made, it skips the pip install check completely to reduce startup times.
 
 ---
