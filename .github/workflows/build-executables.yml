@@ -14,8 +14,9 @@ jobs:
     name: Build on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
+      fail-fast: false
       matrix:
-        os: [ubuntu-22.04, macos-14, windows-2022]
+        os: [ubuntu-22.04, macos-14, windows-latest]
         include:
           - os: ubuntu-22.04
             artifact_name: DataAnalysisStudio-linux
@@ -23,7 +24,7 @@ jobs:
           - os: macos-14
             artifact_name: DataAnalysisStudio-macos
             pyinstaller_args: --add-data "frontend:frontend"
-          - os: windows-2022
+          - os: windows-latest
             artifact_name: DataAnalysisStudio-windows.exe
             pyinstaller_args: --add-data "frontend;frontend"
 
