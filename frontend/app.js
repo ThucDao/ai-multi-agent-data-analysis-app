@@ -250,7 +250,10 @@ async function startAnalysis() {
   // Toggle flags
   isAnalyzing = true;
   startBtn.disabled = true;
-  document.getElementById('save-creds-btn').disabled = true;
+  
+  // Update layout and button states
+  document.getElementById('app-layout').classList.remove('no-results');
+  setCredentialsButtonsDisabled(true);
   
   // UI setups
   progressCard.style.display = 'block';
@@ -311,7 +314,7 @@ async function pollStatus() {
       pollInterval = null;
       isAnalyzing = false;
       startBtn.disabled = false;
-      document.getElementById('save-creds-btn').disabled = false;
+      setCredentialsButtonsDisabled(false);
       workflowSpinner.classList.remove('progress-spinner');
 
       if (status.completed) {
@@ -407,7 +410,7 @@ function handleHaltState(friendlyError) {
   pollInterval = null;
   isAnalyzing = false;
   startBtn.disabled = false;
-  document.getElementById('save-creds-btn').disabled = false;
+  setCredentialsButtonsDisabled(false);
   workflowSpinner.classList.remove('progress-spinner');
 
   // Mark currently active node as idle/failed
@@ -520,4 +523,14 @@ async function openPDF() {
 // LangSmith dashboard trigger
 function openLangSmith() {
   window.open('https://smith.langchain.com/', '_blank');
+}
+
+// Enable/Disable credentials buttons during analysis runs
+function setCredentialsButtonsDisabled(disabled) {
+  const savePermBtn = document.getElementById('save-creds-perm-btn');
+  const saveTempBtn = document.getElementById('save-creds-temp-btn');
+  const clearBtn = document.getElementById('clear-creds-btn');
+  if (savePermBtn) savePermBtn.disabled = disabled;
+  if (saveTempBtn) saveTempBtn.disabled = disabled;
+  if (clearBtn) clearBtn.disabled = disabled;
 }

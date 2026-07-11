@@ -118,7 +118,22 @@ body {
   display: grid;
   grid-template-columns: 1fr;
   gap: 2rem;
-  align-items: start;
+  margin-top: 1rem;
+}
+
+/* Layout Centering when no results are shown */
+.app-layout.no-results {
+  display: flex;
+  justify-content: center;
+}
+
+.app-layout.no-results > .control-panel {
+  max-width: 600px;
+  width: 100%;
+}
+
+.app-layout.no-results > .results-panel {
+  display: none;
 }
 
 /* Glassmorphism Cards */
