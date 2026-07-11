@@ -89,20 +89,26 @@ function updateCredentialsBadges(status) {
     geminiStatus.textContent = badgeText;
     geminiStatus.classList.add('configured');
     geminiInput.placeholder = '••••••••••••••••';
+    geminiInput.disabled = true;
+    geminiInput.value = '';
   } else {
     geminiStatus.textContent = 'Not Saved';
     geminiStatus.classList.remove('configured');
     geminiInput.placeholder = 'Enter Gemini API key...';
+    geminiInput.disabled = false;
   }
 
   if (status.langsmith_configured) {
     langsmithStatus.textContent = badgeText;
     langsmithStatus.classList.add('configured');
     langsmithInput.placeholder = '••••••••••••••••';
+    langsmithInput.disabled = true;
+    langsmithInput.value = '';
   } else {
     langsmithStatus.textContent = 'Not Saved';
     langsmithStatus.classList.remove('configured');
     langsmithInput.placeholder = 'Enter LangSmith API key...';
+    langsmithInput.disabled = false;
   }
 
   // Toggle "Clear Saved Keys" and Save buttons visibility based on configuration status
@@ -316,7 +322,6 @@ async function startAnalysis() {
   }
 }
 
-// Timer update function
 function updateTimer() {
   if (!startTime) return;
   const elapsedMs = Date.now() - startTime;
@@ -328,9 +333,14 @@ function updateTimer() {
 
   const pad = (num) => String(num).padStart(2, '0');
 
-  const timerEl = document.getElementById('execution-timer');
-  if (timerEl) {
-    timerEl.textContent = `Elapsed time:  ${pad(hrs)} : ${pad(mins)} : ${pad(secs)}`;
+  const timerValEl = document.querySelector('#execution-timer .timer-value');
+  if (timerValEl) {
+    timerValEl.textContent = `${pad(hrs)} : ${pad(mins)} : ${pad(secs)}`;
+  } else {
+    const timerEl = document.getElementById('execution-timer');
+    if (timerEl) {
+      timerEl.textContent = `Elapsed time:  ${pad(hrs)} : ${pad(mins)} : ${pad(secs)}`;
+    }
   }
 }
 

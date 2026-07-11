@@ -13,8 +13,8 @@
   --color-success-glow: rgba(21, 128, 61, 0.15);
   --color-error: #be123c; /* Rose Red */
   --color-error-glow: rgba(190, 18, 60, 0.15);
-  --color-active: #0369a1; /* Ocean Blue */
-  --color-active-glow: rgba(3, 105, 161, 0.15);
+  --color-active: #16a34a; /* Vibrant Green */
+  --color-active-glow: rgba(22, 163, 74, 0.15);
   
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --font-header: 'Outfit', sans-serif;
@@ -362,14 +362,22 @@ input[type="text"]:focus {
 }
 
 .btn-secondary {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid var(--border-color);
+  background: rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(0, 0, 0, 0.12);
   color: var(--text-main);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
 .btn-secondary:hover:not(:disabled) {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.2);
+  background: rgba(0, 0, 0, 0.12);
+  border-color: rgba(0, 0, 0, 0.18);
+}
+
+.btn-secondary:active:not(:disabled) {
+  background: rgba(0, 0, 0, 0.18);
+  border-color: rgba(0, 0, 0, 0.24);
+  transform: translateY(1px) scale(0.98);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .btn-danger-style {
@@ -460,7 +468,7 @@ input[type="text"]:focus {
 .agent-node.active {
   border-color: var(--color-active);
   box-shadow: 0 0 15px 0 var(--color-active-glow);
-  background: rgba(6, 182, 212, 0.05);
+  background: rgba(22, 163, 74, 0.05);
 }
 
 .agent-node.active .node-indicator {
@@ -475,8 +483,22 @@ input[type="text"]:focus {
 }
 
 .agent-node.completed .node-indicator {
-  background: var(--color-success);
-  box-shadow: 0 0 8px 1px var(--color-success);
+  background: transparent;
+  box-shadow: none;
+  border-radius: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  height: 14px;
+}
+
+.agent-node.completed .node-indicator::after {
+  content: '✓';
+  color: var(--color-success);
+  font-size: 1.2rem;
+  font-weight: 800;
+  line-height: 1;
 }
 
 @keyframes pulseIndicator {
@@ -852,9 +874,35 @@ input[type="text"]:focus {
 
 .timer-display {
   margin-left: auto;
-  font-family: var(--font-mono);
-  font-size: 0.85rem;
+  font-family: var(--font-header);
+  font-size: 1.35rem;
   color: var(--text-muted);
   font-weight: 600;
+  letter-spacing: -0.01em;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
   white-space: nowrap;
+}
+
+@media (min-width: 1024px) {
+  .agent-grid {
+    grid-template-columns: repeat(5, 1fr) !important;
+  }
+}
+
+@media (max-width: 767px) {
+  .card-header {
+    flex-wrap: wrap;
+    gap: 0.5rem 1rem;
+  }
+  
+  .timer-display {
+    width: 100%;
+    margin-left: 0;
+    margin-top: 0.25rem;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+  }
 }

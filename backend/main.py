@@ -59,6 +59,16 @@ def open_browser():
 
 @app.on_event("startup")
 def on_startup():
+    # Clean up any leftover temporary credentials from a previous run
+    try:
+        from backend.config import clear_credentials
+        creds = load_credentials()
+        if creds.get("temporary"):
+            clear_credentials()
+            print("[INFO] Cleaned up temporary credentials from previous session on startup.")
+    except Exception as e:
+        print("[ERROR] Failed to clean up temporary credentials on startup:", e)
+
     # Start thread to open browser
     threading.Thread(target=open_browser, daemon=True).start()
 

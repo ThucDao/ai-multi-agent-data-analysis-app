@@ -58,6 +58,7 @@
               <input type="password" id="gemini-key" placeholder="Enter Gemini API key...">
               <span class="status-badge" id="gemini-status">Not Saved</span>
             </div>
+            <p class="field-info">Note: To use the Paid Tier, your Gemini API key must have billing set up already.</p>
           </div>
 
           <div class="form-group">
@@ -151,7 +152,10 @@
           <div class="card-header">
             <span class="icon progress-spinner" id="workflow-spinner">⏳</span>
             <h2>Agent Execution Logs</h2>
-            <span id="execution-timer" class="timer-display">Elapsed time:  00 : 00 : 00</span>
+            <span id="execution-timer" class="timer-display">
+              <span class="timer-label">Elapsed time:</span>
+              <span class="timer-value">00 : 00 : 00</span>
+            </span>
           </div>
 
           <!-- Agent Checklist UI -->
