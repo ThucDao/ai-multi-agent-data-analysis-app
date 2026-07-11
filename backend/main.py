@@ -122,18 +122,29 @@ def api_upload_csv(file: UploadFile = File(...)):
 
 @app.post("/api/select-export-directory")
 def api_select_export_directory():
-    """Pops up a native directory selector dialog on the host computer."""
+    """Pops up a native directory selector dialog on the host computer via a safe subprocess."""
     try:
-        import tkinter as tk
-        from tkinter import filedialog
+        import subprocess
+        exe = sys.executable
         
-        root = tk.Tk()
-        root.withdraw()
-        root.attributes("-topmost", True)
+        if getattr(sys, "frozen", False):
+            cmd = [exe, "--pick-folder"]
+        else:
+            cmd = [exe, get_resource_path("launcher.py"), "--pick-folder"]
+            
+        creationflags = 0
+        if platform.system() == "Windows":
+            creationflags = 0x08000000  # CREATE_NO_WINDOW
+            
+        result = subprocess.run(
+            cmd,
+            capture_output=True,
+            text=True,
+            creationflags=creationflags,
+            check=True
+        )
         
-        selected_dir = filedialog.askdirectory(title="Select Export Directory")
-        root.destroy()
-        
+        selected_dir = result.stdout.strip()
         if selected_dir:
             return {"status": "success", "directory": selected_dir}
         else:

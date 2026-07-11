@@ -1,6 +1,23 @@
 import sys
 import os
 import io
+
+if __name__ == "__main__":
+    if len(sys.argv) > 1 and sys.argv[1] == "--pick-folder":
+        import tkinter as tk
+        from tkinter import filedialog
+        root = tk.Tk()
+        root.withdraw()
+        root.attributes("-topmost", True)
+        selected_dir = filedialog.askdirectory(title="Select Export Directory")
+        root.destroy()
+        if sys.__stdout__:
+            sys.__stdout__.write(selected_dir + "\n")
+            sys.__stdout__.flush()
+        else:
+            print(selected_dir)
+        sys.exit(0)
+
 import uvicorn
 
 # Redirect stdout/stderr if None (common in PyInstaller --noconsole mode on Windows)
