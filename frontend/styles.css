@@ -35,7 +35,7 @@
 }
 
 body {
-  background: linear-gradient(135deg, #f0fdf4 0%, #ecfeff 50%, #f0f9ff 100%);
+  background: linear-gradient(135deg, #c6f6d5 0%, #b2f5ea 50%, #bee3f8 100%);
   background-attachment: fixed;
   color: var(--text-main);
   font-family: var(--font-sans);
@@ -241,7 +241,7 @@ input[type="text"]:focus {
 /* Segment controls for Tiers */
 .segment-control {
   display: flex;
-  background: rgba(255, 255, 255, 0.5);
+  background: rgba(0, 0, 0, 0.05);
   border: 1px solid var(--border-color);
   padding: 4px;
   border-radius: var(--radius-sm);
@@ -271,17 +271,28 @@ input[type="text"]:focus {
 }
 
 .segment-btn.active {
-  background: rgba(255, 255, 255, 1);
-  color: var(--color-primary);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
-}
-
-#tier-paid.active {
-  color: var(--color-primary);
+  color: #ffffff !important;
+  font-weight: 600;
 }
 
 #tier-free.active {
-  color: var(--color-accent);
+  background: var(--color-accent);
+  box-shadow: 0 2px 8px rgba(2, 132, 199, 0.25);
+}
+
+#tier-paid.active {
+  background: var(--color-primary);
+  box-shadow: 0 2px 8px rgba(13, 148, 136, 0.25);
+}
+
+#engine-xhtml2pdf.active {
+  background: var(--color-primary);
+  box-shadow: 0 2px 8px rgba(13, 148, 136, 0.25);
+}
+
+#engine-weasyprint.active {
+  background: var(--color-accent);
+  box-shadow: 0 2px 8px rgba(2, 132, 199, 0.25);
 }
 
 /* File Picker UI */
