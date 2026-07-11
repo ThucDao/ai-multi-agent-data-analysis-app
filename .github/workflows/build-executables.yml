@@ -19,13 +19,13 @@ jobs:
         os: [ubuntu-22.04, macos-14, windows-latest]
         include:
           - os: ubuntu-22.04
-            artifact_name: DataAnalysisStudio-linux
+            artifact_name: AI-DataAnalysisApp-linux
             pyinstaller_args: --add-data "frontend:frontend"
           - os: macos-14
-            artifact_name: DataAnalysisStudio-macos
+            artifact_name: AI-DataAnalysisApp-macos
             pyinstaller_args: --add-data "frontend:frontend"
           - os: windows-latest
-            artifact_name: DataAnalysisStudio-windows.exe
+            artifact_name: AI-DataAnalysisApp-windows.exe
             pyinstaller_args: --add-data "frontend;frontend"
 
     steps:
@@ -46,17 +46,17 @@ jobs:
 
       - name: Build executable with PyInstaller
         run: |
-          pyinstaller --onefile --noconsole ${{ matrix.pyinstaller_args }} --name "DataAnalysisStudio" launcher.py
+          pyinstaller --onefile --noconsole ${{ matrix.pyinstaller_args }} --name "AI-DataAnalysisApp" launcher.py
 
       - name: Rename executable on Unix (non-Windows)
         if: matrix.os != 'windows-latest'
         run: |
-          mv dist/DataAnalysisStudio dist/${{ matrix.artifact_name }}
+          mv dist/AI-DataAnalysisApp dist/${{ matrix.artifact_name }}
 
       - name: Rename executable on Windows
         if: matrix.os == 'windows-latest'
         run: |
-          mv dist/DataAnalysisStudio.exe dist/${{ matrix.artifact_name }}
+          mv dist/AI-DataAnalysisApp.exe dist/${{ matrix.artifact_name }}
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
@@ -82,8 +82,8 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           files: |
-            artifacts/DataAnalysisStudio-windows.exe/DataAnalysisStudio-windows.exe
-            artifacts/DataAnalysisStudio-macos/DataAnalysisStudio-macos
-            artifacts/DataAnalysisStudio-linux/DataAnalysisStudio-linux
+            artifacts/AI-DataAnalysisApp-windows.exe/AI-DataAnalysisApp-windows.exe
+            artifacts/AI-DataAnalysisApp-macos/AI-DataAnalysisApp-macos
+            artifacts/AI-DataAnalysisApp-linux/AI-DataAnalysisApp-linux
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -1,8 +1,8 @@
 @echo off
-title AI Multi-Agent Data Analysis Studio Launcher
+title AI Multi-Agent Data Analysis App Launcher
 
 echo =======================================================
-echo   AI Multi-Agent Data Analysis Studio Launcher (Windows)
+echo   AI Multi-Agent Data Analysis App Launcher (Windows)
 echo =======================================================
 echo.
 

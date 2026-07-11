@@ -21,7 +21,7 @@ from mdit_py_plugins.footnote import footnote_plugin
 # Configuration globals
 client = None
 MODEL = "gemini-3.5-flash"
-ARTIFACTS_DIR = Path("artifacts")
+ARTIFACTS_DIR = Path("da_artifacts")
 
 # Callback to report progress to the backend web server
 _status_callback: Callable[[str, str, str | None], None] = None
@@ -201,7 +201,8 @@ def render_pdf_xhtml2pdf(markdown_text: str, pdf_path: Path):
     # Callback to resolve relative image path references from html (e.g. "artifacts/chart...")
     def link_callback(uri, rel):
         if uri.startswith("artifacts/"):
-            return os.path.abspath(uri)
+            local_path = ARTIFACTS_DIR / uri.replace("artifacts/", "", 1)
+            return os.path.abspath(str(local_path))
         return uri
 
     with open(pdf_path, "wb") as pdf_file:
@@ -280,8 +281,12 @@ def render_pdf_weasyprint(markdown_text: str, pdf_path: Path):
     </html>
     """
 
+    # Translate virtual image src "artifacts/..." to filesystem absolute paths
+    abs_artifacts_path = str(ARTIFACTS_DIR.resolve()).replace("\\", "/")
+    resolved_html = html_template.replace('src="artifacts/', f'src="{abs_artifacts_path}/').replace("src='artifacts/", f"src='{abs_artifacts_path}/")
+
     weasyprint.HTML(
-        string=html_template,
+        string=resolved_html,
         base_url=str(ARTIFACTS_DIR.parent.resolve())
     ).write_pdf(str(pdf_path))
 

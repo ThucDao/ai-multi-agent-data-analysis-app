@@ -1,8 +1,8 @@
 #!/bin/bash
 
-# AI Multi-Agent Data Analysis Studio Launcher (Mac/Linux)
+# AI Multi-Agent Data Analysis App Launcher (Mac/Linux)
 echo "======================================================="
-echo "  AI Multi-Agent Data Analysis Studio Launcher (Unix)"
+echo "  AI Multi-Agent Data Analysis App Launcher (Unix)"
 echo "======================================================="
 echo ""
 
