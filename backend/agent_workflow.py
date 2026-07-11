@@ -539,8 +539,8 @@ def run_agent_workflow(dataset_path: str) -> dict:
     initial_state = State(dataset_path=dataset_path)
     final_state = graph.invoke(initial_state)
     return {
-        "report_md": final_state.report_md,
-        "report_pdf": final_state.report_pdf,
-        "ok": final_state.exec_result.get("ok", False) if final_state.exec_result else False,
-        "last_error": final_state.last_error
+        "report_md": final_state.get("report_md"),
+        "report_pdf": final_state.get("report_pdf"),
+        "ok": final_state.get("exec_result", {}).get("ok", False) if final_state.get("exec_result") else False,
+        "last_error": final_state.get("last_error")
     }
