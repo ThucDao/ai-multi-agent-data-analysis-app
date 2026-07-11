@@ -59,11 +59,11 @@ function selectEngine(engine) {
   if (engine === 'xhtml2pdf') {
     xhtmlBtn.classList.add('active');
     weasyBtn.classList.remove('active');
-    descEl.innerHTML = '<strong>xhtml2pdf</strong>: Runs completely in Python. Zero native OS setup required. Works instantly on any machine.';
+    descEl.innerHTML = '<strong>xhtml2pdf</strong>:<br>Runs completely in Python.<br>Zero native OS setup required.<br>Works instantly on any machine.';
   } else {
     weasyBtn.classList.add('active');
     xhtmlBtn.classList.remove('active');
-    descEl.innerHTML = '<strong>WeasyPrint</strong>: High-fidelity CSS3/HTML5 printer engine. Requires GTK+ and Pango installed on your operating system.';
+    descEl.innerHTML = '<strong>WeasyPrint</strong>:<br>High-fidelity CSS3/HTML5 printer engine.<br>Requires GTK+ and Pango installed on your operating system.';
   }
 }
 
@@ -82,12 +82,11 @@ async function checkCredentials() {
 function updateCredentialsBadges(status) {
   const isTemp = status.temporary;
   const badgeText = isTemp ? 'Temporary' : 'Saved';
-  const placeholderSuffix = isTemp ? ' (Temporary)' : ' (Saved)';
 
   if (status.gemini_configured) {
     geminiStatus.textContent = badgeText;
     geminiStatus.classList.add('configured');
-    geminiInput.placeholder = `••••••••••••••••${placeholderSuffix}`;
+    geminiInput.placeholder = '••••••••••••••••';
   } else {
     geminiStatus.textContent = 'Not Saved';
     geminiStatus.classList.remove('configured');
@@ -97,19 +96,26 @@ function updateCredentialsBadges(status) {
   if (status.langsmith_configured) {
     langsmithStatus.textContent = badgeText;
     langsmithStatus.classList.add('configured');
-    langsmithInput.placeholder = `••••••••••••••••${placeholderSuffix}`;
+    langsmithInput.placeholder = '••••••••••••••••';
   } else {
     langsmithStatus.textContent = 'Not Saved';
     langsmithStatus.classList.remove('configured');
     langsmithInput.placeholder = 'Enter LangSmith API key...';
   }
 
-  // Toggle "Clear Saved Keys" button based on configuration status
+  // Toggle "Clear Saved Keys" and Save buttons visibility based on configuration status
   const clearBtn = document.getElementById('clear-creds-btn');
+  const saveRow = document.querySelector('.creds-btn-row');
+  const hintEl = document.querySelector('.creds-hint');
+  
   if (status.gemini_configured || status.langsmith_configured) {
-    clearBtn.style.display = 'block';
+    if (clearBtn) clearBtn.style.display = 'block';
+    if (saveRow) saveRow.style.display = 'none';
+    if (hintEl) hintEl.style.display = 'none';
   } else {
-    clearBtn.style.display = 'none';
+    if (clearBtn) clearBtn.style.display = 'none';
+    if (saveRow) saveRow.style.display = 'flex';
+    if (hintEl) hintEl.style.display = 'block';
   }
 }
 

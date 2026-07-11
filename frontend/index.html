@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,10 +8,13 @@
   <!-- Google Fonts for Modern Premium Look -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap"
+    rel="stylesheet">
   <!-- Link Stylesheet -->
   <link rel="stylesheet" href="/frontend/styles.css">
 </head>
+
 <body>
 
   <!-- Background Gradients -->
@@ -21,20 +25,21 @@
     <!-- Header -->
     <header class="app-header">
       <h1 class="gradient-text">AI Multi-Agent Data Analysis Studio</h1>
-      <p class="subtitle">Orchestrate Gemini-powered agents to profile, visualize, and generate insights from your data in seconds.</p>
+      <p class="subtitle">Orchestrate Gemini-powered agents to profile, visualize, and generate insights from data in
+        seconds.</p>
     </header>
 
     <div id="app-layout" class="app-layout no-results">
       <!-- Left Column: Controls & Configuration -->
       <section class="control-panel">
-        
+
         <!-- API Credentials Card -->
         <div class="glass-card">
           <div class="card-header">
             <span class="icon">🔑</span>
             <h2>API Configuration</h2>
           </div>
-          
+
           <div class="form-group">
             <label>Select Execution Tier</label>
             <div class="segment-control">
@@ -64,20 +69,24 @@
           </div>
 
           <div class="creds-btn-container">
-            <button id="save-creds-perm-btn" class="btn btn-secondary" onclick="saveCreds(false)">
-              Save Permanently
-            </button>
-            <button id="save-creds-temp-btn" class="btn btn-secondary" onclick="saveCreds(true)">
-              Save Temporarily (This Session)
-            </button>
-            <button id="clear-creds-btn" class="btn btn-secondary btn-danger-style" onclick="clearCreds()" style="display: none;">
+            <div class="creds-btn-row">
+              <button id="save-creds-perm-btn" class="btn btn-secondary" onclick="saveCreds(false)">
+                Save Permanently
+              </button>
+              <button id="save-creds-temp-btn" class="btn btn-secondary" onclick="saveCreds(true)">
+                Save Temporarily
+              </button>
+            </div>
+            <button id="clear-creds-btn" class="btn btn-secondary btn-danger-style" onclick="clearCreds()"
+              style="display: none;">
               Clear Saved Keys
             </button>
           </div>
-          
+
           <p class="creds-hint">
-            <strong>Permanent</strong> saves keys to your home user folder for future runs.
-            <strong>Temporary</strong> keeps keys active for this session only; they are erased from the config file when the app closes.
+            <strong>Permanent</strong> saves keys to your home user folder for future runs.<br>
+            <strong>Temporary</strong> keeps keys active for this session only; they are erased from the config file
+            when the app closes.
           </p>
         </div>
 
@@ -87,19 +96,20 @@
             <span class="icon">📊</span>
             <h2>Import Dataset</h2>
           </div>
-          
+
           <div class="form-group">
-            <label>Select CSV Document</label>
+            <label>Select CSV File</label>
             <div class="file-picker-container">
               <input type="text" id="csv-file-name" placeholder="No file selected..." readonly>
               <button type="button" class="btn btn-secondary" onclick="triggerFilePicker()">Browse</button>
-              <input type="file" id="csv-file-input" accept=".csv" style="display: none;" onchange="handleFileChange(event)">
+              <input type="file" id="csv-file-input" accept=".csv" style="display: none;"
+                onchange="handleFileChange(event)">
             </div>
-            <p class="field-info">Upload strictly 1 CSV data file.</p>
+            <p class="field-info">Upload strictly 1 CSV file.</p>
           </div>
 
           <div class="form-group">
-            <label for="export-location">Export Directory (Optional)</label>
+            <label for="export-location">Export Directory</label>
             <div class="file-picker-container">
               <input type="text" id="export-location" placeholder="Select folder to save PDF & MD reports...">
               <button type="button" class="btn btn-secondary" onclick="browseExportLocation()">Browse</button>
@@ -110,7 +120,8 @@
           <div class="form-group">
             <label>PDF Rendering Engine</label>
             <div class="segment-control">
-              <button type="button" id="engine-xhtml2pdf" class="segment-btn active" onclick="selectEngine('xhtml2pdf')">
+              <button type="button" id="engine-xhtml2pdf" class="segment-btn active"
+                onclick="selectEngine('xhtml2pdf')">
                 xhtml2pdf <span>(Default / Portable)</span>
               </button>
               <button type="button" id="engine-weasyprint" class="segment-btn" onclick="selectEngine('weasyprint')">
@@ -118,7 +129,10 @@
               </button>
             </div>
             <p class="field-info" id="engine-desc">
-              <strong>xhtml2pdf</strong>: Runs completely in Python. Zero native OS setup required. Works instantly on any machine.
+              <strong>xhtml2pdf</strong>:<br>
+              Runs completely in Python.<br>
+              Zero native OS setup required.<br>
+              Works instantly on any machine.
             </p>
           </div>
 
@@ -131,7 +145,7 @@
 
       <!-- Right Column: Progress & Results -->
       <section class="results-panel">
-        
+
         <!-- Live Workflow Progress Card -->
         <div id="progress-card" class="glass-card" style="display: none;">
           <div class="card-header">
@@ -210,7 +224,8 @@
           <div class="action-highlight-box">
             <div class="box-info">
               <h3>Review Detailed Traces</h3>
-              <p>You can inspect the reasoning flow, LLM prompt templates, and execution speed inside the LangSmith trace graph dashboard.</p>
+              <p>You can inspect the reasoning flow, LLM prompt templates, and execution speed inside the LangSmith
+                trace graph dashboard.</p>
             </div>
             <button class="btn btn-secondary icon-btn" onclick="openLangSmith()">
               🚀 Open LangSmith Dashboard
@@ -223,7 +238,8 @@
               <li>Log in to your LangSmith console with your active credentials.</li>
               <li>Click on the <strong>Projects</strong> tab on the left sidebar.</li>
               <li>Select the project named <strong>auto-data-analysis</strong>.</li>
-              <li>Click on the latest run thread to expand the full agent cascade (Waterfall View). You can click on individual nodes to review the input prompts and output responses for each agent.</li>
+              <li>Click on the latest run thread to expand the full agent cascade (Waterfall View). You can click on
+                individual nodes to review the input prompts and output responses for each agent.</li>
             </ol>
           </div>
 
@@ -232,7 +248,8 @@
             <span class="pdf-icon" id="pdf-action-icon">📄</span>
             <div class="pdf-text">
               <strong id="pdf-action-title">Export to PDF</strong>
-              <span id="pdf-action-desc">Click to compile the publication-ready PDF using the selected engine and save/open it.</span>
+              <span id="pdf-action-desc">Click to compile the publication-ready PDF using the selected engine and
+                save/open it.</span>
             </div>
             <span class="pdf-arrow" id="pdf-action-arrow">➔</span>
           </div>
@@ -261,4 +278,5 @@
   <!-- Include App Logic script -->
   <script src="/frontend/app.js"></script>
 </body>
+
 </html>

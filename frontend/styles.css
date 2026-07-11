@@ -207,6 +207,10 @@ input[type="text"] {
   transition: all var(--transition-fast);
 }
 
+.input-container input {
+  padding-right: 6.5rem; /* Stop dots/text before reaching status badge */
+}
+
 input[type="password"]:focus,
 input[type="text"]:focus {
   border-color: var(--color-primary);
@@ -381,6 +385,16 @@ input[type="text"]:focus {
 
 .creds-btn-container .btn {
   width: 100%;
+}
+
+.creds-btn-row {
+  display: flex;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.creds-btn-row .btn {
+  flex: 1;
 }
 
 /* Grid spacing utility */
