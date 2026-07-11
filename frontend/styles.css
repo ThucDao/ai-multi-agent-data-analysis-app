@@ -1,20 +1,20 @@
 /* CSS Variables for design system tokens */
 :root {
-  --bg-primary: #0a0b14;
-  --bg-card: rgba(18, 22, 45, 0.7);
-  --border-color: rgba(255, 255, 255, 0.08);
-  --text-main: #e2e8f0;
-  --text-muted: #94a3b8;
-  --color-primary: #6366f1; /* Indigo */
-  --color-primary-glow: rgba(99, 102, 241, 0.3);
-  --color-accent: #a855f7; /* Violet */
-  --color-accent-glow: rgba(168, 85, 247, 0.3);
-  --color-success: #10b981; /* Emerald */
-  --color-success-glow: rgba(16, 185, 129, 0.2);
-  --color-error: #f43f5e; /* Rose */
-  --color-error-glow: rgba(244, 63, 94, 0.2);
-  --color-active: #06b6d4; /* Cyan */
-  --color-active-glow: rgba(6, 182, 212, 0.3);
+  --bg-primary: #f0fdf4; /* Mint green tint */
+  --bg-card: rgba(255, 255, 255, 0.75);
+  --border-color: rgba(0, 0, 0, 0.08);
+  --text-main: #1e293b; /* Dark Slate */
+  --text-muted: #475569; /* Slate 600 */
+  --color-primary: #0d9488; /* Teal */
+  --color-primary-glow: rgba(13, 148, 136, 0.15);
+  --color-accent: #0284c7; /* Sky Blue */
+  --color-accent-glow: rgba(2, 132, 199, 0.15);
+  --color-success: #15803d; /* Forest Green */
+  --color-success-glow: rgba(21, 128, 61, 0.15);
+  --color-error: #be123c; /* Rose Red */
+  --color-error-glow: rgba(190, 18, 60, 0.15);
+  --color-active: #0369a1; /* Ocean Blue */
+  --color-active-glow: rgba(3, 105, 161, 0.15);
   
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --font-header: 'Outfit', sans-serif;
@@ -35,7 +35,8 @@
 }
 
 body {
-  background-color: var(--bg-primary);
+  background: linear-gradient(135deg, #f0fdf4 0%, #ecfeff 50%, #f0f9ff 100%);
+  background-attachment: fixed;
   color: var(--text-main);
   font-family: var(--font-sans);
   min-height: 100vh;
@@ -98,7 +99,7 @@ body {
   font-weight: 800;
   font-size: 3rem;
   letter-spacing: -0.04em;
-  background: linear-gradient(135deg, #ffffff 0%, #a5b4fc 50%, #d8b4fe 100%);
+  background: linear-gradient(135deg, #0f172a 0%, #0d9488 50%, #0284c7 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -196,7 +197,7 @@ body {
 input[type="password"],
 input[type="text"] {
   width: 100%;
-  background: rgba(10, 11, 20, 0.8);
+  background: rgba(255, 255, 255, 0.95);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-sm);
   padding: 0.75rem 1rem;
@@ -240,7 +241,7 @@ input[type="text"]:focus {
 /* Segment controls for Tiers */
 .segment-control {
   display: flex;
-  background: rgba(10, 11, 20, 0.8);
+  background: rgba(255, 255, 255, 0.5);
   border: 1px solid var(--border-color);
   padding: 4px;
   border-radius: var(--radius-sm);
@@ -270,17 +271,17 @@ input[type="text"]:focus {
 }
 
 .segment-btn.active {
-  background: rgba(255, 255, 255, 0.08);
-  color: var(--text-main);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  background: rgba(255, 255, 255, 1);
+  color: var(--color-primary);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
 }
 
 #tier-paid.active {
-  color: #c084fc;
+  color: var(--color-primary);
 }
 
 #tier-free.active {
-  color: #38bdf8;
+  color: var(--color-accent);
 }
 
 /* File Picker UI */
@@ -411,7 +412,7 @@ input[type="text"]:focus {
 }
 
 .agent-node {
-  background: rgba(10, 11, 20, 0.5);
+  background: rgba(255, 255, 255, 0.45);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-sm);
   padding: 1rem;
@@ -486,16 +487,16 @@ input[type="text"]:focus {
 
 /* Console logs wrapper */
 .console-log {
-  background: #06070d;
+  background: rgba(248, 250, 252, 0.95);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-md);
   overflow: hidden;
   font-family: var(--font-mono);
-  box-shadow: inset 0 4px 20px rgba(0,0,0,0.5);
+  box-shadow: inset 0 2px 8px rgba(0,0,0,0.05);
 }
 
 .console-header {
-  background: rgba(255, 255, 255, 0.02);
+  background: rgba(0, 0, 0, 0.03);
   border-bottom: 1px solid var(--border-color);
   padding: 0.6rem 1.2rem;
   font-size: 0.75rem;
@@ -510,7 +511,7 @@ input[type="text"]:focus {
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: rgba(255,255,255,0.2);
+  background: rgba(0,0,0,0.15);
   margin-left: 4px;
 }
 
@@ -532,9 +533,9 @@ input[type="text"]:focus {
 }
 
 .log-line.system-msg { color: var(--text-muted); }
-.log-line.info-msg { color: #38bdf8; }
-.log-line.agent-msg { color: #c084fc; }
-.log-line.error-msg { color: #fda4af; }
+.log-line.info-msg { color: #0284c7; }
+.log-line.agent-msg { color: #7c3aed; }
+.log-line.error-msg { color: #be123c; }
 
 /* Scrollbar styling for console and viewer */
 .console-body::-webkit-scrollbar,
@@ -549,13 +550,13 @@ input[type="text"]:focus {
 
 .console-body::-webkit-scrollbar-thumb,
 .markdown-container::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.15);
   border-radius: 3px;
 }
 
 .console-body::-webkit-scrollbar-thumb:hover,
 .markdown-container::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(0, 0, 0, 0.25);
 }
 
 /* Error Alert Banner */
@@ -576,7 +577,7 @@ input[type="text"]:focus {
 
 .error-message h3 {
   font-size: 0.95rem;
-  color: #fda4af;
+  color: #be123c;
   margin-bottom: 2px;
   font-family: var(--font-header);
 }
@@ -605,7 +606,7 @@ input[type="text"]:focus {
   font-family: var(--font-header);
   font-size: 1.1rem;
   margin-bottom: 4px;
-  color: #fff;
+  color: var(--text-main);
 }
 
 .box-info p {
@@ -620,7 +621,7 @@ input[type="text"]:focus {
 }
 
 .langsmith-guide {
-  background: rgba(0, 0, 0, 0.2);
+  background: rgba(255, 255, 255, 0.4);
   border-radius: var(--radius-sm);
   padding: 1.2rem;
   border-left: 3px solid var(--color-primary);
@@ -680,7 +681,7 @@ input[type="text"]:focus {
 
 .pdf-text strong {
   font-size: 1.05rem;
-  color: #fff;
+  color: var(--text-main);
   font-family: var(--font-header);
 }
 
@@ -707,7 +708,7 @@ input[type="text"]:focus {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  border-top: 1px solid var(--border-color);
   padding-top: 1.5rem;
 }
 
@@ -719,13 +720,13 @@ input[type="text"]:focus {
 
 /* Markdown viewer box */
 .markdown-container {
-  background: rgba(10, 11, 20, 0.5);
+  background: rgba(255, 255, 255, 0.85);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-md);
   padding: 2rem;
   max-height: 600px;
   overflow-y: auto;
-  box-shadow: inset 0 4px 20px rgba(0,0,0,0.3);
+  box-shadow: inset 0 2px 10px rgba(0,0,0,0.02);
 }
 
 /* Beautiful structured report styling */
@@ -739,14 +740,14 @@ input[type="text"]:focus {
 .markdown-body h2,
 .markdown-body h3 {
   font-family: var(--font-header);
-  color: #fff;
+  color: var(--text-main);
   margin-top: 1.75rem;
   margin-bottom: 0.75rem;
   font-weight: 600;
   letter-spacing: -0.01em;
 }
 
-.markdown-body h1 { font-size: 1.75rem; border-bottom: 1px solid rgba(255, 255, 255, 0.1); padding-bottom: 0.5rem; }
+.markdown-body h1 { font-size: 1.75rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem; }
 .markdown-body h2 { font-size: 1.35rem; }
 .markdown-body h3 { font-size: 1.1rem; }
 
@@ -773,18 +774,18 @@ input[type="text"]:focus {
 
 .markdown-body th,
 .markdown-body td {
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--border-color);
   padding: 0.75rem;
   text-align: left;
 }
 
 .markdown-body th {
-  background: rgba(255, 255, 255, 0.04);
+  background: rgba(0, 0, 0, 0.02);
   font-weight: 600;
 }
 
 .markdown-body tr:nth-child(even) {
-  background: rgba(255, 255, 255, 0.01);
+  background: rgba(0, 0, 0, 0.005);
 }
 
 .markdown-body img {
@@ -793,12 +794,12 @@ input[type="text"]:focus {
   height: auto;
   border-radius: var(--radius-sm);
   margin: 1.5rem auto;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  border: 1px solid var(--border-color);
 }
 
 .markdown-body code {
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(0, 0, 0, 0.05);
   padding: 0.2rem 0.4rem;
   border-radius: 4px;
   font-family: var(--font-mono);
@@ -806,7 +807,7 @@ input[type="text"]:focus {
 }
 
 .markdown-body pre {
-  background: #06070d;
+  background: rgba(241, 245, 249, 0.95);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-sm);
   padding: 1rem;
@@ -822,7 +823,7 @@ input[type="text"]:focus {
 
 .markdown-body blockquote {
   border-left: 3px solid var(--color-primary);
-  background: rgba(99, 102, 241, 0.05);
+  background: rgba(13, 148, 136, 0.05);
   padding: 0.75rem 1.25rem;
   margin-bottom: 1.2rem;
   border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
@@ -836,4 +837,13 @@ input[type="text"]:focus {
     grid-template-columns: 400px 1fr;
     gap: 2.5rem;
   }
+}
+
+.timer-display {
+  margin-left: auto;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-weight: 600;
+  white-space: nowrap;
 }

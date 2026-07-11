@@ -6,6 +6,8 @@ let generatedMarkdown = null;
 let pollInterval = null;
 let lastLogMessage = '';
 let isAnalyzing = false;
+let timerInterval = null;
+let startTime = null;
 
 // Agent node order to resolve progress states sequentially
 const agentNodes = ['profiler', 'code_writer', 'executor', 'insights', 'report'];
@@ -51,11 +53,11 @@ function selectTier(tier) {
 function selectEngine(engine) {
   if (isAnalyzing) return;
   selectedEngine = engine;
-  
+
   const xhtmlBtn = document.getElementById('engine-xhtml2pdf');
   const weasyBtn = document.getElementById('engine-weasyprint');
   const descEl = document.getElementById('engine-desc');
-  
+
   if (engine === 'xhtml2pdf') {
     xhtmlBtn.classList.add('active');
     weasyBtn.classList.remove('active');
@@ -63,7 +65,7 @@ function selectEngine(engine) {
   } else {
     weasyBtn.classList.add('active');
     xhtmlBtn.classList.remove('active');
-    descEl.innerHTML = '<strong>WeasyPrint</strong>:<br>High-fidelity CSS3/HTML5 printer engine.<br>Requires GTK+ and Pango installed on your operating system.';
+    descEl.innerHTML = '<strong>WeasyPrint</strong>:<br>High-fidelity CSS3/HTML5 printer engine.<br>Requires GTK+ and Pango installed on operating system.';
   }
 }
 
@@ -107,7 +109,7 @@ function updateCredentialsBadges(status) {
   const clearBtn = document.getElementById('clear-creds-btn');
   const saveRow = document.querySelector('.creds-btn-row');
   const hintEl = document.querySelector('.creds-hint');
-  
+
   if (status.gemini_configured || status.langsmith_configured) {
     if (clearBtn) clearBtn.style.display = 'block';
     if (saveRow) saveRow.style.display = 'none';
@@ -125,9 +127,9 @@ async function saveCreds(isTemporary = false) {
   const langsmithKey = langsmithInput.value.trim();
 
   // If fields are empty and we already have them saved, do nothing
-  if (!geminiKey && !langsmithKey && 
-      geminiStatus.classList.contains('configured') && 
-      langsmithStatus.classList.contains('configured')) {
+  if (!geminiKey && !langsmithKey &&
+    geminiStatus.classList.contains('configured') &&
+    langsmithStatus.classList.contains('configured')) {
     alert('API keys are already saved.');
     return;
   }
@@ -147,7 +149,7 @@ async function saveCreds(isTemporary = false) {
         temporary: isTemporary
       })
     });
-    
+
     if (res.ok) {
       const mode = isTemporary ? 'temporarily for this session' : 'permanently';
       alert(`Credentials saved successfully ${mode}. The API keys have been hidden for security.`);
@@ -174,7 +176,7 @@ async function clearCreds() {
     const res = await fetch('/api/credentials/clear', {
       method: 'POST'
     });
-    
+
     if (res.ok) {
       alert('Stored credentials cleared successfully.');
       geminiInput.value = '';
@@ -256,18 +258,18 @@ async function startAnalysis() {
   // Toggle flags
   isAnalyzing = true;
   startBtn.disabled = true;
-  
+
   // Update layout and button states
   document.getElementById('app-layout').classList.remove('no-results');
   setCredentialsButtonsDisabled(true);
-  
+
   // UI setups
   progressCard.style.display = 'block';
   resultsCard.style.display = 'none';
   errorAlert.style.display = 'none';
   markdownContainer.style.display = 'none';
   toggleMdBtn.textContent = 'Show Markdown Report';
-  
+
   // Reset agents nodes classes
   agentNodes.forEach(node => {
     const el = document.getElementById(`node-${node}`);
@@ -279,9 +281,17 @@ async function startAnalysis() {
   addLogLine('system-msg', 'Initializing analysis workflow...');
   lastLogMessage = '';
 
+  // Reset timer
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+  startTime = Date.now();
+  document.getElementById('execution-timer').textContent = 'Elapsed time:  00 : 00 : 00';
+  timerInterval = setInterval(updateTimer, 1000);
+
   const formData = new FormData();
   formData.append('tier', selectedTier);
-  
+
   const exportPath = exportLocationInput.value.trim();
   if (exportPath) {
     formData.append('export_path', exportPath);
@@ -306,6 +316,24 @@ async function startAnalysis() {
   }
 }
 
+// Timer update function
+function updateTimer() {
+  if (!startTime) return;
+  const elapsedMs = Date.now() - startTime;
+  const totalSecs = Math.floor(elapsedMs / 1000);
+
+  const hrs = Math.floor(totalSecs / 3600);
+  const mins = Math.floor((totalSecs % 3600) / 60);
+  const secs = totalSecs % 60;
+
+  const pad = (num) => String(num).padStart(2, '0');
+
+  const timerEl = document.getElementById('execution-timer');
+  if (timerEl) {
+    timerEl.textContent = `Elapsed time:  ${pad(hrs)} : ${pad(mins)} : ${pad(secs)}`;
+  }
+}
+
 // Poll status endpoint
 async function pollStatus() {
   try {
@@ -318,6 +346,10 @@ async function pollStatus() {
     if (!status.is_running) {
       clearInterval(pollInterval);
       pollInterval = null;
+      if (timerInterval) {
+        clearInterval(timerInterval);
+        timerInterval = null;
+      }
       isAnalyzing = false;
       startBtn.disabled = false;
       setCredentialsButtonsDisabled(false);
@@ -327,16 +359,16 @@ async function pollStatus() {
         // Run completed successfully
         pdfReportPath = null; // resets local path since PDF isn't compiled yet
         generatedMarkdown = status.report_md;
-        
+
         // Reset PDF action button state
         document.getElementById('pdf-action-title').textContent = 'Export to PDF';
         document.getElementById('pdf-action-desc').textContent = `Compile and render the report using ${selectedEngine}.`;
-        
+
         document.getElementById('markdown-body').innerHTML = status.report_html || '<p>No report body generated.</p>';
         resultsCard.style.display = 'block';
         addLogLine('system-msg', 'Workflow execution completed. You can now toggle the report or click "Export to PDF".');
       }
-      
+
       if (status.error && !status.completed) {
         // Fatal workflow failure
         handleHaltState(status.error);
@@ -350,14 +382,14 @@ async function pollStatus() {
 // Update the agent node cards based on current active state
 function updateAgentNodesUI(status) {
   const activeNode = status.active_agent;
-  
+
   if (status.is_running && activeNode) {
     const activeIndex = agentNodes.indexOf(activeNode);
-    
+
     agentNodes.forEach((node, idx) => {
       const el = document.getElementById(`node-${node}`);
       if (!el) return;
-      
+
       if (idx < activeIndex) {
         el.className = 'agent-node completed';
       } else if (idx === activeIndex) {
@@ -379,19 +411,19 @@ function updateAgentNodesUI(status) {
 function updateConsoleLogs(status) {
   const msg = status.message;
   const activeNode = status.active_agent;
-  
+
   if (msg && msg !== lastLogMessage) {
     lastLogMessage = msg;
     const timestamp = new Date().toLocaleTimeString();
-    
+
     let lineClass = 'info-msg';
     let prefix = '[SYSTEM]';
-    
+
     if (activeNode) {
       lineClass = 'agent-msg';
       prefix = `[${activeNode.toUpperCase()} AGENT]`;
     }
-    
+
     addLogLine(lineClass, `${prefix} (${timestamp}): ${msg}`);
   }
 
@@ -414,6 +446,10 @@ function addLogLine(cssClass, text) {
 function handleHaltState(friendlyError) {
   clearInterval(pollInterval);
   pollInterval = null;
+  if (timerInterval) {
+    clearInterval(timerInterval);
+    timerInterval = null;
+  }
   isAnalyzing = false;
   startBtn.disabled = false;
   setCredentialsButtonsDisabled(false);
@@ -479,15 +515,15 @@ async function generatePDF() {
     if (res.ok) {
       const data = await res.json();
       pdfReportPath = data.pdf_path;
-      
+
       titleEl.textContent = 'Open PDF Report';
-      
+
       let msg = `PDF generated successfully using ${selectedEngine}! Click to view.`;
       if (data.exported_path) {
         msg += ' Copied to export directory.';
       }
       descEl.textContent = msg;
-      
+
       // Auto open PDF
       openPDF();
     } else {
