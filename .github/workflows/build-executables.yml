@@ -6,21 +6,24 @@ on:
       - 'v*' # Runs when you push a version tag like v1.0.0
   workflow_dispatch: # Allows manual triggering from the GitHub Actions tab
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 jobs:
   build:
     name: Build on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
+        os: [ubuntu-22.04, macos-14, windows-2022]
         include:
-          - os: ubuntu-latest
+          - os: ubuntu-22.04
             artifact_name: DataAnalysisStudio-linux
             pyinstaller_args: --add-data "frontend:frontend"
-          - os: macos-latest
+          - os: macos-14
             artifact_name: DataAnalysisStudio-macos
             pyinstaller_args: --add-data "frontend:frontend"
-          - os: windows-latest
+          - os: windows-2022
             artifact_name: DataAnalysisStudio-windows.exe
             pyinstaller_args: --add-data "frontend;frontend"
 
