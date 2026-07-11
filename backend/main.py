@@ -223,7 +223,10 @@ def run_workflow_background(csv_path: str, tier: str, gemini_key: str, langsmith
                                 f.write(result["report_md"])
                         
                         if result["report_pdf"] and Path(result["report_pdf"]).exists():
-                            shutil.copy2(result["report_pdf"], pdf_export)
+                            src_pdf = Path(result["report_pdf"]).resolve()
+                            dst_pdf = Path(pdf_export).resolve()
+                            if src_pdf != dst_pdf:
+                                shutil.copy2(src_pdf, dst_pdf)
                         
                         run_state["message"] += f" Exported reports to: {export_path}"
                     else:
@@ -342,7 +345,10 @@ def api_generate_pdf(payload: GeneratePDFPayload):
                 import shutil
                 filename = Path(pdf_path).name
                 exported_dest = export_dir / filename
-                shutil.copy2(pdf_path, exported_dest)
+                src_pdf = Path(pdf_path).resolve()
+                dst_pdf = Path(exported_dest).resolve()
+                if src_pdf != dst_pdf:
+                    shutil.copy2(src_pdf, dst_pdf)
                 exported_path = str(exported_dest.resolve())
                 
         return {
