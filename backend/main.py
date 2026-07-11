@@ -47,6 +47,7 @@ app.mount("/artifacts", StaticFiles(directory="artifacts"), name="artifacts")
 class CredentialsPayload(BaseModel):
     gemini_api_key: str
     langsmith_api_key: str
+    temporary: bool = False
 
 import webbrowser
 import time
@@ -60,6 +61,18 @@ def open_browser():
 def on_startup():
     # Start thread to open browser
     threading.Thread(target=open_browser, daemon=True).start()
+
+@app.on_event("shutdown")
+def on_shutdown():
+    """Cleans up temporary session credentials when the application is stopped."""
+    try:
+        from backend.config import load_credentials, clear_credentials
+        creds = load_credentials()
+        if creds.get("temporary"):
+            clear_credentials()
+            print("[INFO] Temporary credentials cleaned up successfully.")
+    except Exception as e:
+        print("[ERROR] Failed to clean up temporary credentials:", e)
 
 @app.get("/", response_class=HTMLResponse)
 def serve_index():
@@ -78,10 +91,20 @@ def api_save_credentials(payload: CredentialsPayload):
         raise HTTPException(status_code=400, detail="Both Gemini and LangSmith API keys are required.")
     
     try:
-        save_credentials(payload.gemini_api_key, payload.langsmith_api_key)
+        save_credentials(payload.gemini_api_key, payload.langsmith_api_key, payload.temporary)
         return {"status": "success", "message": "Credentials saved securely."}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to save credentials: {str(e)}")
+
+@app.post("/api/credentials/clear")
+def api_clear_credentials():
+    """Clears all stored credentials from the configuration file."""
+    try:
+        from backend.config import clear_credentials
+        clear_credentials()
+        return {"status": "success", "message": "Credentials cleared."}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to clear credentials: {str(e)}")
 
 @app.post("/api/upload-csv")
 def api_upload_csv(file: UploadFile = File(...)):

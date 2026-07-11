@@ -80,10 +80,14 @@ async function checkCredentials() {
 
 // Update credential badges in UI
 function updateCredentialsBadges(status) {
+  const isTemp = status.temporary;
+  const badgeText = isTemp ? 'Temporary' : 'Saved';
+  const placeholderSuffix = isTemp ? ' (Temporary)' : ' (Saved)';
+
   if (status.gemini_configured) {
-    geminiStatus.textContent = 'Saved';
+    geminiStatus.textContent = badgeText;
     geminiStatus.classList.add('configured');
-    geminiInput.placeholder = '•••••••••••••••• (Saved)';
+    geminiInput.placeholder = `••••••••••••••••${placeholderSuffix}`;
   } else {
     geminiStatus.textContent = 'Not Saved';
     geminiStatus.classList.remove('configured');
@@ -91,18 +95,26 @@ function updateCredentialsBadges(status) {
   }
 
   if (status.langsmith_configured) {
-    langsmithStatus.textContent = 'Saved';
+    langsmithStatus.textContent = badgeText;
     langsmithStatus.classList.add('configured');
-    langsmithInput.placeholder = '•••••••••••••••• (Saved)';
+    langsmithInput.placeholder = `••••••••••••••••${placeholderSuffix}`;
   } else {
     langsmithStatus.textContent = 'Not Saved';
     langsmithStatus.classList.remove('configured');
     langsmithInput.placeholder = 'Enter LangSmith API key...';
   }
+
+  // Toggle "Clear Saved Keys" button based on configuration status
+  const clearBtn = document.getElementById('clear-creds-btn');
+  if (status.gemini_configured || status.langsmith_configured) {
+    clearBtn.style.display = 'block';
+  } else {
+    clearBtn.style.display = 'none';
+  }
 }
 
 // Save pasted API credentials
-async function saveCreds() {
+async function saveCreds(isTemporary = false) {
   const geminiKey = geminiInput.value.trim();
   const langsmithKey = langsmithInput.value.trim();
 
@@ -125,18 +137,46 @@ async function saveCreds() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         gemini_api_key: geminiKey,
-        langsmith_api_key: langsmithKey
+        langsmith_api_key: langsmithKey,
+        temporary: isTemporary
       })
     });
     
     if (res.ok) {
-      alert('Credentials saved successfully. The API keys have been hidden for security.');
+      const mode = isTemporary ? 'temporarily for this session' : 'permanently';
+      alert(`Credentials saved successfully ${mode}. The API keys have been hidden for security.`);
       geminiInput.value = '';
       langsmithInput.value = '';
       checkCredentials();
     } else {
       const errData = await res.json();
       alert(`Error saving credentials: ${errData.detail || 'Unknown error'}`);
+    }
+  } catch (err) {
+    alert(`Failed to connect to the backend: ${err.message}`);
+  }
+}
+
+// Clear stored credentials on backend
+async function clearCreds() {
+  if (isAnalyzing) return;
+  if (!confirm('Are you sure you want to delete all stored API keys from this machine?')) {
+    return;
+  }
+
+  try {
+    const res = await fetch('/api/credentials/clear', {
+      method: 'POST'
+    });
+    
+    if (res.ok) {
+      alert('Stored credentials cleared successfully.');
+      geminiInput.value = '';
+      langsmithInput.value = '';
+      checkCredentials();
+    } else {
+      const errData = await res.json();
+      alert(`Error clearing credentials: ${errData.detail || 'Unknown error'}`);
     }
   } catch (err) {
     alert(`Failed to connect to the backend: ${err.message}`);

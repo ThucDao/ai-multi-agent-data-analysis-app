@@ -100,6 +100,7 @@ body {
   letter-spacing: -0.04em;
   background: linear-gradient(135deg, #ffffff 0%, #a5b4fc 50%, #d8b4fe 100%);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
   margin-bottom: 0.5rem;
 }
@@ -340,9 +341,31 @@ input[type="text"]:focus {
   border-color: rgba(255, 255, 255, 0.2);
 }
 
+.btn-danger-style {
+  background: rgba(244, 63, 94, 0.05);
+  border: 1px solid rgba(244, 63, 94, 0.2);
+  color: #fda4af;
+}
+
+.btn-danger-style:hover:not(:disabled) {
+  background: rgba(244, 63, 94, 0.15);
+  border-color: rgba(244, 63, 94, 0.45);
+}
+
 .btn-sm {
   padding: 0.4rem 0.8rem;
   font-size: 0.8rem;
+}
+
+.creds-btn-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+.creds-btn-container .btn {
+  width: 100%;
 }
 
 /* Grid spacing utility */

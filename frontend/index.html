@@ -63,11 +63,22 @@
             </div>
           </div>
 
-          <button id="save-creds-btn" class="btn btn-secondary" onclick="saveCreds()">
-            Save Credentials Securely
-          </button>
+          <div class="creds-btn-container">
+            <button id="save-creds-perm-btn" class="btn btn-secondary" onclick="saveCreds(false)">
+              Save Permanently
+            </button>
+            <button id="save-creds-temp-btn" class="btn btn-secondary" onclick="saveCreds(true)">
+              Save Temporarily (This Session)
+            </button>
+            <button id="clear-creds-btn" class="btn btn-secondary btn-danger-style" onclick="clearCreds()" style="display: none;">
+              Clear Saved Keys
+            </button>
+          </div>
           
-          <p class="creds-hint">Keys are saved locally in your user folder and will never be exposed in the UI after saving.</p>
+          <p class="creds-hint">
+            <strong>Permanent</strong> saves keys to your home user folder for future runs.
+            <strong>Temporary</strong> keeps keys active for this session only; they are erased from the config file when the app closes.
+          </p>
         </div>
 
         <!-- File Upload Card -->
