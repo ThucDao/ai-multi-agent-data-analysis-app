@@ -123,9 +123,15 @@ def load_dataset(path: str):
 def run_python(code: str):
     """Runs generated python code inside a restricted execution sandbox."""
     ARTIFACTS_DIR.mkdir(exist_ok=True)
-    local_env = {"ARTIFACTS_DIR": ARTIFACTS_DIR}
+    local_env = {
+        "ARTIFACTS_DIR": ARTIFACTS_DIR,
+        "_artifacts": [],
+        "_charts_meta": [],
+        "_stdout": ""
+    }
     try:
-        exec(textwrap.dedent(code), {}, local_env)
+        # Pass local_env as the globals/locals dict to resolve function scoping issues inside exec()
+        exec(textwrap.dedent(code), local_env)
         return {
             "ok": True,
             "stdout": local_env.get("_stdout", ""),
@@ -548,8 +554,25 @@ graph = g.compile()
 
 def run_agent_workflow(dataset_path: str) -> dict:
     """Invokes the compiled agent graph and returns the final state outputs."""
-    initial_state = State(dataset_path=dataset_path)
-    final_state = graph.invoke(initial_state)
+    from langsmith import Client as LangsmithClient, tracing_context
+    
+    ls_key = os.environ.get("LANGSMITH_API_KEY") or os.environ.get("LANGCHAIN_API_KEY")
+    ls_project = os.environ.get("LANGSMITH_PROJECT") or os.environ.get("LANGCHAIN_PROJECT") or "auto-data-analysis"
+    
+    if ls_key:
+        try:
+            client = LangsmithClient(api_key=ls_key)
+            ctx = tracing_context(client=client, project_name=ls_project, enabled=True)
+        except Exception as e:
+            print("[WARN] Failed to initialize LangSmith client:", e)
+            ctx = tracing_context(enabled=False)
+    else:
+        ctx = tracing_context(enabled=False)
+        
+    with ctx:
+        initial_state = State(dataset_path=dataset_path)
+        final_state = graph.invoke(initial_state)
+        
     return {
         "report_md": final_state.get("report_md"),
         "report_pdf": final_state.get("report_pdf"),
