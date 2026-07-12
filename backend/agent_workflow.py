@@ -28,7 +28,7 @@ from mdit_py_plugins.footnote import footnote_plugin
 # Configuration globals
 client = None
 MODEL = "gemini-3.5-flash"
-ARTIFACTS_DIR = Path("da_artifacts")
+ARTIFACTS_DIR = Path("ada_artifacts")
 
 # Callback to report progress to the backend web server
 _status_callback: Callable[[str, str, str | None], None] = None
@@ -211,10 +211,10 @@ def render_pdf_xhtml2pdf(markdown_text: str, pdf_path: Path):
     </html>
     """
     
-    # Callback to resolve relative image path references from html (e.g. "artifacts/chart...")
+    # Callback to resolve relative image path references from html (e.g. "ada_artifacts/chart...")
     def link_callback(uri, rel):
-        if uri.startswith("artifacts/"):
-            local_path = ARTIFACTS_DIR / uri.replace("artifacts/", "", 1)
+        if uri.startswith("ada_artifacts/"):
+            local_path = ARTIFACTS_DIR / uri.replace("ada_artifacts/", "", 1)
             return os.path.abspath(str(local_path))
         return uri
 
@@ -294,9 +294,11 @@ def render_pdf_weasyprint(markdown_text: str, pdf_path: Path):
     </html>
     """
 
-    # Translate virtual image src "artifacts/..." to filesystem absolute paths
+    # Translate virtual image src "ada_artifacts/..." to filesystem absolute paths
     abs_artifacts_path = str(ARTIFACTS_DIR.resolve()).replace("\\", "/")
-    resolved_html = html_template.replace('src="artifacts/', f'src="{abs_artifacts_path}/').replace("src='artifacts/", f"src='{abs_artifacts_path}/")
+    resolved_html = (html_template
+                     .replace('src="ada_artifacts/', f'src="{abs_artifacts_path}/')
+                     .replace("src='ada_artifacts/", f"src='{abs_artifacts_path}/"))
 
     weasyprint.HTML(
         string=resolved_html,
@@ -377,7 +379,7 @@ def code_writer_agent(state: State):
     6. Track chart metadata in _charts_meta (list[dict]) with:
          {{
            "title": "<human readable chart title>",
-           "filename": "artifacts/chart_01_x.png",
+           "filename": "ada_artifacts/chart_01_x.png",
            "description": "<what this plot shows (1-2 sentences)>",
            "one_liner": "<ONE line insight from the chart>"
          }}
@@ -388,6 +390,8 @@ def code_writer_agent(state: State):
     IMPORTANT:
     - import matplotlib.pyplot as plt
     - plt.close() after saving each plot
+    - Use ARTIFACTS_DIR to save charts: plt.savefig(ARTIFACTS_DIR / "chart_name.png"). Do NOT hardcode or create a folder named "artifacts" on disk.
+    - In _charts_meta, the "filename" value MUST start with the virtual path "ada_artifacts/" (e.g. "ada_artifacts/chart_01_x.png") so the web client can render it.
     - ensure _artifacts and _charts_meta exist even if empty
     - if modeling, add baseline metrics to _stdout
 

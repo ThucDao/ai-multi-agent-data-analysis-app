@@ -37,12 +37,11 @@ run_state = {
 }
 
 # Ensure folders exist
-Path("da_artifacts").mkdir(exist_ok=True)
-Path("da_uploads").mkdir(exist_ok=True)
+Path("ada_artifacts").mkdir(exist_ok=True)
 
 # Mount frontend static files and artifacts
 app.mount("/frontend", StaticFiles(directory=get_resource_path("frontend")), name="frontend")
-app.mount("/artifacts", StaticFiles(directory="da_artifacts"), name="artifacts")
+app.mount("/ada_artifacts", StaticFiles(directory="ada_artifacts"), name="ada_artifacts")
 
 class CredentialsPayload(BaseModel):
     gemini_api_key: str
@@ -123,7 +122,7 @@ def api_upload_csv(file: UploadFile = File(...)):
         raise HTTPException(status_code=400, detail="Only CSV files are accepted.")
     
     try:
-        dest_path = Path("da_uploads") / "workspace_data.csv"
+        dest_path = Path("ada_artifacts") / "workspace_data.csv"
         with open(dest_path, "wb") as buffer:
             buffer.write(file.file.read())
         return {"status": "success", "filename": file.filename, "path": str(dest_path)}
@@ -283,7 +282,7 @@ def api_run_analysis(tier: str = Form(...), export_path: str = Form(None)):
     if not gemini_key or not langsmith_key:
         raise HTTPException(status_code=400, detail="Missing API credentials. Please set them first in the UI.")
 
-    csv_path = Path("da_uploads") / "workspace_data.csv"
+    csv_path = Path("ada_artifacts") / "workspace_data.csv"
     if not csv_path.exists():
         raise HTTPException(status_code=400, detail="No dataset uploaded. Please select a CSV file first.")
 
