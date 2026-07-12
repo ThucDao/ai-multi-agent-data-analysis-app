@@ -22,13 +22,23 @@ if __name__ == "__main__":
             print(selected_dir)
         sys.exit(0)
 
-import uvicorn
+# Redirect stdout/stderr to a physical log file in the artifacts directory for debugging noconsole runs
+try:
+    from pathlib import Path
+    log_dir = Path("ada_artifacts")
+    log_dir.mkdir(exist_ok=True)
+    # Open log file in append mode with line-buffering (autoflush)
+    log_file = open(log_dir / "app.log", "a", encoding="utf-8", buffering=1)
+    sys.stdout = log_file
+    sys.stderr = log_file
+except Exception:
+    import io
+    if sys.stdout is None:
+        sys.stdout = io.StringIO()
+    if sys.stderr is None:
+        sys.stderr = io.StringIO()
 
-# Redirect stdout/stderr if None (common in PyInstaller --noconsole mode on Windows)
-if sys.stdout is None:
-    sys.stdout = io.StringIO()
-if sys.stderr is None:
-    sys.stderr = io.StringIO()
+import uvicorn
 
 # Add current project root to python path to resolve submodules
 project_root = os.path.dirname(os.path.abspath(__file__))
