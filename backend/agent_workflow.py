@@ -234,6 +234,43 @@ def render_pdf_xhtml2pdf(markdown_text: str, pdf_path: Path):
 
 def render_pdf_weasyprint(markdown_text: str, pdf_path: Path):
     """Renders PDF using WeasyPrint (high-fidelity printer rendering, requires GTK+)."""
+    import os
+    import sys
+    
+    # On Windows, we must dynamically register Conda environment DLL directories for Python 3.8+ compatibility.
+    # macOS and Linux resolve their Pango/Cairo C-libraries automatically through standard global search paths
+    # (e.g. Homebrew prefix '/opt/homebrew/lib' on macOS, or '/usr/lib' on Linux) without needing manual registration.
+    if sys.platform == "win32" and hasattr(os, "add_dll_directory"):
+        conda_env = os.environ.get("CONDA_PREFIX")
+        if conda_env:
+            dll_path = os.path.join(conda_env, "Library", "bin")
+            if os.path.isdir(dll_path):
+                try:
+                    os.add_dll_directory(dll_path)
+                except Exception:
+                    pass
+                    
+        # Check standard default conda paths in user profile
+        user_profile = os.environ.get("USERPROFILE")
+        if user_profile:
+            for base in ["miniconda3", "anaconda3", ".conda"]:
+                env_dir = os.path.join(user_profile, base, "Library", "bin")
+                if os.path.isdir(env_dir):
+                    try:
+                        os.add_dll_directory(env_dir)
+                    except Exception:
+                        pass
+                # Check environments folder under this base
+                envs_path = os.path.join(user_profile, base, "envs")
+                if os.path.isdir(envs_path):
+                    try:
+                        for env_name in os.listdir(envs_path):
+                            env_dll = os.path.join(envs_path, env_name, "Library", "bin")
+                            if os.path.isdir(env_dll):
+                                os.add_dll_directory(env_dll)
+                    except Exception:
+                        pass
+
     import weasyprint
     html_body = md.render(markdown_text)
 

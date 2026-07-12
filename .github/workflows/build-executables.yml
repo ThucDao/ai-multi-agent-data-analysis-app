@@ -44,11 +44,6 @@ jobs:
           pip install -r requirements.txt
           pip install pyinstaller
 
-      - name: Install UPX
-        uses: crazy-max/ghaction-upx@v4
-        with:
-          install: true
-
       - name: Build executable with PyInstaller
         run: |
           pyinstaller --onefile --noconsole ${{ matrix.pyinstaller_args }} --name "AI-DataAnalysisApp" launcher.py
