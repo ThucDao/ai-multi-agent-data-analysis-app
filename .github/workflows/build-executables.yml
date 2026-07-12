@@ -20,13 +20,13 @@ jobs:
         include:
           - os: ubuntu-22.04
             artifact_name: AI-DataAnalysisApp-linux
-            pyinstaller_args: --add-data "frontend:frontend" --collect-all reportlab --collect-all xhtml2pdf --exclude-module numpy.tests --exclude-module pandas.tests --exclude-module matplotlib.tests --exclude-module setuptools --exclude-module pip --exclude-module distutils
+            pyinstaller_args: --add-data "frontend:frontend" --collect-all reportlab --collect-all xhtml2pdf --collect-all scikit-learn --collect-all seaborn --exclude-module numpy.tests --exclude-module pandas.tests --exclude-module matplotlib.tests --exclude-module setuptools --exclude-module pip --exclude-module distutils
           - os: macos-14
             artifact_name: AI-DataAnalysisApp-macos
-            pyinstaller_args: --add-data "frontend:frontend" --collect-all reportlab --collect-all xhtml2pdf --exclude-module numpy.tests --exclude-module pandas.tests --exclude-module matplotlib.tests --exclude-module setuptools --exclude-module pip --exclude-module distutils
+            pyinstaller_args: --add-data "frontend:frontend" --collect-all reportlab --collect-all xhtml2pdf --collect-all scikit-learn --collect-all seaborn --exclude-module numpy.tests --exclude-module pandas.tests --exclude-module matplotlib.tests --exclude-module setuptools --exclude-module pip --exclude-module distutils
           - os: windows-latest
             artifact_name: AI-DataAnalysisApp-windows.exe
-            pyinstaller_args: --add-data "frontend;frontend" --collect-all reportlab --collect-all xhtml2pdf --exclude-module numpy.tests --exclude-module pandas.tests --exclude-module matplotlib.tests --exclude-module setuptools --exclude-module pip --exclude-module distutils
+            pyinstaller_args: --add-data "frontend;frontend" --collect-all reportlab --collect-all xhtml2pdf --collect-all scikit-learn --collect-all seaborn --exclude-module numpy.tests --exclude-module pandas.tests --exclude-module matplotlib.tests --exclude-module setuptools --exclude-module pip --exclude-module distutils
 
     steps:
       - name: Checkout repository
