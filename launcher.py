@@ -1,6 +1,7 @@
 import sys
 # Force ReportLab to use pure Python mode, avoiding dynamic C-extension DLL crashes inside PyInstaller executables
 sys.modules['_rl_accel'] = None
+sys.modules['_renderPM'] = None
 
 import os
 import io
