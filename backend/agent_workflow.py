@@ -559,12 +559,26 @@ graph = g.compile()
 def run_agent_workflow(dataset_path: str) -> dict:
     """Invokes the compiled agent graph and returns the final state outputs."""
     from langsmith import Client as LangsmithClient, tracing_context
+    from langchain_core.tracers.langchain import LangChainTracer
     
     ls_key = os.environ.get("LANGSMITH_API_KEY") or os.environ.get("LANGCHAIN_API_KEY")
     ls_project = os.environ.get("LANGSMITH_PROJECT") or os.environ.get("LANGCHAIN_PROJECT") or "auto-data-analysis"
     
+    callbacks = []
     if ls_key:
         try:
+            # Sync keys to environment variables
+            os.environ["LANGCHAIN_API_KEY"] = ls_key
+            os.environ["LANGCHAIN_TRACING_V2"] = "true"
+            os.environ["LANGCHAIN_PROJECT"] = ls_project
+            os.environ["LANGSMITH_API_KEY"] = ls_key
+            os.environ["LANGSMITH_TRACING"] = "true"
+            os.environ["LANGSMITH_PROJECT"] = ls_project
+            
+            tracer = LangChainTracer(project_name=ls_project)
+            callbacks.append(tracer)
+            print(f"[INFO] LangChainTracer initialized successfully for project: {ls_project}")
+            
             client = LangsmithClient(api_key=ls_key)
             ctx = tracing_context(client=client, project_name=ls_project, enabled=True)
         except Exception as e:
@@ -575,7 +589,8 @@ def run_agent_workflow(dataset_path: str) -> dict:
         
     with ctx:
         initial_state = State(dataset_path=dataset_path)
-        final_state = graph.invoke(initial_state)
+        # Pass the tracer callbacks explicitly to trace the graph invocation
+        final_state = graph.invoke(initial_state, config={"callbacks": callbacks})
         
     return {
         "report_md": final_state.get("report_md"),
