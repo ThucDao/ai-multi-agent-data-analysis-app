@@ -78,12 +78,14 @@ def gemini_call(prompt: str, thinking_level: str = "high"):
     if client is None:
         raise ValueError("Gemini Client has not been initialized. Please configure API keys first.")
         
+    config_args = {}
+    if thinking_level and thinking_level != "off":
+        config_args["thinking_config"] = types.ThinkingConfig(thinking_level=thinking_level)
+        
     resp = client.models.generate_content(
         model=MODEL,
         contents=prompt,
-        config=types.GenerateContentConfig(
-            thinking_config=types.ThinkingConfig(thinking_level=thinking_level)
-        ),
+        config=types.GenerateContentConfig(**config_args),
     )
 
     usage = getattr(resp, "usage_metadata", None)
@@ -110,13 +112,15 @@ def gemini_call(prompt: str, thinking_level: str = "high"):
 def load_dataset(path: str):
     """Loads a CSV file and profiles its basic structure."""
     df = pd.read_csv(path)
+    # Round statistics to 2 decimal places to save token space
+    desc = df.describe(include="all").round(2).fillna("")
     summary = {
         "shape": df.shape,
         "columns": list(df.columns),
         "dtypes": {c: str(t) for c, t in df.dtypes.items()},
         "missing_pct": df.isna().mean().to_dict(),
         "head": df.head(5).to_dict(orient="records"),
-        "describe": df.describe(include="all").fillna("").to_dict()
+        "describe": desc.to_dict()
     }
     return summary
 
