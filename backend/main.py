@@ -191,10 +191,14 @@ def run_workflow_background(csv_path: str, tier: str, gemini_key: str, langsmith
         register_status_callback(agent_status_cb)
         set_client_and_model(gemini_key, tier)
 
-        # 3. Configure environment variables for LangSmith tracing
+        # 3. Configure environment variables for LangSmith/LangChain tracing
         os.environ["LANGSMITH_TRACING"] = "true"
         os.environ["LANGSMITH_API_KEY"] = langsmith_key
         os.environ["LANGSMITH_PROJECT"] = "auto-data-analysis"
+
+        os.environ["LANGCHAIN_TRACING_V2"] = "true"
+        os.environ["LANGCHAIN_API_KEY"] = langsmith_key
+        os.environ["LANGCHAIN_PROJECT"] = "auto-data-analysis"
 
         # 4. Invoke graph
         result = run_agent_workflow(csv_path)

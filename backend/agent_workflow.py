@@ -14,6 +14,13 @@ from langsmith import traceable
 import pandas as pd
 import markdown2
 
+# Dummy imports to force PyInstaller to package these dynamic sandbox dependencies
+try:
+    import sklearn
+    import seaborn
+except ImportError:
+    pass
+
 from markdown_it import MarkdownIt
 from mdit_py_plugins.tasklists import tasklists_plugin
 from mdit_py_plugins.footnote import footnote_plugin
