@@ -1,13 +1,10 @@
 import os
 import sys
-import platform
-import subprocess
 import traceback
 import threading
 from pathlib import Path
 from fastapi import FastAPI, UploadFile, File, HTTPException, Form
 from fastapi.staticfiles import StaticFiles
-from fastapi.responses import HTMLResponse, FileResponse, JSONResponse
 from pydantic import BaseModel
 
 # Add project root to path

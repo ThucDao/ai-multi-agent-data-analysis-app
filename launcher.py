@@ -2,6 +2,13 @@ import sys
 import os
 import io
 
+# Force matplotlib to use non-interactive Agg backend to prevent Tkinter multi-threading GUI crashes
+try:
+    import matplotlib
+    matplotlib.use('Agg')
+except ImportError:
+    pass
+
 if __name__ == "__main__":
     if len(sys.argv) > 1 and sys.argv[1] == "--pick-folder":
         import tkinter as tk

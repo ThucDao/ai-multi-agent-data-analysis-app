@@ -1,10 +1,9 @@
 import os
 import json
 import textwrap
-import traceback
 from datetime import datetime
 from pathlib import Path
-from typing import Callable, Any
+from typing import Callable
 
 from google import genai
 from google.genai import types
@@ -12,7 +11,6 @@ from pydantic import BaseModel
 from langgraph.graph import StateGraph, END
 from langsmith import traceable
 import pandas as pd
-import markdown2
 
 # Dummy imports to force PyInstaller to package these dynamic sandbox dependencies
 try:
@@ -134,8 +132,10 @@ def run_python(code: str):
         "_stdout": ""
     }
     try:
+        # Prepend backend configuration to prevent Tkinter initialization in code writer sandbox
+        exec_code = "import matplotlib\nmatplotlib.use('Agg')\n" + textwrap.dedent(code)
         # Pass local_env as the globals/locals dict to resolve function scoping issues inside exec()
-        exec(textwrap.dedent(code), local_env)
+        exec(exec_code, local_env)
         return {
             "ok": True,
             "stdout": local_env.get("_stdout", ""),
