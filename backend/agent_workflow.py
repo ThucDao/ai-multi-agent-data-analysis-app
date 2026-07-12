@@ -474,7 +474,7 @@ def insights_agent(state: State):
 
 @traceable(name="report_agent")
 def report_agent(state: State):
-    update_status("report", "Compiling Markdown report and rendering PDF document...")
+    update_status("report", "Compiling Markdown report...")
     prompt = f"""
     You are the Report Agent.
     Create a neat Markdown report (HTML allowed).
