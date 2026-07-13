@@ -242,34 +242,87 @@ def render_pdf_weasyprint(markdown_text: str, pdf_path: Path):
     # macOS and Linux resolve their Pango/Cairo C-libraries automatically through standard global search paths
     # (e.g. Homebrew prefix '/opt/homebrew/lib' on macOS, or '/usr/lib' on Linux) without needing manual registration.
     if sys.platform == "win32" and hasattr(os, "add_dll_directory"):
+        print("[INFO] Initiating Windows GTK/Pango DLL directory scanner...")
+        # 1. Check CONDA_PREFIX env variable (active environment)
         conda_env = os.environ.get("CONDA_PREFIX")
         if conda_env:
             dll_path = os.path.join(conda_env, "Library", "bin")
             if os.path.isdir(dll_path):
                 try:
                     os.add_dll_directory(dll_path)
-                except Exception:
-                    pass
-                    
-        # Check standard default conda paths in user profile
+                    print(f"[INFO] Registered DLL directory from CONDA_PREFIX: {dll_path}")
+                except Exception as e:
+                    print(f"[WARN] Failed to register CONDA_PREFIX DLL path {dll_path}: {e}")
+
+        # 2. Scan PATH environment variable for any directories ending with Library\bin or containing GTK/Conda paths
+        path_env = os.environ.get("PATH", "")
+        for path_str in path_env.split(";"):
+            path_str = path_str.strip()
+            if not path_str:
+                continue
+            # Direct check for Conda Library/bin or GTK runtime bin folder
+            if "Library\\bin" in path_str or "Library/bin" in path_str or "gtk" in path_str.lower():
+                if os.path.isdir(path_str):
+                    try:
+                        os.add_dll_directory(path_str)
+                        print(f"[INFO] Registered DLL directory from PATH: {path_str}")
+                    except Exception as e:
+                        pass
+            # If the path contains miniconda/anaconda, check if there is a Library/bin sibling or child
+            elif "miniconda" in path_str.lower() or "anaconda" in path_str.lower():
+                base_dir = None
+                if "Scripts" in path_str:
+                    base_dir = os.path.dirname(path_str)
+                elif "Library" in path_str:
+                    base_dir = os.path.dirname(os.path.dirname(path_str))
+                else:
+                    base_dir = path_str
+                
+                if base_dir:
+                    dll_path = os.path.join(base_dir, "Library", "bin")
+                    if os.path.isdir(dll_path):
+                        try:
+                            os.add_dll_directory(dll_path)
+                            print(f"[INFO] Registered DLL directory from PATH parent: {dll_path}")
+                        except Exception as e:
+                            pass
+
+        # 3. Check standard default paths in USERPROFILE, AppData Local/Roaming, and ProgramData (All Users)
         user_profile = os.environ.get("USERPROFILE")
+        program_data = os.environ.get("ProgramData", "C:\\ProgramData")
+        
+        search_roots = []
         if user_profile:
-            for base in ["miniconda3", "anaconda3", ".conda"]:
-                env_dir = os.path.join(user_profile, base, "Library", "bin")
+            search_roots.extend([
+                user_profile,
+                os.path.join(user_profile, "AppData", "Local"),
+                os.path.join(user_profile, "AppData", "Local", "Programs"),
+                os.path.join(user_profile, "AppData", "Roaming")
+            ])
+        if program_data:
+            search_roots.append(program_data)
+            
+        for search_root in search_roots:
+            if not search_root or not os.path.isdir(search_root):
+                continue
+            for base in ["miniconda3", "anaconda3", ".conda", "miniconda", "anaconda"]:
+                env_dir = os.path.join(search_root, base, "Library", "bin")
                 if os.path.isdir(env_dir):
                     try:
                         os.add_dll_directory(env_dir)
-                    except Exception:
+                        print(f"[INFO] Registered base DLL directory: {env_dir}")
+                    except Exception as e:
                         pass
-                # Check environments folder under this base
-                envs_path = os.path.join(user_profile, base, "envs")
+                # Check environment folders
+                envs_path = os.path.join(search_root, base, "envs")
                 if os.path.isdir(envs_path):
                     try:
                         for env_name in os.listdir(envs_path):
                             env_dll = os.path.join(envs_path, env_name, "Library", "bin")
                             if os.path.isdir(env_dll):
                                 os.add_dll_directory(env_dll)
-                    except Exception:
+                                print(f"[INFO] Registered env DLL directory: {env_dll}")
+                    except Exception as e:
                         pass
 
     import weasyprint
