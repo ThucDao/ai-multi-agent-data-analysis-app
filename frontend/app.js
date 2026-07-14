@@ -593,3 +593,8 @@ function setCredentialsButtonsDisabled(disabled) {
   if (saveTempBtn) saveTempBtn.disabled = disabled;
   if (clearBtn) clearBtn.disabled = disabled;
 }
+
+// Keep-alive heartbeat loop to prevent background server orphaning
+setInterval(() => {
+  fetch('/api/heartbeat', { method: 'POST' }).catch(() => {});
+}, 1500);

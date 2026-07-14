@@ -51,6 +51,30 @@ class CredentialsPayload(BaseModel):
 import webbrowser
 import time
 
+# Global variable to track the last client heartbeat
+last_heartbeat = time.time()
+
+def heartbeat_watchdog():
+    """Shuts down the backend cleanly if no active browser client pings are received."""
+    # Give the browser tab plenty of time to boot up and load index.html on initial startup
+    time.sleep(20)
+    while True:
+        time.sleep(2)
+        if time.time() - last_heartbeat > 6:
+            print("[INFO] No active browser client detected (timeout). Shutting down background server process...")
+            # Clean up temporary credentials if they exist
+            try:
+                from backend.config import load_credentials, clear_credentials
+                creds = load_credentials()
+                if creds.get("temporary"):
+                    clear_credentials()
+                    print("[INFO] Temporary credentials cleaned up successfully.")
+            except Exception as e:
+                print("[ERROR] Failed to clean up temporary credentials on auto-shutdown:", e)
+            
+            # Terminate the server process
+            os._exit(0)
+
 def open_browser():
     # Allow 1.5 seconds for FastAPI to boot up
     time.sleep(1.5)
@@ -60,7 +84,7 @@ def open_browser():
 def on_startup():
     # Clean up any leftover temporary credentials from a previous run
     try:
-        from backend.config import clear_credentials
+        from backend.config import load_credentials, clear_credentials
         creds = load_credentials()
         if creds.get("temporary"):
             clear_credentials()
@@ -70,6 +94,9 @@ def on_startup():
 
     # Start thread to open browser
     threading.Thread(target=open_browser, daemon=True).start()
+    
+    # Start the watchdog thread on server boot
+    threading.Thread(target=heartbeat_watchdog, daemon=True).start()
 
 @app.on_event("shutdown")
 def on_shutdown():
@@ -82,6 +109,12 @@ def on_shutdown():
             print("[INFO] Temporary credentials cleaned up successfully.")
     except Exception as e:
         print("[ERROR] Failed to clean up temporary credentials:", e)
+
+@app.post("/api/heartbeat")
+def api_heartbeat():
+    global last_heartbeat
+    last_heartbeat = time.time()
+    return {"status": "ok"}
 
 @app.get("/", response_class=HTMLResponse)
 def serve_index():
