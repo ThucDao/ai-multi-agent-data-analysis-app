@@ -606,10 +606,10 @@ function toggleComparisonTable() {
   if (wrapper && title) {
     if (wrapper.style.display === 'none') {
       wrapper.style.display = 'block';
-      title.textContent = 'Hide Gemini Model & Tier Comparison';
+      title.textContent = '▲ Hide Gemini Model & Tier Comparison';
     } else {
       wrapper.style.display = 'none';
-      title.textContent = 'Show Gemini Model & Tier Comparison';
+      title.textContent = '▼ Show Gemini Model & Tier Comparison';
     }
   }
 }

@@ -44,17 +44,17 @@
             <label>Gemini Model</label>
             <div class="segment-control">
               <button type="button" id="tier-free" class="segment-btn active" onclick="selectTier('free')">
-                Gemini 3.5 Flash <span style="font-size: 15px;">(Free or paid tier)</span>
+                Gemini 3.5 Flash <span>(Free or paid tier)</span>
               </button>
               <button type="button" id="tier-paid" class="segment-btn" onclick="selectTier('paid')">
-                Gemini 3.1 Pro Preview <span style="font-size: 15px;">(Paid tier only)</span>
+                Gemini 3.1 Pro Preview <span>(Paid tier only)</span>
               </button>
             </div>
           </div>
 
           <div id="gemini-comparison-table" class="form-group" style="margin-top: 1rem; margin-bottom: 1.5rem;">
             <h3 id="toggle-comparison-title" onclick="toggleComparisonTable()">
-              Hide Gemini Model & Tier Comparison
+              ▲ Hide Gemini Model & Tier Comparison
             </h3>
             <div id="gemini-comparison-table-wrapper" style="overflow-x: auto; width: 100%; border: 1px solid var(--border-color); border-radius: var(--radius-sm); background: rgba(255,255,255,0.45);">
               <table style="width: 100%; border-collapse: collapse; font-size: 0.75rem; line-height: 1.4; text-align: left;">
@@ -154,7 +154,7 @@
           <div class="form-group">
             <label>Import CSV File</label>
             <div class="file-picker-container">
-              <input type="text" id="csv-file-name" placeholder="No file selected..." readonly>
+              <input type="text" id="csv-file-name" placeholder="Press Browse to select" readonly>
               <button type="button" class="btn btn-secondary" onclick="triggerFilePicker()">Browse</button>
               <input type="file" id="csv-file-input" accept=".csv" style="display: none;"
                 onchange="handleFileChange(event)">
@@ -165,7 +165,7 @@
           <div class="form-group">
             <label for="export-location">Export Directory</label>
             <div class="file-picker-container">
-              <input type="text" id="export-location" placeholder="Enter a folder path or press Browse">
+              <input type="text" id="export-location" placeholder="Enter path or press Browse">
               <button type="button" class="btn btn-secondary" onclick="browseExportLocation()">Browse</button>
             </div>
             <p class="field-info">Storing PDF and Markdown reports.</p>
