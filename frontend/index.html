@@ -53,8 +53,10 @@
           </div>
 
           <div id="gemini-comparison-table" class="form-group" style="margin-top: 1rem; margin-bottom: 1.5rem;">
-            <h3 style="font-family: var(--font-header); font-size: 0.95rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--text-main);">Gemini Model & Tier Comparison</h3>
-            <div style="overflow-x: auto; width: 100%; border: 1px solid var(--border-color); border-radius: var(--radius-sm); background: rgba(255,255,255,0.45);">
+            <h3 id="toggle-comparison-title" onclick="toggleComparisonTable()">
+              Hide Gemini Model & Tier Comparison
+            </h3>
+            <div id="gemini-comparison-table-wrapper" style="overflow-x: auto; width: 100%; border: 1px solid var(--border-color); border-radius: var(--radius-sm); background: rgba(255,255,255,0.45);">
               <table style="width: 100%; border-collapse: collapse; font-size: 0.75rem; line-height: 1.4; text-align: left;">
                 <thead>
                   <tr style="background: rgba(0, 0, 0, 0.03); border-bottom: 1px solid var(--border-color);">
@@ -117,7 +119,7 @@
               <input type="password" id="langsmith-key" placeholder="Enter LangSmith API key...">
               <span class="status-badge" id="langsmith-status">Not Saved</span>
             </div>
-            <p class="field-info">Note: LangSmith is used for real-time tracking, visualization, and debugging of the multi-agent graph reasoning cascade.</p>
+            <p class="field-info">LangSmith is used for real-time tracking, visualization, and debugging of the multi-agent graph reasoning cascade.</p>
           </div>
 
           <div class="creds-btn-container">
@@ -163,7 +165,7 @@
           <div class="form-group">
             <label for="export-location">Export Directory</label>
             <div class="file-picker-container">
-              <input type="text" id="export-location" placeholder="Select folder to save PDF & MD reports...">
+              <input type="text" id="export-location" placeholder="Enter a folder path or press Browse">
               <button type="button" class="btn btn-secondary" onclick="browseExportLocation()">Browse</button>
             </div>
             <p class="field-info">Storing PDF and Markdown reports.</p>

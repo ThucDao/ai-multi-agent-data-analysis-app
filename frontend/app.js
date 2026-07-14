@@ -598,3 +598,18 @@ function setCredentialsButtonsDisabled(disabled) {
 setInterval(() => {
   fetch('/api/heartbeat', { method: 'POST' }).catch(() => {});
 }, 1500);
+
+// Toggle visibility of the Gemini Model & Tier Comparison Table
+function toggleComparisonTable() {
+  const wrapper = document.getElementById('gemini-comparison-table-wrapper');
+  const title = document.getElementById('toggle-comparison-title');
+  if (wrapper && title) {
+    if (wrapper.style.display === 'none') {
+      wrapper.style.display = 'block';
+      title.textContent = 'Hide Gemini Model & Tier Comparison';
+    } else {
+      wrapper.style.display = 'none';
+      title.textContent = 'Show Gemini Model & Tier Comparison';
+    }
+  }
+}

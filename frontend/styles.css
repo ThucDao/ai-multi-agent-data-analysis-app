@@ -917,3 +917,22 @@ input[type="text"]:focus {
   letter-spacing: -0.01em;
   opacity: 0.8;
 }
+
+#toggle-comparison-title {
+  cursor: pointer;
+  user-select: none;
+  font-family: var(--font-header);
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--color-accent);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  transition: all var(--transition-fast);
+}
+
+#toggle-comparison-title:hover {
+  color: var(--color-primary);
+  text-decoration: underline;
+}
