@@ -44,10 +44,10 @@
             <label>Gemini Model</label>
             <div class="segment-control">
               <button type="button" id="tier-free" class="segment-btn active" onclick="selectTier('free')">
-                Gemini 3.5 Flash <span style="font-size: 20px;">(Free or paid tier)</span>
+                Gemini 3.5 Flash <span style="font-size: 15px;">(Free or paid tier)</span>
               </button>
               <button type="button" id="tier-paid" class="segment-btn" onclick="selectTier('paid')">
-                Gemini 3.1 Pro Preview <span style="font-size: 20px;">(Paid tier only)</span>
+                Gemini 3.1 Pro Preview <span style="font-size: 15px;">(Paid tier only)</span>
               </button>
             </div>
           </div>
@@ -77,7 +77,7 @@
                     <td style="padding: 6px 8px; font-weight: 600; border-right: 1px solid var(--border-color); background: rgba(0,0,0,0.01);">Cost <br>(per 1M Tokens)</td>
                     <td style="padding: 6px 8px; border-right: 1px solid var(--border-color);"><strong>Free</strong></td>
                     <td style="padding: 6px 8px; border-right: 1px solid var(--border-color);">$1.50 (Input) <br> $9.00 (Output)</td>
-                    <td style="padding: 6px 8px;"><strong>Variable Tier Pricing:</strong> <br>• Shorter prompts <br>(≤200k tokens): <br><strong>$1.00 In / $6.00 Out</strong><br>• High-context prompts <br>(>200k tokens): <br>Scales up to full price <br><strong>$2.00 In / $12.00 Out</strong>.</td>
+                    <td style="padding: 6px 8px;"><strong>Variable Tier Pricing:</strong> <br>• Shorter prompts <br>(≤200k tokens): <br><strong>$1.00 In / $6.00 Out</strong><br>• High-context prompts <br>(>200k tokens): <br><strong>$2.00 In / $12.00 Out</strong>.</td>
                   </tr>
                   <tr style="border-bottom: 1px solid var(--border-color);">
                     <td style="padding: 6px 8px; font-weight: 600; border-right: 1px solid var(--border-color); background: rgba(0,0,0,0.01);">Context Window</td>
@@ -110,7 +110,7 @@
             </div>
             <p class="field-info">Note: To use the Paid Tier, your Gemini API key must have billing set up already.</p>
             <p class="field-info" style="margin-top: 4px;">Paid API keys charge for all model usage. For free access, disable billing for your API key and use Gemini 3.5 Flash.</p>
-            <p class="field-info" style="margin-top: 4px;"><strong>Caveat: During high demand of the Gemini 3.5 Flash model, it may return a "503 UNAVAILABLE" error for the Free Tier.</strong></p>
+            <p class="field-info" style="margin-top: 4px;"><strong>Caveat: For the Free Tier, during high demand of the Gemini 3.5 Flash model, it may return a "503 UNAVAILABLE" error.</strong></p>
           </div>
 
           <div class="form-group">
