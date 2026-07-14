@@ -92,6 +92,14 @@ def on_startup():
     except Exception as e:
         print("[ERROR] Failed to clean up temporary credentials on startup:", e)
 
+    # Close PyInstaller splash screen if active
+    try:
+        import pyi_splash
+        pyi_splash.close()
+        print("[INFO] Closed PyInstaller splash screen successfully.")
+    except ImportError:
+        pass
+
     # Start thread to open browser
     threading.Thread(target=open_browser, daemon=True).start()
     
