@@ -243,6 +243,14 @@ def render_pdf_weasyprint(markdown_text: str, pdf_path: Path):
     # (e.g. Homebrew prefix '/opt/homebrew/lib' on macOS, or '/usr/lib' on Linux) without needing manual registration.
     if sys.platform == "win32" and hasattr(os, "add_dll_directory"):
         print("[INFO] Initiating Windows GTK/Pango DLL directory scanner...")
+        # 0. Check if bundled by PyInstaller (in which case the DLLs are located in sys._MEIPASS)
+        if getattr(sys, "frozen", False) and hasattr(sys, "_MEIPASS"):
+            try:
+                os.add_dll_directory(sys._MEIPASS)
+                print(f"[INFO] Registered DLL directory from PyInstaller _MEIPASS: {sys._MEIPASS}")
+            except Exception as e:
+                print(f"[WARN] Failed to register _MEIPASS DLL path: {e}")
+
         # 1. Check CONDA_PREFIX env variable (active environment)
         conda_env = os.environ.get("CONDA_PREFIX")
         if conda_env:
