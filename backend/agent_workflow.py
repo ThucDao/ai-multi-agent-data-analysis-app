@@ -397,11 +397,15 @@ def render_pdf_weasyprint(markdown_text: str, pdf_path: Path):
     </html>
     """
 
-    # Translate virtual image src "ada_artifacts/..." to filesystem absolute paths
+    # Translate virtual image src "ada_artifacts/..." to filesystem absolute file:/// URIs
     abs_artifacts_path = str(ARTIFACTS_DIR.resolve()).replace("\\", "/")
+    resolved_prefix = f"file:///{abs_artifacts_path}/"
+    if resolved_prefix.startswith("file:////"):
+        resolved_prefix = resolved_prefix.replace("file:////", "file:///", 1)
+
     resolved_html = (html_template
-                     .replace('src="ada_artifacts/', f'src="{abs_artifacts_path}/')
-                     .replace("src='ada_artifacts/", f"src='{abs_artifacts_path}/"))
+                     .replace('src="ada_artifacts/', f'src="{resolved_prefix}')
+                     .replace("src='ada_artifacts/", f"src='{resolved_prefix}"))
 
     weasyprint.HTML(
         string=resolved_html,
