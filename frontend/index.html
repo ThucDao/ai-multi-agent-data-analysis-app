@@ -42,12 +42,12 @@
 
           <div class="form-group">
             <label>Gemini Model</label>
-            <div class="segment-control" style="height: auto; align-items: stretch;">
-              <button type="button" id="tier-free" class="segment-btn active" onclick="selectTier('free')" style="line-height: 1.3; padding: 6px 12px; height: auto;">
-                Gemini 3.5 Flash<br><span style="font-size: 10px; opacity: 0.85;">(Free or paid tier)</span>
+            <div class="segment-control">
+              <button type="button" id="tier-free" class="segment-btn active" onclick="selectTier('free')">
+                Gemini 3.5 Flash <span style="font-size: 20px;">(Free or paid tier)</span>
               </button>
-              <button type="button" id="tier-paid" class="segment-btn" onclick="selectTier('paid')" style="line-height: 1.3; padding: 6px 12px; height: auto;">
-                Gemini 3.1 Pro Preview<br><span style="font-size: 10px; opacity: 0.85;">(Paid tier only)</span>
+              <button type="button" id="tier-paid" class="segment-btn" onclick="selectTier('paid')">
+                Gemini 3.1 Pro Preview <span style="font-size: 20px;">(Paid tier only)</span>
               </button>
             </div>
           </div>
@@ -72,10 +72,10 @@
                     <td style="padding: 6px 8px;">Deep reasoning, complex coding, and heavy tool automation.</td>
                   </tr>
                   <tr style="border-bottom: 1px solid var(--border-color);">
-                    <td style="padding: 6px 8px; font-weight: 600; border-right: 1px solid var(--border-color); background: rgba(0,0,0,0.01);">Cost (per 1M Tokens)</td>
+                    <td style="padding: 6px 8px; font-weight: 600; border-right: 1px solid var(--border-color); background: rgba(0,0,0,0.01);">Cost <br>(per 1M Tokens)</td>
                     <td style="padding: 6px 8px; border-right: 1px solid var(--border-color);"><strong>Free</strong></td>
                     <td style="padding: 6px 8px; border-right: 1px solid var(--border-color);">$1.50 (Input) <br> $9.00 (Output)</td>
-                    <td style="padding: 6px 8px;"><strong>Variable Tier Pricing:</strong> <br>• Shorter prompts (≤200k tokens): <strong>$1.00 In / $6.00 Out</strong><br>• High-context prompts (>200k tokens): Scales up to full price <strong>$2.00 In / $12.00 Out</strong>.</td>
+                    <td style="padding: 6px 8px;"><strong>Variable Tier Pricing:</strong> <br>• Shorter prompts <br>(≤200k tokens): <br><strong>$1.00 In / $6.00 Out</strong><br>• High-context prompts <br>(>200k tokens): <br>Scales up to full price <br><strong>$2.00 In / $12.00 Out</strong>.</td>
                   </tr>
                   <tr style="border-bottom: 1px solid var(--border-color);">
                     <td style="padding: 6px 8px; font-weight: 600; border-right: 1px solid var(--border-color); background: rgba(0,0,0,0.01);">Context Window</td>
@@ -85,9 +85,9 @@
                   </tr>
                   <tr style="border-bottom: 1px solid var(--border-color);">
                     <td style="padding: 6px 8px; font-weight: 600; border-right: 1px solid var(--border-color); background: rgba(0,0,0,0.01);">Rate Limits</td>
-                    <td style="padding: 6px 8px; border-right: 1px solid var(--border-color);"><strong>Restricted Baseline:</strong> <br>• 15 Requests/Min (RPM) <br>• 1,500 Requests/Day (RPD)</td>
-                    <td style="padding: 6px 8px; border-right: 1px solid var(--border-color);"><strong>High Concurrency:</strong> <br>• No daily limits <br>• Scales dynamically via 2M–10M+ TPM</td>
-                    <td style="padding: 6px 8px;"><strong>Moderate Preview:</strong> <br>• Restricted concurrency tier floors <br>• Scaled dynamically via 500k–2M+ TPM</td>
+                    <td style="padding: 6px 8px; border-right: 1px solid var(--border-color);"><strong>Restricted Baseline:</strong> <br>• 15 Requests/Min <br>• 1,500 Requests/Day</td>
+                    <td style="padding: 6px 8px; border-right: 1px solid var(--border-color);"><strong>High Concurrency:</strong> <br>• No daily limits <br>• Scales dynamically via 2M–10M+ Tokens/Min</td>
+                    <td style="padding: 6px 8px;"><strong>Moderate Preview:</strong> <br>• Restricted concurrency tier floors <br>• Scaled dynamically via 500k–2M+ Tokens/Min</td>
                   </tr>
                   <tr>
                     <td style="padding: 6px 8px; font-weight: 600; border-right: 1px solid var(--border-color); background: rgba(0,0,0,0.01); border-bottom: none;">Data Privacy</td>
@@ -107,7 +107,8 @@
               <span class="status-badge" id="gemini-status">Not Saved</span>
             </div>
             <p class="field-info">Note: To use the Paid Tier, your Gemini API key must have billing set up already.</p>
-            <p class="field-info" style="margin-top: 4px;"><strong>Caveat:</strong> If your Gemini API Key has billing enabled, using any Gemini model will charge you money. To use free of charge, your Gemini API Key must not have billing set up and you can only use Gemini 3.5 Flash model, but note that you may get error 503 UNAVAILABLE when this model is currently experiencing high demand.</p>
+            <p class="field-info" style="margin-top: 4px;">Paid API keys charge for all model usage. For free access, disable billing for your API key and use Gemini 3.5 Flash.</p>
+            <p class="field-info" style="margin-top: 4px;"><strong>Caveat: During high demand of the Gemini 3.5 Flash model, it may return a "503 UNAVAILABLE" error for the Free Tier.</strong></p>
           </div>
 
           <div class="form-group">
