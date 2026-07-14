@@ -57,15 +57,18 @@ function selectEngine(engine) {
   const xhtmlBtn = document.getElementById('engine-xhtml2pdf');
   const weasyBtn = document.getElementById('engine-weasyprint');
   const descEl = document.getElementById('engine-desc');
+  const noteEl = document.getElementById('weasyprint-note');
 
   if (engine === 'xhtml2pdf') {
     xhtmlBtn.classList.add('active');
     weasyBtn.classList.remove('active');
     descEl.innerHTML = '<strong>xhtml2pdf</strong>:<br>Runs completely in Python.<br>Zero native OS setup required.<br>Works instantly on any machine.';
+    if (noteEl) noteEl.style.display = 'none';
   } else {
     weasyBtn.classList.add('active');
     xhtmlBtn.classList.remove('active');
     descEl.innerHTML = '<strong>WeasyPrint</strong>:<br>High-fidelity CSS3/HTML5 printer engine.<br>Requires GTK+ and Pango installed on operating system.';
+    if (noteEl) noteEl.style.display = 'block';
   }
 }
 
@@ -268,6 +271,10 @@ async function startAnalysis() {
   // Update layout and button states
   document.getElementById('app-layout').classList.remove('no-results');
   setCredentialsButtonsDisabled(true);
+
+  // Hide the Gemini comparison table during analysis
+  const comparisonTable = document.getElementById('gemini-comparison-table');
+  if (comparisonTable) comparisonTable.style.display = 'none';
 
   // UI setups
   progressCard.style.display = 'block';
