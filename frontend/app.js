@@ -613,3 +613,14 @@ function toggleComparisonTable() {
     }
   }
 }
+
+// Monitor page visibility states to prevent watchdog shutdown on tab suspend/freeze
+document.addEventListener('visibilitychange', () => {
+  const state = document.visibilityState; // 'visible' or 'hidden'
+  fetch(`/api/client-state?state=${state}`, { method: 'POST', keepalive: true }).catch(() => {});
+});
+
+// Explicitly notify server to shut down immediately when tab/browser is closed
+window.addEventListener('pagehide', () => {
+  fetch('/api/client-state?state=closed', { method: 'POST', keepalive: true }).catch(() => {});
+});

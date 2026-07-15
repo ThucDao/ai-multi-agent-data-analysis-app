@@ -53,6 +53,7 @@ import time
 
 # Global variable to track the last client heartbeat
 last_heartbeat = time.time()
+client_backgrounded = False
 
 def heartbeat_watchdog():
     """Shuts down the backend cleanly if no active browser client pings are received."""
@@ -60,6 +61,8 @@ def heartbeat_watchdog():
     time.sleep(20)
     while True:
         time.sleep(2)
+        if client_backgrounded:
+            continue
         if time.time() - last_heartbeat > 10:
             print("[INFO] No active browser client detected (timeout). Shutting down background server process...")
             # Clean up temporary credentials if they exist
@@ -123,6 +126,29 @@ async def update_heartbeat_middleware(request, call_next):
     global last_heartbeat
     last_heartbeat = time.time()
     return await call_next(request)
+
+@app.post("/api/client-state")
+def api_client_state(state: str):
+    global last_heartbeat, client_backgrounded
+    last_heartbeat = time.time()
+    if state == "hidden":
+        client_backgrounded = True
+        print("[INFO] Client tab went to background. Suspending watchdog timeout.")
+    elif state == "visible":
+        client_backgrounded = False
+        print("[INFO] Client tab returned to foreground. Resuming watchdog.")
+    elif state == "closed":
+        print("[INFO] Client tab closed. Shutting down background server process...")
+        try:
+            from backend.config import load_credentials, clear_credentials
+            creds = load_credentials()
+            if creds.get("temporary"):
+                clear_credentials()
+                print("[INFO] Temporary credentials cleaned up successfully.")
+        except Exception as e:
+            print("[ERROR] Failed to clean up temporary credentials on tab close:", e)
+        os._exit(0)
+    return {"status": "success", "state": state}
 
 @app.post("/api/heartbeat")
 def api_heartbeat():
