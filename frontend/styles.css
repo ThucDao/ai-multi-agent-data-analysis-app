@@ -683,8 +683,8 @@ input[type="text"]:focus {
 
 /* Clickable PDF highlight card */
 .pdf-highlight-line {
-  background: linear-gradient(135deg, rgba(220, 38, 38, 0.15) 0%, rgba(239, 68, 68, 0.05) 100%);
-  border: 1px solid rgba(239, 68, 68, 0.25);
+  background: linear-gradient(135deg, rgba(234, 179, 8, 0.15) 0%, rgba(254, 240, 138, 0.05) 100%);
+  border: 1px solid rgba(234, 179, 8, 0.25);
   border-radius: var(--radius-md);
   padding: 1.25rem 1.5rem;
   display: flex;
@@ -697,8 +697,8 @@ input[type="text"]:focus {
 
 .pdf-highlight-line:hover {
   transform: translateY(-2px);
-  border-color: rgba(239, 68, 68, 0.45);
-  box-shadow: 0 4px 20px 0 rgba(239, 68, 68, 0.15);
+  border-color: rgba(234, 179, 8, 0.45);
+  box-shadow: 0 4px 20px 0 rgba(234, 179, 8, 0.15);
 }
 
 .pdf-icon {
