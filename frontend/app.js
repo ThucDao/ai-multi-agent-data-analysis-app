@@ -597,7 +597,7 @@ function setCredentialsButtonsDisabled(disabled) {
 // Keep-alive heartbeat loop to prevent background server orphaning
 setInterval(() => {
   fetch('/api/heartbeat', { method: 'POST' }).catch(() => {});
-}, 1500);
+}, 2000);
 
 // Toggle visibility of the Gemini Model & Tier Comparison Table
 function toggleComparisonTable() {

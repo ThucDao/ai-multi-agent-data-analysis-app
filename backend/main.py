@@ -60,7 +60,7 @@ def heartbeat_watchdog():
     time.sleep(20)
     while True:
         time.sleep(2)
-        if time.time() - last_heartbeat > 6:
+        if time.time() - last_heartbeat > 10:
             print("[INFO] No active browser client detected (timeout). Shutting down background server process...")
             # Clean up temporary credentials if they exist
             try:
@@ -117,6 +117,12 @@ def on_shutdown():
             print("[INFO] Temporary credentials cleaned up successfully.")
     except Exception as e:
         print("[ERROR] Failed to clean up temporary credentials:", e)
+
+@app.middleware("http")
+async def update_heartbeat_middleware(request, call_next):
+    global last_heartbeat
+    last_heartbeat = time.time()
+    return await call_next(request)
 
 @app.post("/api/heartbeat")
 def api_heartbeat():
