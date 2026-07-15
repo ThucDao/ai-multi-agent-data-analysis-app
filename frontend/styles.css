@@ -936,3 +936,18 @@ input[type="text"]:focus {
   color: var(--color-primary);
   text-decoration: underline;
 }
+
+.create-key-link {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-accent);
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: normal;
+  transition: all var(--transition-fast);
+}
+
+.create-key-link:hover {
+  color: var(--color-primary);
+  text-decoration: underline;
+}

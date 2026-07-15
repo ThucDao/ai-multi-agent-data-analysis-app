@@ -103,7 +103,10 @@
           </div>
 
           <div class="form-group">
-            <label for="gemini-key">Gemini API Key</label>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+              <label for="gemini-key" style="margin-bottom: 0;">Gemini API Key</label>
+              <a href="https://aistudio.google.com/api-keys" target="_blank" class="create-key-link">Create API key</a>
+            </div>
             <div class="input-container">
               <input type="password" id="gemini-key" placeholder="Enter Gemini API key...">
               <span class="status-badge" id="gemini-status">Not Saved</span>
@@ -114,7 +117,10 @@
           </div>
 
           <div class="form-group">
-            <label for="langsmith-key">LangSmith API Key</label>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+              <label for="langsmith-key" style="margin-bottom: 0;">LangSmith API Key</label>
+              <a href="https://www.langchain.com/langsmith/observability" target="_blank" class="create-key-link">Create API key</a>
+            </div>
             <div class="input-container">
               <input type="password" id="langsmith-key" placeholder="Enter LangSmith API key...">
               <span class="status-badge" id="langsmith-status">Not Saved</span>
