@@ -161,6 +161,23 @@ graph TD
 
 ---
 
+## 💻 Tech Stack
+
+### Frontend
+* **Core Layout**: Semantic HTML5
+* **Styling**: Vanilla CSS (CSS Variables, HSL Gradient Grids, Glassmorphism Cards)
+* **Interactions**: Native ES6 JavaScript (Fetch API, Live Polling)
+
+### Backend
+* **API Framework**: FastAPI (Uvicorn ASGI runner)
+* **Agent Flow Orchestration**: LangGraph (LangChain ecosystem)
+* **LLM Engine**: Google Gemini API (`gemini-2.5-flash` and `gemini-1.5-pro` configurations)
+* **Tracing/Observability**: LangSmith
+* **PDF Compilation**: `xhtml2pdf` & `WeasyPrint` (via GTK/Cairo)
+* **Build Compiler**: PyInstaller
+
+---
+
 ## 🌐 Architectural Decision: Why Local Binary over Web App?
 
 This application is purposefully packaged as a local binary rather than deployed to public cloud services (like Streamlit or Vercel) for two critical reasons:
