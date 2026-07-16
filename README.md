@@ -4,6 +4,16 @@ A professional, self-contained desktop application that automates end-to-end dat
 
 ---
 
+## 📸 Screenshots & Showcase
+
+| Application Interface | LangGraph / LangSmith Trace Dashboard |
+| :---: | :---: |
+| *[Placeholder: Add Application UI Screenshot here]* | *[Placeholder: Add LangGraph Dashboard Screenshot here]* |
+
+📄 **[Download Sample Analytical PDF Report](./sample_report_placeholder.pdf)** *(Placeholder: I will upload the actual PDF file later and update this link)*
+
+---
+
 ## 🛠️ The 3 Stages of Development
 
 This application was developed progressively across three distinct stages to ensure algorithmic correctness, modular separation, and a friction-free experience for end-users.
@@ -186,11 +196,15 @@ This application is purposefully packaged as a local binary rather than deployed
 Running the multi-agent graph requires entering your **Gemini API Key** and **LangSmith API Key**. Inputting credentials into a public web server raises legitimate security doubts. Running locally keeps your keys and datasets strictly on your local device—they are never sent to a middleman server.
 
 ### 2. Native Operating System Dependencies for WeasyPrint
-While the default `xhtml2pdf` compiler is fully portable, it lacks support for modern CSS tables. `WeasyPrint` yields publication-quality, print-ready document rendering, but requires native system-level layout libraries. Running locally allows users to easily install these dependencies:
+While `xhtml2pdf` is lightweight and easy to deploy as a pure-Python package, it has limited support for modern CSS features and complex table layouts. 
+In contrast, `WeasyPrint` produces high-fidelity, publication-quality PDFs with significantly better HTML/CSS rendering, but it depends on several native system libraries, such as Cairo, Pango, and GLib/GObject.
+
+These dependencies are straightforward to install on desktop operating systems (for example, via Homebrew on macOS or Apt on Debian/Ubuntu), but they can complicate deployment on shared-hosting or serverless platforms where installing native libraries or custom runtimes is restricted.
+Packaging the application for local execution allows users to install these dependencies natively (see below) and take advantage of WeasyPrint's superior rendering quality.
 
 * **macOS**:
   ```bash
-  brew install cairo pango
+  brew install cairo pango gobject-introspection
   ```
 * **Linux (Debian/Ubuntu)**:
   ```bash
@@ -198,3 +212,9 @@ While the default `xhtml2pdf` compiler is fully portable, it lacks support for m
   ```
 * **Windows**:
   The standalone binary handles this automatically by shipping the required pre-compiled DLL dependencies bundled directly inside the executable.
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
