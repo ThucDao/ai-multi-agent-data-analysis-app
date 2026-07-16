@@ -74,15 +74,13 @@ To eliminate local setups for end-users, the app is compiled into a single pre-p
 #### File Structure
 ```text
 ai-multi-agent-data-analysis-app/
-├── releases/
-│   ├── AI-DataAnalysisApp-windows.exe  # Standalone Windows binary (pre-compiled)
-│   ├── AI-DataAnalysisApp-macos        # Standalone macOS binary (pre-compiled)
-│   └── AI-DataAnalysisApp-linux        # Standalone Linux binary (pre-compiled)
 ├── .github/workflows/
 │   └── build-executables.yml       # Multi-platform CI/CD compilation actions pipeline
 ├── splash.png                      # Outfit font gradient rounded-corner loading splash card
 └── launcher.py                     # Compiler entry point
 ```
+
+*Note on Executables: The three compiled executable files are not tracked in the git history due to file size limits. Instead, they are generated automatically by the GitHub Actions compilation workflow and released as build artifacts under the **Actions** tab (inside the specific run's **Artifacts** section at the bottom of the page), or published as downloads on the repository's **Releases** page.*
 
 ---
 
@@ -105,18 +103,21 @@ ai-multi-agent-data-analysis-app/
 
 ### Prerequisites
 To use the application, you will need:
-1. **Google Gemini API Key**: Obtainable from [Google AI Studio](https://aistudio.google.com/api-keys).
+1. **Google Gemini API Key**: Obtainable from [Google AI Studio](https://aistudio.google.com/api-keys). *(Note: If you plan to use any Pro models of Gemini, your Google AI Studio account must have billing set up and activated).*
 2. **LangSmith API Key**: Obtainable from [LangSmith](https://www.langchain.com/langsmith/observability) to track the multi-agent graph cascade in real-time.
 
 ---
 
 ### Option A: Running the Standalone Executable (Stage 3) - *Recommended*
-The easiest way to run the app. No Python installation required.
+The easiest way to run the app. Absolutely zero setup or installation is required—no Python runtime setup or external layout engine dependencies are needed, as all requirements are fully pre-packaged directly inside the executable.
 
-1. Download the executable matching your OS from the repository's **Releases** tab:
-   * **Windows**: `AI-DataAnalysisApp-windows.exe`
-   * **macOS**: `AI-DataAnalysisApp-macos`
-   * **Linux**: `AI-DataAnalysisApp-linux`
+1. **Download the executable matching your OS**:
+   * Go to the repository's main page on GitHub.
+   * On the right-hand sidebar, locate the **Releases** section (or go directly to **[https://github.com/ThucDao/ai-multi-agent-data-analysis-app/releases](https://github.com/ThucDao/ai-multi-agent-data-analysis-app/releases)**).
+   * Click on the latest release tag (e.g. `v1.0`), expand the **Assets** section if hidden, and download the binary file for your OS:
+     * **Windows**: `AI-DataAnalysisApp-windows.exe`
+     * **macOS**: `AI-DataAnalysisApp-macos`
+     * **Linux**: `AI-DataAnalysisApp-linux`
 2. **Launch the application**:
    * **Windows**: Double-click `AI-DataAnalysisApp-windows.exe`. A premium loading splash screen will display while the server starts up, and your browser will open to `http://127.0.0.1:8000` automatically.
    * **macOS & Linux**: Open a terminal in the folder containing your downloaded file, make it executable, and run it:
@@ -130,18 +131,16 @@ The easiest way to run the app. No Python installation required.
 ### Option B: Running the Source Code (Stage 2)
 Best for developers wanting to modify code or run in debug mode.
 
+**System Requirements**: **Python 3.10 or higher** must be installed on your local machine and added to your system's **PATH** environment variable.
+
 1. Clone the repository and navigate into the directory:
    ```bash
    git clone https://github.com/ThucDao/ai-multi-agent-data-analysis-app.git
    cd ai-multi-agent-data-analysis-app
    ```
-2. Install Python dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
-3. Run the startup script:
+2. Run the startup script (this automatically initializes the virtual environment, checks dependencies, and launches the application):
    * **Windows**: Double-click `run.bat` or run it from the command prompt.
-   * **macOS & Linux**: Run `./run.sh` (make sure it has execution permissions: `chmod +x run.sh`).
+   * **macOS & Linux**: Run `./run.sh` (ensure execution permission is granted with `chmod +x run.sh`).
 
 ---
 
