@@ -63,9 +63,9 @@ A professional, self-contained desktop application that automates end-to-end dat
 <br>
 
 ### 9. Post-Run Action Panel
-![Figure 9: Post-run UI actions showing PDF export button, markdown viewer button, and a LangSmith trace shortcut](./screenshots/run%2045_paid%20tier_gemini%203.1%20pro_xhtml2pdf/09_LangSmith_PDF_Markdown.png)
+![Figure 9: Post-run UI actions showing LangSmith trace, PDF export, and Markdown viewer buttons](./screenshots/run%2045_paid%20tier_gemini%203.1%20pro_xhtml2pdf/09_LangSmith_PDF_Markdown.png)
 <br>
-*Figure 9: Post-run UI actions showing PDF export button, markdown viewer button, and a LangSmith trace shortcut*
+*Figure 9: Post-run UI actions showing LangSmith trace, PDF export, and Markdown viewer buttons*
 
 <br>
 
