@@ -1,12 +1,12 @@
 # AI Multi-Agent Data Analysis App
 
-A professional, self-contained desktop application that automates end-to-end data analysis workflows on raw CSV datasets. Built with a modular **FastAPI** backend and a premium, responsive **Vanilla CSS/JS** frontend, it orchestrates a specialized multi-agent cascade using **LangGraph** to coordinate **Google Gemini LLMs**. The application runs a self-correcting subprocess execution sandbox to generate Matplotlib visualizations and compile publication-grade PDF reports via **WeasyPrint**—all packaged into a zero-dependency standalone binary using **PyInstaller**.
+A professional, self-contained desktop application that automates end-to-end data analysis workflows on raw CSV datasets. Built with a modular **FastAPI** backend and a premium, responsive **Vanilla CSS/JS** frontend, it orchestrates a specialized multi-agent cascade using **LangGraph** to coordinate **Google Gemini LLMs**. The application runs a self-correcting subprocess execution sandbox to generate Matplotlib visualizations and compile publication-grade PDF reports via **WeasyPrint**, with the entire suite packaged into a zero-dependency standalone binary using **PyInstaller**.
 
 This highly versatile tool provides value through four key areas:
 1. **Adaptability to Any Dataset**: Dynamically profiles column schemas and structure for any uploaded tabular CSV file without hardcoded assumptions.
 2. **End-to-End Capabilities**: Coordinates the complete data analysis lifecycle from profiling, code generation, and sandboxed execution, to insights extraction and report formatting.
 3. **Developer & Business User Paradigms**: Serves developers via an interactive prototyping notebook and modular codebase to customize or debug, while providing business users with a standalone plug-and-play desktop client requiring zero-setup.
-4. **Dual PDF Engine Support**: Embeds both `xhtml2pdf` (highly portable and setup-free) and `WeasyPrint` (high-fidelity, print-ready CSS rendering) so users can select whichever compiler fits their environment best.
+4. **Dual PDF Engine Support**: Embeds both `xhtml2pdf` (highly portable and setup-free) and `WeasyPrint` (high-fidelity, print-ready CSS rendering) so users can select whichever compiler fits their environment.
 
 ---
 
@@ -142,7 +142,7 @@ This highly versatile tool provides value through four key areas:
 
 <br>
 
-📄 **[Download the PDF report generated with WeasyPrint engine.](./artifacts/run%2046_paid%20tier_gemini%203.1%20pro_weasyprint/report_2026-07-14_23.29.24.pdf)**
+### 📄 [View the PDF report generated with WeasyPrint engine.](./artifacts/run%2046_paid%20tier_gemini%203.1%20pro_weasyprint/report_2026-07-14_23.29.24.pdf)
 
 ---
 
@@ -236,8 +236,8 @@ ai-multi-agent-data-analysis-app/
 
 ### Prerequisites
 To use the application, you will need:
-1. **Google Gemini API Key**: Obtainable from [Google AI Studio](https://aistudio.google.com/api-keys).
-   *(Note: If you plan to use any Pro models of Gemini, your Google AI Studio project must have billing enabled).*
+1. **Google Gemini API Key**: Obtainable from [Google AI Studio](https://aistudio.google.com/api-keys).     
+   *Note: If you plan to use any Pro models of Gemini, Google AI Studio project must have billing enabled.*
 2. **LangSmith API Key**: Obtainable from [LangSmith](https://www.langchain.com/langsmith/observability) to track the multi-agent graph cascade in real-time.
 
 ---
@@ -255,11 +255,17 @@ The easiest way to run the app with zero setup or installation. No Python runtim
 2. **Launch the application**:
    * **Windows**:    
      Double-click `AI-DataAnalysisApp-windows.exe`. A loading splash screen will display while the server starts up, and your browser will open to `http://127.0.0.1:8000` automatically.
-   * **macOS & Linux**:    
+   * **macOS**:    
      Open a terminal in the folder containing your downloaded file, make it executable, and run it:
      ```bash
      chmod +x AI-DataAnalysisApp-macos
      ./AI-DataAnalysisApp-macos
+     ```
+   * **Linux**:    
+     Open a terminal in the folder containing your downloaded file, make it executable, and run it:
+     ```bash
+     chmod +x AI-DataAnalysisApp-linux
+     ./AI-DataAnalysisApp-linux
      ```
 
 ---
@@ -312,13 +318,13 @@ graph TD
 ### Detailed Agent Roles & Design
 * **Data Profiler Agent (`profiler`)**:    
   Reads the raw CSV schema, automatically infers data types, detects missing values/anomalies, and drafts a structured JSON execution plan containing proposed analysis approaches and visual chart designs.
-* **Python Developer Agent (`code_writer`)**: 
+* **Python Developer Agent (`code_writer`)**:   
   Generates clean, robust Python analytics code using Pandas, Matplotlib, and Seaborn based on the Profiler's plan.
-* **Local Code Executor Agent (`executor`)**: 
+* **Local Code Executor Agent (`executor`)**:   
   Runs the generated python code in a sandboxed subprocess. It captures stdout/stderr logs, writes generated chart PNGs to local workspace directories, and sends stack traces back to the `code_writer` for automatic self-correction if runtime errors occur.
-* **Visual Analyst Agent (`insights`)**: 
+* **Visual Analyst Agent (`insights`)**:   
   Inspects data correlations, generated graphs, and summary statistics to write high-level data findings, business takeaways, and explanations for each visual chart.
-* **Report Writer Agent (`report`)**: 
+* **Report Writer Agent (`report`)**:    
   Consolidates the data profiles, compiled charts, and visual insights into a unified, beautifully styled Markdown report structure.
 
 ---
@@ -361,8 +367,8 @@ graph TD
 This application is purposefully packaged as a local binary rather than deployed to public cloud services (like Streamlit or Vercel) for two critical reasons:
 
 ### 1. Data Privacy and Key Security
-Running the multi-agent graph requires entering your **Gemini API Key** and **LangSmith API Key**. 
-Inputting credentials into a public web server raises legitimate security doubts. 
+Running the multi-agent graph requires entering your **Gemini API Key** and **LangSmith API Key**.   
+Inputting credentials into a public web server raises legitimate security doubts.   
 Running locally ensures your secret keys and dataset metrics are communicated directly to Google's Gemini and LangSmith API endpoints, rather than being routed through or stored on third-party middleman servers.
 
 ### 2. Native Operating System Dependencies for WeasyPrint
