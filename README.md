@@ -8,39 +8,75 @@ A professional, self-contained desktop application that automates end-to-end dat
 
 ### 1. Model & API Key Configuration
 ![Figure 1: API configuration panel showing model selection and API key inputs](./screenshots/run%2045_paid%20tier_gemini%203.1%20pro_xhtml2pdf/01_Model_API.png)
+*Figure 1: API configuration panel showing model selection and API key inputs*
+
+<br>
 
 ### 2. Dataset Importer & PDF Engine Selection
 ![Figure 2: Selection of input CSV dataset, export directory, and PDF rendering engine choice](./screenshots/run%2045_paid%20tier_gemini%203.1%20pro_xhtml2pdf/02_Input_output_PDF_engine.png)
+*Figure 2: Selection of input CSV dataset, export directory, and PDF rendering engine choice*
+
+<br>
 
 ### 3. Profiler Agent Execution
 ![Figure 3: Profiler Agent actively mapping dataset column types and analysis scope](./screenshots/run%2045_paid%20tier_gemini%203.1%20pro_xhtml2pdf/03_Agent_1.png)
+*Figure 3: Profiler Agent actively mapping dataset column types and analysis scope*
+
+<br>
 
 ### 4. Code Writer Agent Execution
 ![Figure 4: Code Writer Agent generating code for statistical computation and Matplotlib chart creation](./screenshots/run%2045_paid%20tier_gemini%203.1%20pro_xhtml2pdf/04_Agent_2.png)
+*Figure 4: Code Writer Agent generating code for statistical computation and Matplotlib chart creation*
+
+<br>
 
 ### 5. Executor Agent Sandbox Run
 ![Figure 5: Executor Agent running code in a sandbox, tracking logs, and auto-correcting any errors](./screenshots/run%2045_paid%20tier_gemini%203.1%20pro_xhtml2pdf/05_Agent_3.png)
+*Figure 5: Executor Agent running code in a sandbox, tracking logs, and auto-correcting any errors*
+
+<br>
 
 ### 6. Insights Agent Data Interpretation
 ![Figure 6: Insights Agent interpreting statistical outputs and writing visual explanations](./screenshots/run%2045_paid%20tier_gemini%203.1%20pro_xhtml2pdf/06_Agent_4.png)
+*Figure 6: Insights Agent interpreting statistical outputs and writing visual explanations*
+
+<br>
 
 ### 7. Report Agent Compilation
 ![Figure 7: Report Agent formatting the final markdown document and compiling the layout](./screenshots/run%2045_paid%20tier_gemini%203.1%20pro_xhtml2pdf/07_Agent_5.png)
+*Figure 7: Report Agent formatting the final markdown document and compiling the layout*
+
+<br>
 
 ### 8. Workflow Successfully Completed
 ![Figure 8: Analysis workflow fully completed, displaying processing time and run log](./screenshots/run%2045_paid%20tier_gemini%203.1%20pro_xhtml2pdf/08_Workflow_completed.png)
+*Figure 8: Analysis workflow fully completed, displaying processing time and run log*
+
+<br>
 
 ### 9. Post-Run Action Panel
 ![Figure 9: Post-run UI actions showing PDF export button, markdown viewer button, and a LangSmith trace shortcut](./screenshots/run%2045_paid%20tier_gemini%203.1%20pro_xhtml2pdf/09_LangSmith_PDF_Markdown.png)
+*Figure 9: Post-run UI actions showing PDF export button, markdown viewer button, and a LangSmith trace shortcut*
+
+<br>
 
 ### 10. Integrated Markdown Viewer
 ![Figure 10: Integrated Markdown toggle viewer showing formatted document tables and text within the UI](./screenshots/run%2045_paid%20tier_gemini%203.1%20pro_xhtml2pdf/10_Markdown_report.png)
+*Figure 10: Integrated Markdown toggle viewer showing formatted document tables and text within the UI*
+
+<br>
 
 ### 11. LangSmith Runs Dashboard
 ![Figure 11: LangSmith dashboard showing trace latency, token costs, and node executions](./screenshots/run%2045_paid%20tier_gemini%203.1%20pro_xhtml2pdf/11_LangSmith_dashboard_agent_run_45_46.png)
+*Figure 11: LangSmith dashboard showing trace latency, token costs, and node executions*
+
+<br>
 
 ### 12. LangSmith Execution Waterfall View
 ![Figure 12: LangSmith waterfall view displaying the step-by-step agent node latency breakdown](./screenshots/run%2045_paid%20tier_gemini%203.1%20pro_xhtml2pdf/12_LangSmith_dashboard_agent_run_45_waterfall_view.png)
+*Figure 12: LangSmith waterfall view displaying the step-by-step agent node latency breakdown*
+
+<br>
 
 📄 **[Download the PDF report generated with WeasyPrint engine.](./artifacts/run%2046_paid%20tier_gemini%203.1%20pro_weasyprint/report_2026-07-14_23.29.24.pdf)**
 
