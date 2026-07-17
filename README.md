@@ -1,6 +1,12 @@
 # AI Multi-Agent Data Analysis App
 
-A professional, self-contained desktop application that automates end-to-end data analysis workflows on raw CSV datasets. Built with **FastAPI**, **LangGraph**, and a premium **Vanilla CSS/JS** reactive single-page interface, it orchestrates a specialized multi-agent cascade to profile data, write/sandbox execution scripts, extract insights, and render publication-grade reports.
+A professional, self-contained desktop application that automates end-to-end data analysis workflows on raw CSV datasets. Built with a modular **FastAPI** backend and a premium, responsive **Vanilla CSS/JS** frontend, it orchestrates a specialized multi-agent cascade using **LangGraph** to coordinate **Google Gemini LLMs**. The application runs a self-correcting subprocess execution sandbox to generate Matplotlib visualizations and compile publication-grade PDF reports via **WeasyPrint**—all packaged into a zero-dependency standalone binary using **PyInstaller**.
+
+This highly versatile tool provides value through four key areas:
+1. **Adaptability to Any Dataset**: Dynamically profiles column schemas and structure for any uploaded tabular CSV file without hardcoded assumptions.
+2. **End-to-End Capabilities**: Coordinates the complete data analysis lifecycle from profiling, code generation, and sandboxed execution, to insights extraction and report formatting.
+3. **Developer & Business User Paradigms**: Serves developers via an interactive prototyping notebook and modular codebase to customize or debug, while providing business users with a standalone plug-and-play desktop client requiring zero-setup.
+4. **Dual PDF Engine Support**: Embeds both `xhtml2pdf` (highly portable and setup-free) and `WeasyPrint` (high-fidelity, print-ready CSS rendering) so users can select whichever compiler fits their environment best.
 
 ---
 
@@ -29,86 +35,110 @@ A professional, self-contained desktop application that automates end-to-end dat
 ## 📸 Screenshots & Showcase
 
 ### 1. Model & API Key Configuration
-![Figure 1: API configuration panel showing model selection and API key inputs](./screenshots/run%2045_paid%20tier_gemini%203.1%20pro_xhtml2pdf/01_Model_API.png)
-<br>
-*Figure 1: API configuration panel showing model selection and API key inputs*
+<p align="center">
+  <img src="./screenshots/run%2045_paid%20tier_gemini%203.1%20pro_xhtml2pdf/01_Model_API.png" alt="Figure 1: API configuration panel showing model selection and API key inputs">
+  <br>
+  <em>Figure 1: API configuration panel showing model selection and API key inputs</em>
+</p>
 
 <br>
 
 ### 2. Dataset Importer & PDF Engine Selection
-![Figure 2: Selection of input CSV dataset, export directory, and PDF rendering engine choice](./screenshots/run%2045_paid%20tier_gemini%203.1%20pro_xhtml2pdf/02_Input_output_PDF_engine.png)
-<br>
-*Figure 2: Selection of input CSV dataset, export directory, and PDF rendering engine choice*
+<p align="center">
+  <img src="./screenshots/run%2045_paid%20tier_gemini%203.1%20pro_xhtml2pdf/02_Input_output_PDF_engine.png" alt="Figure 2: Selection of input CSV dataset, export directory, and PDF rendering engine choice">
+  <br>
+  <em>Figure 2: Selection of input CSV dataset, export directory, and PDF rendering engine choice</em>
+</p>
 
 <br>
 
 ### 3. Profiler Agent Execution
-![Figure 3: Profiler Agent actively mapping dataset column types and analysis scope](./screenshots/run%2045_paid%20tier_gemini%203.1%20pro_xhtml2pdf/03_Agent_1.png)
-<br>
-*Figure 3: Profiler Agent actively mapping dataset column types and analysis scope*
+<p align="center">
+  <img src="./screenshots/run%2045_paid%20tier_gemini%203.1%20pro_xhtml2pdf/03_Agent_1.png" alt="Figure 3: Profiler Agent actively mapping dataset column types and analysis scope">
+  <br>
+  <em>Figure 3: Profiler Agent actively mapping dataset column types and analysis scope</em>
+</p>
 
 <br>
 
 ### 4. Code Writer Agent Execution
-![Figure 4: Code Writer Agent generating code for statistical computation and Matplotlib chart creation](./screenshots/run%2045_paid%20tier_gemini%203.1%20pro_xhtml2pdf/04_Agent_2.png)
-<br>
-*Figure 4: Code Writer Agent generating code for statistical computation and Matplotlib chart creation*
+<p align="center">
+  <img src="./screenshots/run%2045_paid%20tier_gemini%203.1%20pro_xhtml2pdf/04_Agent_2.png" alt="Figure 4: Code Writer Agent generating code for statistical computation and Matplotlib chart creation">
+  <br>
+  <em>Figure 4: Code Writer Agent generating code for statistical computation and Matplotlib chart creation</em>
+</p>
 
 <br>
 
 ### 5. Executor Agent Sandbox Run
-![Figure 5: Executor Agent running code in a sandbox, tracking logs, and auto-correcting any errors](./screenshots/run%2045_paid%20tier_gemini%203.1%20pro_xhtml2pdf/05_Agent_3.png)
-<br>
-*Figure 5: Executor Agent running code in a sandbox, tracking logs, and auto-correcting any errors*
+<p align="center">
+  <img src="./screenshots/run%2045_paid%20tier_gemini%203.1%20pro_xhtml2pdf/05_Agent_3.png" alt="Figure 5: Executor Agent running code in a sandbox, tracking logs, and auto-correcting any errors">
+  <br>
+  <em>Figure 5: Executor Agent running code in a sandbox, tracking logs, and auto-correcting any errors</em>
+</p>
 
 <br>
 
 ### 6. Insights Agent Data Interpretation
-![Figure 6: Insights Agent interpreting statistical outputs and writing visual explanations](./screenshots/run%2045_paid%20tier_gemini%203.1%20pro_xhtml2pdf/06_Agent_4.png)
-<br>
-*Figure 6: Insights Agent interpreting statistical outputs and writing visual explanations*
+<p align="center">
+  <img src="./screenshots/run%2045_paid%20tier_gemini%203.1%20pro_xhtml2pdf/06_Agent_4.png" alt="Figure 6: Insights Agent interpreting statistical outputs and writing visual explanations">
+  <br>
+  <em>Figure 6: Insights Agent interpreting statistical outputs and writing visual explanations</em>
+</p>
 
 <br>
 
 ### 7. Report Agent Compilation
-![Figure 7: Report Agent formatting the final markdown document and compiling the layout](./screenshots/run%2045_paid%20tier_gemini%203.1%20pro_xhtml2pdf/07_Agent_5.png)
-<br>
-*Figure 7: Report Agent formatting the final markdown document and compiling the layout*
+<p align="center">
+  <img src="./screenshots/run%2045_paid%20tier_gemini%203.1%20pro_xhtml2pdf/07_Agent_5.png" alt="Figure 7: Report Agent formatting the final markdown document and compiling the layout">
+  <br>
+  <em>Figure 7: Report Agent formatting the final markdown document and compiling the layout</em>
+</p>
 
 <br>
 
 ### 8. Workflow Successfully Completed
-![Figure 8: Analysis workflow fully completed, displaying processing time and run log](./screenshots/run%2045_paid%20tier_gemini%203.1%20pro_xhtml2pdf/08_Workflow_completed.png)
-<br>
-*Figure 8: Analysis workflow fully completed, displaying processing time and run log*
+<p align="center">
+  <img src="./screenshots/run%2045_paid%20tier_gemini%203.1%20pro_xhtml2pdf/08_Workflow_completed.png" alt="Figure 8: Analysis workflow fully completed, displaying processing time and run log">
+  <br>
+  <em>Figure 8: Analysis workflow fully completed, displaying processing time and run log</em>
+</p>
 
 <br>
 
 ### 9. Post-Run Action Panel
-![Figure 9: Post-run UI actions showing LangSmith trace, PDF export, and Markdown viewer buttons](./screenshots/run%2045_paid%20tier_gemini%203.1%20pro_xhtml2pdf/09_LangSmith_PDF_Markdown.png)
-<br>
-*Figure 9: Post-run UI actions showing LangSmith trace, PDF export, and Markdown viewer buttons*
+<p align="center">
+  <img src="./screenshots/run%2045_paid%20tier_gemini%203.1%20pro_xhtml2pdf/09_LangSmith_PDF_Markdown.png" alt="Figure 9: Post-run UI actions showing LangSmith trace, PDF export, and Markdown viewer buttons">
+  <br>
+  <em>Figure 9: Post-run UI actions showing LangSmith trace, PDF export, and Markdown viewer buttons</em>
+</p>
 
 <br>
 
 ### 10. Integrated Markdown Viewer
-![Figure 10: Integrated Markdown toggle viewer showing formatted document tables and text within the UI](./screenshots/run%2045_paid%20tier_gemini%203.1%20pro_xhtml2pdf/10_Markdown_report.png)
-<br>
-*Figure 10: Integrated Markdown toggle viewer showing formatted document tables and text within the UI*
+<p align="center">
+  <img src="./screenshots/run%2045_paid%20tier_gemini%203.1%20pro_xhtml2pdf/10_Markdown_report.png" alt="Figure 10: Integrated Markdown toggle viewer showing formatted document tables and text within the UI">
+  <br>
+  <em>Figure 10: Integrated Markdown toggle viewer showing formatted document tables and text within the UI</em>
+</p>
 
 <br>
 
 ### 11. LangSmith Runs Dashboard
-![Figure 11: LangSmith dashboard showing trace latency, token costs, and node executions](./screenshots/run%2045_paid%20tier_gemini%203.1%20pro_xhtml2pdf/11_LangSmith_dashboard_agent_run_45_46.png)
-<br>
-*Figure 11: LangSmith dashboard showing trace latency, token costs, and node executions*
+<p align="center">
+  <img src="./screenshots/run%2045_paid%20tier_gemini%203.1%20pro_xhtml2pdf/11_LangSmith_dashboard_agent_run_45_46.png" alt="Figure 11: LangSmith dashboard showing trace latency, token costs, and node executions">
+  <br>
+  <em>Figure 11: LangSmith dashboard showing trace latency, token costs, and node executions</em>
+</p>
 
 <br>
 
 ### 12. LangSmith Execution Waterfall View
-![Figure 12: LangSmith waterfall view displaying the step-by-step agent node latency breakdown](./screenshots/run%2045_paid%20tier_gemini%203.1%20pro_xhtml2pdf/12_LangSmith_dashboard_agent_run_45_waterfall_view.png)
-<br>
-*Figure 12: LangSmith waterfall view displaying the step-by-step agent node latency breakdown*
+<p align="center">
+  <img src="./screenshots/run%2045_paid%20tier_gemini%203.1%20pro_xhtml2pdf/12_LangSmith_dashboard_agent_run_45_waterfall_view.png" alt="Figure 12: LangSmith waterfall view displaying the step-by-step agent node latency breakdown">
+  <br>
+  <em>Figure 12: LangSmith waterfall view displaying the step-by-step agent node latency breakdown</em>
+</p>
 
 <br>
 
@@ -135,7 +165,7 @@ The initial phase focused on researching the multi-agent logic, prompt engineeri
 ```text
 ai-multi-agent-data-analysis-app/
 ├── AI multi-agent data-analysis app FREE TIER.ipynb   # Core prototype notebook
-├── AI multi-agent data-analysis app PAID TIER.html    # HTML export showing prototype run results
+├── AI multi-agent data-analysis app PAID TIER.html    # HTML export showing prototype results
 └── Languages_of_the_World.csv                         # Test dataset
 ```
 
@@ -146,7 +176,7 @@ ai-multi-agent-data-analysis-app/
 ---
 
 ### Stage 2: Modular Architecture & Startup Launchers
-The prototype was restructured into a production-grade web application with a modular FastAPI backend and an independent responsive frontend SPA. Local command scripts were added for easy startup.
+The prototype was restructured into a production-grade web application with a modular FastAPI backend and an independent responsive frontend Single Page Application (SPA). Local command scripts were added for easy startup.
 
 #### File Structure
 ```text
@@ -156,7 +186,7 @@ ai-multi-agent-data-analysis-app/
 │   ├── agent_workflow.py           # LangGraph team nodes and tool execution definition
 │   └── config.py                   # Local credentials and file-system paths
 ├── frontend/
-│   ├── index.html                  # Responsive client SPA layout
+│   ├── index.html                  # Responsive client Single Page Application (SPA) layout
 │   ├── styles.css                  # Custom CSS design system variable tokens
 │   └── app.js                      # AJAX client pings, visibility handlers, and SSE UI
 ├── launcher.py                     # Uvicorn bootloader and auto-browser launcher
@@ -169,9 +199,9 @@ ai-multi-agent-data-analysis-app/
 ---
 
 ### Stage 3: Standalone Executable Packaging
-To eliminate local setups for end-users, the app is compiled into a single pre-packaged binary for each specific OS using PyInstaller, complete with a custom startup splash screen and an embedded browser launcher.
+To eliminate local setups for end-users, the app is compiled into a single pre-packaged binary for each specific operating system (OS) using PyInstaller, complete with a custom startup splash screen and an embedded browser launcher.
 
-*Note: PyInstaller compiles binaries natively for the host OS (so compiling a Windows executable requires a Windows host, macOS requires macOS, and Linux requires Linux). Since compiling all three local binaries would require owning three different physical computers, this project utilizes a custom GitHub Actions CI/CD build matrix workflow. This compiles and packages the desktop executables for Windows, macOS, and Linux in parallel automatically upon tagging a release.*
+*Note: PyInstaller compiles binaries natively for the host operating system (so compiling a Windows executable requires a Windows host, macOS requires macOS, and Linux requires Linux). Since manually configuring and maintaining separate physical machines, multi-boot partitions, or virtual machines for all three operating systems is highly inconvenient and resource-intensive, this project utilizes a custom GitHub Actions CI/CD build matrix workflow. This compiles and packages the desktop executables for Windows, macOS, and Linux in parallel, either automatically upon tagging a release or manually via the GitHub Actions interface.*
 
 #### File Structure
 ```text
@@ -187,16 +217,17 @@ ai-multi-agent-data-analysis-app/
 ---
 
 ## 📂 Additional Project Files & Directories
-While not part of the active development code in the three stages, you may see these other files and folders in the repository root. Here is what they are and why they are valuable:
+
+While not part of the active development code across the three stages, you may see these other files and folders in the repository root. Below is a breakdown of their respective purposes and functions:
 
 ```text
 ai-multi-agent-data-analysis-app/
-├── artifacts/                      # Chart images, Markdown and PDF reports generated by this app
+├── artifacts/                      # Generated chart images, Markdown and PDF reports
 ├── docs/                           # Planning and walkthrough documents for Stage 2 development
 ├── screenshots/                    # UI captures and LangGraph console photos
-├── LICENSE                         # MIT License documentation outlining your permission to use/modify the code
-├── .gitattributes                  # System configuration telling Git how to handle line endings and binary files
-└── .gitignore                      # Git configuration file specifying which untracked files to ignore
+├── LICENSE                         # MIT License allowing free use, modification & distribution
+├── .gitattributes                  # Git configuration managing line endings and binary files
+└── .gitignore                      # Git configuration specifying untracked files to ignore
 ```
 
 ---
@@ -205,24 +236,27 @@ ai-multi-agent-data-analysis-app/
 
 ### Prerequisites
 To use the application, you will need:
-1. **Google Gemini API Key**: Obtainable from [Google AI Studio](https://aistudio.google.com/api-keys). *(Note: If you plan to use any Pro models of Gemini, your Google AI Studio account must have billing set up and activated).*
+1. **Google Gemini API Key**: Obtainable from [Google AI Studio](https://aistudio.google.com/api-keys).
+   *(Note: If you plan to use any Pro models of Gemini, your Google AI Studio project must have billing enabled).*
 2. **LangSmith API Key**: Obtainable from [LangSmith](https://www.langchain.com/langsmith/observability) to track the multi-agent graph cascade in real-time.
 
 ---
 
 ### Option A: Running the Standalone Executable (Stage 3) - *Recommended*
-The easiest way to run the app. Absolutely zero setup or installation is required—no Python runtime setup or external layout engine dependencies are needed, as all requirements are fully pre-packaged directly inside the executable.
+The easiest way to run the app with zero setup or installation. No Python runtime or layout engine dependencies are required, as everything is fully pre-packaged inside the executable.
 
 1. **Download the executable matching your OS**:
    * Go to the repository's main page on GitHub.
    * On the right-hand sidebar, locate the **Releases** section (or go directly to **[https://github.com/ThucDao/ai-multi-agent-data-analysis-app/releases](https://github.com/ThucDao/ai-multi-agent-data-analysis-app/releases)**).
-   * Click on the latest release tag (e.g. `v1.0`), expand the **Assets** section if hidden, and download the binary file for your OS:
+   * Click on the latest release tag (e.g. `v1.0.0`), expand the **Assets** section if hidden, and download the binary file for your OS:
      * **Windows**: `AI-DataAnalysisApp-windows.exe`
      * **macOS**: `AI-DataAnalysisApp-macos`
      * **Linux**: `AI-DataAnalysisApp-linux`
 2. **Launch the application**:
-   * **Windows**: Double-click `AI-DataAnalysisApp-windows.exe`. A premium loading splash screen will display while the server starts up, and your browser will open to `http://127.0.0.1:8000` automatically.
-   * **macOS & Linux**: Open a terminal in the folder containing your downloaded file, make it executable, and run it:
+   * **Windows**:    
+     Double-click `AI-DataAnalysisApp-windows.exe`. A loading splash screen will display while the server starts up, and your browser will open to `http://127.0.0.1:8000` automatically.
+   * **macOS & Linux**:    
+     Open a terminal in the folder containing your downloaded file, make it executable, and run it:
      ```bash
      chmod +x AI-DataAnalysisApp-macos
      ./AI-DataAnalysisApp-macos
@@ -241,8 +275,10 @@ Best for developers wanting to modify code or run in debug mode.
    cd ai-multi-agent-data-analysis-app
    ```
 2. Run the startup script (this automatically initializes the virtual environment, checks dependencies, and launches the application):
-   * **Windows**: Double-click `run.bat` or run it from the command prompt.
-   * **macOS & Linux**: Run `./run.sh` (ensure execution permission is granted with `chmod +x run.sh`).
+   * **Windows**:    
+     Double-click `run.bat` or run it from the command prompt.
+   * **macOS & Linux**:    
+     Run `./run.sh` (ensure execution permission is granted with `chmod +x run.sh`).
 
 ---
 
@@ -270,27 +306,36 @@ graph TD
     Executor -- "If Error (Max 3 Retries)" --> CodeWriter
     Executor -- "On Success" --> Insights[Insights Agent: Explain Graphs & Findings]
     Insights --> Report[Report Agent: Format Markdown Report]
-    Report --> End([Render PDF / MD])
+    Report --> End([Render MD / PDF])
 ```
 
 ### Detailed Agent Roles & Design
-* **Data Profiler Agent (`profiler`)**: Reads the raw CSV schema, automatically infers data types, detects missing values/anomalies, and drafts a structured JSON execution plan containing proposed analysis approaches and visual chart designs.
-* **Python Developer Agent (`code_writer`)**: Generates clean, robust Python analytics code using Pandas, Matplotlib, and Seaborn based on the Profiler's plan.
-* **Local Code Executor Agent (`executor`)**: Runs the generated python code in a sandboxed subprocess. It captures stdout/stderr logs, writes generated chart PNGs to local workspace directories, and sends stack traces back to the `code_writer` for automatic self-correction if runtime errors occur.
-* **Visual Analyst Agent (`insights`)**: Inspects data correlations, generated graphs, and summary statistics to write high-level data findings, business takeaways, and explanations for each visual chart.
-* **Report Writer Agent (`report`)**: Consolidates the data profiles, compiled charts, and visual insights into a unified, beautifully styled Markdown report structure.
+* **Data Profiler Agent (`profiler`)**:    
+  Reads the raw CSV schema, automatically infers data types, detects missing values/anomalies, and drafts a structured JSON execution plan containing proposed analysis approaches and visual chart designs.
+* **Python Developer Agent (`code_writer`)**: 
+  Generates clean, robust Python analytics code using Pandas, Matplotlib, and Seaborn based on the Profiler's plan.
+* **Local Code Executor Agent (`executor`)**: 
+  Runs the generated python code in a sandboxed subprocess. It captures stdout/stderr logs, writes generated chart PNGs to local workspace directories, and sends stack traces back to the `code_writer` for automatic self-correction if runtime errors occur.
+* **Visual Analyst Agent (`insights`)**: 
+  Inspects data correlations, generated graphs, and summary statistics to write high-level data findings, business takeaways, and explanations for each visual chart.
+* **Report Writer Agent (`report`)**: 
+  Consolidates the data profiles, compiled charts, and visual insights into a unified, beautifully styled Markdown report structure.
 
 ---
 
 ## ✨ Features
 
-* **Zero-Setup Plug & Play**: Standalone executable bundles Python, libraries, DLLs, and Web UI.
-* **Self-Correcting Code Loop**: The executor isolates code runtime; if libraries fail or data shapes trigger runtime warnings, the code writer reads tracebacks and corrects itself automatically.
-* **Premium Glassmorphic UI**: Vanilla HTML5, CSS Variables, and CSS Grid with light/dark modes and interactive micro-animations.
-* **Flexible API Key Storage**: 
-  * **Temporary**: Active for this session only; API keys are wiped from the config file when the application is closed.
+* **Zero-Setup Plug & Play**:    
+  Standalone executable bundles Python, libraries, DLLs, and Web UI.
+* **Self-Correcting Code Loop**:   
+  The executor isolates code runtime; if libraries fail or data shapes trigger runtime warnings, the code writer reads tracebacks and corrects itself automatically.
+* **Premium Glassmorphic UI**:   
+  Vanilla HTML5, CSS Variables, and CSS Grid with a responsive layout and interactive micro-animations.
+* **Flexible API Key Storage**:    
+  * **Temporary**: Active for this session only; API keys are wiped when the app closes.
   * **Permanent**: Saved securely in the user's home folder (`~/.ai_multi_agent_data_analysis/config.json`) for automatic load-in on future launches.
-* **Smart Server Lifecycle Guard**: Custom watchdog tracks visibility and closes the FastAPI background process instantly when the user closes their browser tab, preventing orphaned server processes.
+* **Smart Server Lifecycle Guard**:    
+  Custom watchdog tracks visibility and closes the FastAPI background process instantly when the user closes their browser tab, preventing orphaned server processes.
 
 ---
 
@@ -316,13 +361,15 @@ graph TD
 This application is purposefully packaged as a local binary rather than deployed to public cloud services (like Streamlit or Vercel) for two critical reasons:
 
 ### 1. Data Privacy and Key Security
-Running the multi-agent graph requires entering your **Gemini API Key** and **LangSmith API Key**. Inputting credentials into a public web server raises legitimate security doubts. Running locally keeps your keys and datasets strictly on your local device—they are never sent to a middleman server.
+Running the multi-agent graph requires entering your **Gemini API Key** and **LangSmith API Key**. 
+Inputting credentials into a public web server raises legitimate security doubts. 
+Running locally ensures your secret keys and dataset metrics are communicated directly to Google's Gemini and LangSmith API endpoints, rather than being routed through or stored on third-party middleman servers.
 
 ### 2. Native Operating System Dependencies for WeasyPrint
-While `xhtml2pdf` is lightweight and easy to deploy as a pure-Python package, it has limited support for modern CSS features and complex table layouts. 
+While `xhtml2pdf` is lightweight and easy to deploy as a pure-Python package, it has limited support for modern CSS features and complex table layouts.    
 In contrast, `WeasyPrint` produces high-fidelity, publication-quality PDFs with significantly better HTML/CSS rendering, but it depends on several native system libraries, such as Cairo, Pango, and GLib/GObject.
 
-These dependencies are straightforward to install on desktop operating systems (for example, via Homebrew on macOS or Apt on Debian/Ubuntu), but they can complicate deployment on shared-hosting or serverless platforms where installing native libraries or custom runtimes is restricted.
+These dependencies are straightforward to install on desktop operating systems (for example, via Homebrew on macOS or Apt on Debian/Ubuntu), but they can complicate deployment on shared-hosting or serverless platforms where installing native libraries or custom runtimes is restricted.     
 Packaging the application for local execution allows users to install these dependencies natively (see below) and take advantage of WeasyPrint's superior rendering quality.
 
 * **macOS**:
@@ -333,7 +380,7 @@ Packaging the application for local execution allows users to install these depe
   ```bash
   sudo apt-get install libcairo2 libpango-1.0-0
   ```
-* **Windows**:
+* **Windows**:   
   The standalone binary handles this automatically by shipping the required pre-compiled DLL dependencies bundled directly inside the executable.
 
 ---
