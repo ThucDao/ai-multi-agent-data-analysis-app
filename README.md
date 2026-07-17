@@ -4,6 +4,28 @@ A professional, self-contained desktop application that automates end-to-end dat
 
 ---
 
+## 📌 Table of Contents
+
+* [📸 Screenshots & Showcase](#-screenshots--showcase)
+* [🛠️ The 3 Stages of Development](#-the-3-stages-of-development)
+  * [Stage 1: Jupyter Notebook Prototyping](#stage-1-jupyter-notebook-prototyping)
+  * [Stage 2: Modular Architecture & Startup Launchers](#stage-2-modular-architecture--startup-launchers)
+  * [Stage 3: Standalone Executable Packaging](#stage-3-standalone-executable-packaging)
+* [📂 Additional Project Files & Directories](#-additional-project-files--directories)
+* [⚡ Quick Start](#-quick-start)
+  * [Prerequisites](#prerequisites)
+  * [Option A: Running the Standalone Executable (Stage 3) - Recommended](#option-a-running-the-standalone-executable-stage-3---recommended)
+  * [Option B: Running the Source Code (Stage 2)](#option-b-running-the-source-code-stage-2)
+  * [Option C: Running the Prototype Notebook (Stage 1)](#option-c-running-the-prototype-notebook-stage-1)
+* [🧠 Multi-Agent Cascade Flow](#-multi-agent-cascade-flow)
+  * [Detailed Agent Roles & Design](#detailed-agent-roles--design)
+* [✨ Features](#-features)
+* [💻 Tech Stack](#-tech-stack)
+* [🌐 Architectural Decision: Why Local Binary over Web App?](#-architectural-decision-why-local-binary-over-web-app)
+* [📄 License](#-license)
+
+---
+
 ## 📸 Screenshots & Showcase
 
 ### 1. Model & API Key Configuration
