@@ -166,7 +166,7 @@ The initial phase focused on researching the multi-agent logic, prompt engineeri
 ai-multi-agent-data-analysis-app/
 ├── AI multi-agent data-analysis app FREE TIER.ipynb   # Core prototype notebook
 ├── AI multi-agent data-analysis app PAID TIER.html    # HTML export showing prototype results
-└── Languages_of_the_World.csv                         # Test dataset
+└── Languages_of_the_World.csv                         # Sample dataset
 ```
 
 *Note: The `.html` file was manually exported to give users an immediate view of the analysis outputs after running all code cells in the prototype notebook. The only difference between them is:*
@@ -189,11 +189,9 @@ ai-multi-agent-data-analysis-app/
 │   ├── index.html                  # Responsive client Single Page Application (SPA) layout
 │   ├── styles.css                  # Custom CSS design system variable tokens
 │   └── app.js                      # AJAX client pings, visibility handlers, and SSE UI
-├── launcher.py                     # Uvicorn bootloader and auto-browser launcher
-├── run.bat                         # One-click startup script for Windows
-├── run.sh                          # One-click startup script for macOS/Linux
 ├── requirements.txt                # Python dependencies
-└── Languages_of_the_World.csv      # Sample dataset
+├── run.bat                         # One-click startup script for Windows
+└── run.sh                          # One-click startup script for macOS/Linux
 ```
 
 ---
@@ -208,8 +206,8 @@ To eliminate local setups for end-users, the app is compiled into a single pre-p
 ai-multi-agent-data-analysis-app/
 ├── .github/workflows/
 │   └── build-executables.yml       # Multi-platform CI/CD compilation actions pipeline
-├── splash.png                      # Outfit font gradient rounded-corner loading splash card
-└── launcher.py                     # Compiler entry point
+├── launcher.py                     # Uvicorn bootloader and auto-browser launcher
+└── splash.png                      # Font gradient rounded-corner loading splash card
 ```
 
 *Note on Executables: The three compiled executable files are not tracked in the git history due to file size limits. Instead, they are generated automatically by the GitHub Actions compilation workflow and released as build artifacts under the **Actions** tab (inside the specific run's **Artifacts** section at the bottom of the page), or published as downloads on the repository's **Releases** page.*
