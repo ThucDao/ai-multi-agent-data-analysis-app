@@ -56,46 +56,74 @@
             <h3 id="toggle-comparison-title" onclick="toggleComparisonTable()">
               ▲ Hide Gemini Model & Tier Comparison
             </h3>
-            <div id="gemini-comparison-table-wrapper" style="overflow-x: auto; width: 100%; border: 1px solid var(--border-color); border-radius: var(--radius-sm); background: rgba(255,255,255,0.45);">
-              <table style="width: 100%; border-collapse: collapse; font-size: 0.75rem; line-height: 1.4; text-align: left;">
+            <div id="gemini-comparison-table-wrapper"
+              style="overflow-x: auto; width: 100%; border: 1px solid var(--border-color); border-radius: var(--radius-sm); background: rgba(255,255,255,0.45);">
+              <table
+                style="width: 100%; border-collapse: collapse; font-size: 0.75rem; line-height: 1.4; text-align: left;">
                 <thead>
                   <tr style="background: rgba(0, 0, 0, 0.03); border-bottom: 1px solid var(--border-color);">
-                    <th style="padding: 6px 8px; font-weight: 600; border-right: 1px solid var(--border-color);">Feature / Limit</th>
-                    <th style="padding: 6px 8px; font-weight: 600; border-right: 1px solid var(--border-color);">Gemini 3.5 Flash <br><strong>(Free Tier)</strong></th>
-                    <th style="padding: 6px 8px; font-weight: 600; border-right: 1px solid var(--border-color);">Gemini 3.5 Flash <br><strong>(Paid Tier)</strong></th>
-                    <th style="padding: 6px 8px; font-weight: 600;">Gemini 3.1 Pro Preview <br><strong>(Paid Tier)</strong></th>
+                    <th style="padding: 6px 8px; font-weight: 600; border-right: 1px solid var(--border-color);">Feature
+                      / Limit</th>
+                    <th style="padding: 6px 8px; font-weight: 600; border-right: 1px solid var(--border-color);">Gemini
+                      3.5 Flash <br><strong>(Free Tier)</strong></th>
+                    <th style="padding: 6px 8px; font-weight: 600; border-right: 1px solid var(--border-color);">Gemini
+                      3.5 Flash <br><strong>(Paid Tier)</strong></th>
+                    <th style="padding: 6px 8px; font-weight: 600;">Gemini 3.1 Pro Preview <br><strong>(Paid
+                        Tier)</strong></th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr style="border-bottom: 1px solid var(--border-color);">
-                    <td style="padding: 6px 8px; font-weight: 600; border-right: 1px solid var(--border-color); background: rgba(0,0,0,0.01);">Primary Use Case</td>
-                    <td style="padding: 6px 8px; border-right: 1px solid var(--border-color);">Speed, general tasks, and free prototyping.</td>
-                    <td style="padding: 6px 8px; border-right: 1px solid var(--border-color);">High-frequency production workloads requiring speed.</td>
+                    <td
+                      style="padding: 6px 8px; font-weight: 600; border-right: 1px solid var(--border-color); background: rgba(0,0,0,0.01);">
+                      Primary Use Case</td>
+                    <td style="padding: 6px 8px; border-right: 1px solid var(--border-color);">Speed, general tasks, and
+                      free prototyping.</td>
+                    <td style="padding: 6px 8px; border-right: 1px solid var(--border-color);">High-frequency production
+                      workloads requiring speed.</td>
                     <td style="padding: 6px 8px;">Deep reasoning, complex coding, and heavy tool automation.</td>
                   </tr>
                   <tr style="border-bottom: 1px solid var(--border-color);">
-                    <td style="padding: 6px 8px; font-weight: 600; border-right: 1px solid var(--border-color); background: rgba(0,0,0,0.01);">Cost <br>(per 1M Tokens)</td>
-                    <td style="padding: 6px 8px; border-right: 1px solid var(--border-color);"><strong>Free</strong></td>
-                    <td style="padding: 6px 8px; border-right: 1px solid var(--border-color);">$1.50 (Input) <br> $9.00 (Output)</td>
-                    <td style="padding: 6px 8px;"><strong>Variable Tier Pricing:</strong> <br>• Shorter prompts <br>(≤200k tokens): <br><strong>$1.00 In / $6.00 Out</strong><br>• High-context prompts <br>(>200k tokens): <br><strong>$2.00 In / $12.00 Out</strong>.</td>
+                    <td
+                      style="padding: 6px 8px; font-weight: 600; border-right: 1px solid var(--border-color); background: rgba(0,0,0,0.01);">
+                      Cost <br>(per 1M Tokens)</td>
+                    <td style="padding: 6px 8px; border-right: 1px solid var(--border-color);"><strong>Free</strong>
+                    </td>
+                    <td style="padding: 6px 8px; border-right: 1px solid var(--border-color);">$1.50 (Input) <br> $9.00
+                      (Output)</td>
+                    <td style="padding: 6px 8px;"><strong>Variable Tier Pricing:</strong> <br>• Shorter prompts
+                      <br>(≤200k tokens): <br><strong>$2.00 In / $12.00 Out</strong><br>• High-context prompts
+                      <br>(>200k tokens): <br><strong>$4.00 In / $18.00 Out</strong>.</td>
                   </tr>
                   <tr style="border-bottom: 1px solid var(--border-color);">
-                    <td style="padding: 6px 8px; font-weight: 600; border-right: 1px solid var(--border-color); background: rgba(0,0,0,0.01);">Context Window</td>
+                    <td
+                      style="padding: 6px 8px; font-weight: 600; border-right: 1px solid var(--border-color); background: rgba(0,0,0,0.01);">
+                      Context Window</td>
                     <td style="padding: 6px 8px; border-right: 1px solid var(--border-color);">1,048,576 tokens</td>
                     <td style="padding: 6px 8px; border-right: 1px solid var(--border-color);">1,048,576 tokens</td>
                     <td style="padding: 6px 8px;">1,000,000 tokens</td>
                   </tr>
                   <tr style="border-bottom: 1px solid var(--border-color);">
-                    <td style="padding: 6px 8px; font-weight: 600; border-right: 1px solid var(--border-color); background: rgba(0,0,0,0.01);">Rate Limits</td>
-                    <td style="padding: 6px 8px; border-right: 1px solid var(--border-color);"><strong>Restricted Baseline:</strong> <br>• 15 Requests/Min <br>• 1,500 Requests/Day</td>
-                    <td style="padding: 6px 8px; border-right: 1px solid var(--border-color);"><strong>High Concurrency:</strong> <br>• No daily limits <br>• Scales dynamically via 2M–10M+ Tokens/Min</td>
-                    <td style="padding: 6px 8px;"><strong>Moderate Preview:</strong> <br>• Restricted concurrency tier floors <br>• Scaled dynamically via 500k–2M+ Tokens/Min</td>
+                    <td
+                      style="padding: 6px 8px; font-weight: 600; border-right: 1px solid var(--border-color); background: rgba(0,0,0,0.01);">
+                      Rate Limits</td>
+                    <td style="padding: 6px 8px; border-right: 1px solid var(--border-color);"><strong>Restricted
+                        Baseline:</strong> <br>• 15 Requests/Min <br>• 1,500 Requests/Day</td>
+                    <td style="padding: 6px 8px; border-right: 1px solid var(--border-color);"><strong>High
+                        Concurrency:</strong> <br>• No daily limits <br>• Scales dynamically via 2M–10M+ Tokens/Min</td>
+                    <td style="padding: 6px 8px;"><strong>Moderate Preview:</strong> <br>• Restricted concurrency tier
+                      floors <br>• Scaled dynamically via 500k–2M+ Tokens/Min</td>
                   </tr>
                   <tr>
-                    <td style="padding: 6px 8px; font-weight: 600; border-right: 1px solid var(--border-color); background: rgba(0,0,0,0.01); border-bottom: none;">Data Privacy</td>
-                    <td style="padding: 6px 8px; border-right: 1px solid var(--border-color); border-bottom: none;">Data <strong>may be used</strong> to improve Google products.</td>
-                    <td style="padding: 6px 8px; border-right: 1px solid var(--border-color); border-bottom: none;">Data is <strong>strictly private</strong> and never used for training.</td>
-                    <td style="padding: 6px 8px; border-bottom: none;">Data is <strong>strictly private</strong> and never used for training.</td>
+                    <td
+                      style="padding: 6px 8px; font-weight: 600; border-right: 1px solid var(--border-color); background: rgba(0,0,0,0.01); border-bottom: none;">
+                      Data Privacy</td>
+                    <td style="padding: 6px 8px; border-right: 1px solid var(--border-color); border-bottom: none;">Data
+                      <strong>may be used</strong> to improve Google products.</td>
+                    <td style="padding: 6px 8px; border-right: 1px solid var(--border-color); border-bottom: none;">Data
+                      is <strong>strictly private</strong> and never used for training.</td>
+                    <td style="padding: 6px 8px; border-bottom: none;">Data is <strong>strictly private</strong> and
+                      never used for training.</td>
                   </tr>
                 </tbody>
               </table>
@@ -112,20 +140,24 @@
               <span class="status-badge" id="gemini-status">Not Saved</span>
             </div>
             <p class="field-info">Note: To use the Paid Tier, your Gemini API key must have billing set up already.</p>
-            <p class="field-info" style="margin-top: 4px;">Paid API keys charge for all model usage. For free access, disable billing for your API key and use Gemini 3.5 Flash.</p>
-            <p class="field-info" style="margin-top: 4px;"><strong>Caveat: For the Free Tier, during high demand of the Gemini 3.5 Flash model, it may return a "503 UNAVAILABLE" error.</strong></p>
+            <p class="field-info" style="margin-top: 4px;">Paid API keys charge for all model usage. For free access,
+              disable billing for your API key and use Gemini 3.5 Flash.</p>
+            <p class="field-info" style="margin-top: 4px;"><strong>Caveat: For the Free Tier, during high demand of the
+                Gemini 3.5 Flash model, it may return a "503 UNAVAILABLE" error.</strong></p>
           </div>
 
           <div class="form-group">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
               <label for="langsmith-key" style="margin-bottom: 0;">LangSmith API Key</label>
-              <a href="https://www.langchain.com/langsmith/observability" target="_blank" class="create-key-link">Create API key</a>
+              <a href="https://www.langchain.com/langsmith/observability" target="_blank" class="create-key-link">Create
+                API key</a>
             </div>
             <div class="input-container">
               <input type="password" id="langsmith-key" placeholder="Enter LangSmith API key...">
               <span class="status-badge" id="langsmith-status">Not Saved</span>
             </div>
-            <p class="field-info">LangSmith is used for real-time tracking, visualization, and debugging of the multi-agent graph reasoning cascade.</p>
+            <p class="field-info">LangSmith is used for real-time tracking, visualization, and debugging of the
+              multi-agent graph reasoning cascade.</p>
           </div>
 
           <div class="creds-btn-container">
@@ -194,11 +226,13 @@
               Zero native OS setup required.<br>
               Works instantly on any machine.
             </p>
-            <div id="weasyprint-note" class="field-info weasyprint-platform-note" style="display: none; margin-top: 8px; font-size: 11px; line-height: 1.4; color: #4a5568; background: rgba(255,255,255,0.5); padding: 8px; border-radius: 6px; border: 1px solid rgba(0,0,0,0.06);">
+            <div id="weasyprint-note" class="field-info weasyprint-platform-note"
+              style="display: none; margin-top: 8px; font-size: 11px; line-height: 1.4; color: #4a5568; background: rgba(255,255,255,0.5); padding: 8px; border-radius: 6px; border: 1px solid rgba(0,0,0,0.06);">
               <strong>WeasyPrint Platform Guide:</strong><br>
               • <strong>Windows</strong>: All libraries are pre-packaged inside the app (no action required).<br>
               • <strong>macOS</strong>: To install dependencies, run: <code>brew install cairo pango</code><br>
-              • <strong>Linux</strong>: To install dependencies, run: <code>sudo apt-get install libcairo2 libpango-1.0-0</code>
+              • <strong>Linux</strong>: To install dependencies, run:
+              <code>sudo apt-get install libcairo2 libpango-1.0-0</code>
             </div>
           </div>
 
@@ -323,7 +357,8 @@
           </div>
 
           <!-- Markdown Report Toggle -->
-          <div class="markdown-toggle-header" style="justify-content: flex-start; border-top: 1px solid var(--border-color); padding-top: 1.5rem; margin-bottom: 1rem;">
+          <div class="markdown-toggle-header"
+            style="justify-content: flex-start; border-top: 1px solid var(--border-color); padding-top: 1.5rem; margin-bottom: 1rem;">
             <button id="toggle-md-btn" class="btn btn-secondary" onclick="toggleMarkdownReport()">
               Show Markdown Report
             </button>
