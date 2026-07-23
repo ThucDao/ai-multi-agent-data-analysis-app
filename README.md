@@ -13,7 +13,7 @@ This highly versatile tool provides value through four key areas:
 ## 📌 Table of Contents
 
 1. [📸 Screenshots & Showcase](#-screenshots--showcase)
-2. [🛠️ The Three Stages of Development](#-the-three-stages-of-development)
+2. [🏗️ The Three Stages of Development](#-the-three-stages-of-development)
     * [Stage 1: Jupyter Notebook Prototyping](#stage-1-jupyter-notebook-prototyping)
     * [Stage 2: Modular Architecture & Startup Launchers](#stage-2-modular-architecture--startup-launchers)
     * [Stage 3: Standalone Executable Packaging](#stage-3-standalone-executable-packaging)
@@ -27,11 +27,10 @@ This highly versatile tool provides value through four key areas:
     * [Detailed Agent Roles & Design](#detailed-agent-roles--design)
 6. [✨ Features](#-features)
 7. [💻 Tech Stack](#-tech-stack)
-8. [🌐 Architectural Decision: Why Local Binary over Web App?](#-architectural-decision-why-local-binary-over-web-app)
+8. [⚖️ Architectural Decision: Why Local Binary over Web App?](#-architectural-decision-why-local-binary-over-web-app)
 9. [📄 License](#-license)
 
-> [!NOTE]
-> Click any section title (or its **▶** / **▼**) to open or close that section.
+<mark>💡 Click any section title (or its <b>▶&#xFE0E;</b> / <b>▼</b>) to open or close that section.</mark>
 
 ---
 
@@ -153,7 +152,7 @@ This highly versatile tool provides value through four key areas:
 ---
 
 <details>
-<summary><h2 id="-the-three-stages-of-development"></h2></summary>
+<summary><h2 id="-the-three-stages-of-development">🏗️ The Three Stages of Development</h2></summary>
 
 This application was developed progressively across three distinct stages to ensure algorithmic correctness, modular separation, and a friction-free experience for end-users.
 
@@ -385,7 +384,7 @@ graph TD
 ---
 
 <details>
-<summary><h2 id="-architectural-decision-why-local-binary-over-web-app">🌐 Architectural Decision: Why Local Binary over Web App?</h2></summary>
+<summary><h2 id="-architectural-decision-why-local-binary-over-web-app">⚖️ Architectural Decision: Why Local Binary over Web App?</h2></summary>
 
 This application is purposefully packaged as a local binary rather than deployed to public cloud services (like Streamlit or Vercel) for two critical reasons:
 
