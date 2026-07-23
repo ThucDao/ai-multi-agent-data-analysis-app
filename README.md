@@ -30,10 +30,11 @@ This highly versatile tool provides value through four key areas:
 8. [⚖️ Architectural Decision: Why Local Binary over Web App?](#-architectural-decision-why-local-binary-over-web-app)
 9. [📄 License](#-license)
 
-<mark>💡 Click any section title (or its <b>▶&#xFE0E;</b> | <b>▼</b> ) to open or close that section.</mark>
+<mark>💡 Click any section title below (or the <b>▶&#xFE0E;</b> / <b>▼</b> symbol) to open or close that section.</mark>
 
 ---
 
+<a id="-screenshots--showcase"></a>
 <details>
 <summary><h2>📸 Screenshots & Showcase</h2></summary>
 
@@ -151,8 +152,9 @@ This highly versatile tool provides value through four key areas:
 
 ---
 
+<a id="-the-three-stages-of-development"></a>
 <details>
-<summary><h2></h2></summary>
+<summary><h2>🏗️ The Three Stages of Development</h2></summary>
 
 This application was developed progressively across three distinct stages to ensure algorithmic correctness, modular separation, and a friction-free experience for end-users.
 
@@ -222,6 +224,7 @@ ai-multi-agent-data-analysis-app/
 
 ---
 
+<a id="-additional-project-files--directories"></a>
 <details>
 <summary><h2>📂 Additional Project Files & Directories</h2></summary>
 
@@ -241,6 +244,7 @@ ai-multi-agent-data-analysis-app/
 
 ---
 
+<a id="-quick-start"></a>
 <details>
 <summary><h2>⚡ Quick Start</h2></summary>
 
@@ -312,6 +316,7 @@ For testing individual agent modules interactively.
 
 ---
 
+<a id="-multi-agent-cascade-flow"></a>
 <details>
 <summary><h2>🧠 Multi-Agent Cascade Flow</h2></summary>
 
@@ -344,6 +349,7 @@ graph TD
 
 ---
 
+<a id="-features"></a>
 <details>
 <summary><h2>✨ Features</h2></summary>
 
@@ -363,6 +369,7 @@ graph TD
 
 ---
 
+<a id="-tech-stack"></a>
 <details>
 <summary><h2>💻 Tech Stack</h2></summary>
 
@@ -383,8 +390,9 @@ graph TD
 
 ---
 
+<a id="-architectural-decision-why-local-binary-over-web-app"></a>
 <details>
-<summary><h2></h2></summary>
+<summary><h2>⚖️ Architectural Decision: Why Local Binary over Web App?</h2></summary>
 
 This application is purposefully packaged as a local binary rather than deployed to public cloud services (like Streamlit or Vercel) for two critical reasons:
 
