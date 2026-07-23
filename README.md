@@ -13,7 +13,7 @@ This highly versatile tool provides value through four key areas:
 ## 📌 Table of Contents
 
 1. [📸 Screenshots & Showcase](#-screenshots--showcase)
-2. [🛠️ The 3 Stages of Development](#-the-3-stages-of-development)
+2. [🛠️ The Three Stages of Development](#-the-three-stages-of-development)
     * [Stage 1: Jupyter Notebook Prototyping](#stage-1-jupyter-notebook-prototyping)
     * [Stage 2: Modular Architecture & Startup Launchers](#stage-2-modular-architecture--startup-launchers)
     * [Stage 3: Standalone Executable Packaging](#stage-3-standalone-executable-packaging)
