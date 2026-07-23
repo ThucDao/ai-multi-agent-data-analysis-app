@@ -30,10 +30,12 @@ This highly versatile tool provides value through four key areas:
 8. [🌐 Architectural Decision: Why Local Binary over Web App?](#-architectural-decision-why-local-binary-over-web-app)
 9. [📄 License](#-license)
 
+
+
 ---
 
 <details>
-<summary><h2>📸 Screenshots & Showcase</h2></summary>
+<summary><h2 id="-screenshots--showcase">📸 Screenshots & Showcase</h2></summary>
 
 ### 1. Model & API Key Configuration
 <p align="center">
@@ -150,7 +152,7 @@ This highly versatile tool provides value through four key areas:
 ---
 
 <details>
-<summary><h2>🛠️ The Three Stages of Development</h2></summary>
+<summary><h2 id="-the-three-stages-of-development">🛠️ The Three Stages of Development</h2></summary>
 
 This application was developed progressively across three distinct stages to ensure algorithmic correctness, modular separation, and a friction-free experience for end-users.
 
@@ -221,7 +223,7 @@ ai-multi-agent-data-analysis-app/
 ---
 
 <details>
-<summary><h2>📂 Additional Project Files & Directories</h2></summary>
+<summary><h2 id="-additional-project-files--directories">📂 Additional Project Files & Directories</h2></summary>
 
 While not part of the active development code across the three stages, you may see these other files and folders in the repository root. Below is a breakdown of their respective purposes and functions:
 
@@ -240,7 +242,7 @@ ai-multi-agent-data-analysis-app/
 ---
 
 <details>
-<summary><h2>⚡ Quick Start</h2></summary>
+<summary><h2 id="-quick-start">⚡ Quick Start</h2></summary>
 
 ### Prerequisites
 To use the application, you will need:
@@ -311,7 +313,7 @@ For testing individual agent modules interactively.
 ---
 
 <details>
-<summary><h2>🧠 Multi-Agent Cascade Flow</h2></summary>
+<summary><h2 id="-multi-agent-cascade-flow">🧠 Multi-Agent Cascade Flow</h2></summary>
 
 The core backend uses **LangGraph** to coordinate a self-correcting team of specialized LLM agents. If the compiled Python code crashes, the system automatically redirects the traceback back to the Code Writer to self-correct.
 
@@ -343,7 +345,7 @@ graph TD
 ---
 
 <details>
-<summary><h2>✨ Features</h2></summary>
+<summary><h2 id="-features">✨ Features</h2></summary>
 
 * **Zero-Setup Plug & Play**:    
   Standalone executable bundles Python, libraries, DLLs, and Web UI.
@@ -362,7 +364,7 @@ graph TD
 ---
 
 <details>
-<summary><h2>💻 Tech Stack</h2></summary>
+<summary><h2 id="-tech-stack">💻 Tech Stack</h2></summary>
 
 ### Frontend
 * **Core Layout**: Semantic HTML5
@@ -382,7 +384,7 @@ graph TD
 ---
 
 <details>
-<summary><h2>🌐 Architectural Decision: Why Local Binary over Web App?</h2></summary>
+<summary><h2 id="-architectural-decision-why-local-binary-over-web-app">🌐 Architectural Decision: Why Local Binary over Web App?</h2></summary>
 
 This application is purposefully packaged as a local binary rather than deployed to public cloud services (like Streamlit or Vercel) for two critical reasons:
 
