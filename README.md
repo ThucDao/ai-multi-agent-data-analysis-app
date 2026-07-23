@@ -30,7 +30,8 @@ This highly versatile tool provides value through four key areas:
 8. [🌐 Architectural Decision: Why Local Binary over Web App?](#-architectural-decision-why-local-binary-over-web-app)
 9. [📄 License](#-license)
 
-
+> [!NOTE]
+> Click any section title (or its **▶** / **▼**) to open or close that section.
 
 ---
 
@@ -152,7 +153,7 @@ This highly versatile tool provides value through four key areas:
 ---
 
 <details>
-<summary><h2 id="-the-three-stages-of-development">🛠️ The Three Stages of Development</h2></summary>
+<summary><h2 id="-the-three-stages-of-development"></h2></summary>
 
 This application was developed progressively across three distinct stages to ensure algorithmic correctness, modular separation, and a friction-free experience for end-users.
 
