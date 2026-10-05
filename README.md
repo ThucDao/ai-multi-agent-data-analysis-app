@@ -381,7 +381,7 @@ graph TD
 ### Backend
 * **API Framework**: FastAPI (Uvicorn ASGI runner)
 * **Agent Flow Orchestration**: LangGraph (LangChain ecosystem)
-* **LLM Engine**: Google Gemini API (`gemini-2.5-flash` and `gemini-1.5-pro` configurations)
+* **LLM Engine**: Google Gemini API (`gemini-3.5-flash` and `gemini-3.1-pro` configurations)
 * **Tracing/Observability**: LangSmith
 * **PDF Compilation**: `xhtml2pdf` & `WeasyPrint` (via GTK/Cairo)
 * **Build Compiler**: PyInstaller
